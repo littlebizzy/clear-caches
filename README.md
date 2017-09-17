@@ -1,1 +1,1 @@
-# purge-theme-all
+# purge-them-all
