@@ -1,0 +1,1 @@
+# purge-theme-all
