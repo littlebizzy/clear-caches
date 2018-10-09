@@ -1,0 +1,77 @@
+#prgtha-progress {
+
+	display: none;
+
+	width: 500px;
+	height: 280px;
+	background: #fff;
+	border: 1px solid #ccc;
+
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+
+	-webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.28);
+	-moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.28);
+	box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.28);
+
+	/* WP admin default */
+	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+
+/* display: block; margin-left: 500px; */
+}
+
+	#prgtha-progress-header {
+		padding: 15px;
+		border-bottom: 1px solid #ccc;
+	}
+
+		#prgtha-progress-header p {
+			font-size: 15px;
+			font-weight: bold;
+			margin: 0; padding: 0;
+		}
+
+	#prgtha-progress-body {
+		height: 175px;
+		margin: 0; padding: 0;
+	}
+
+		#prgtha-progress-body-inner {
+			padding: 25px;
+		}
+
+		#prgtha-progress-body p {
+			font-size: 14px;
+			margin: 0 0 12px; padding: 0 0 0 25px;
+		}
+
+		.prgtha-progress-loading {
+			background: url(../../../../wp-admin/images/spinner.gif) left top no-repeat;
+		}
+
+		.prgtha-progress-success {
+			color: green;
+			background: url(../../../../wp-admin/images/yes.png) 2px 2px no-repeat;
+		}
+
+		.prgtha-progress-error {
+			color: red;
+			background: url(../../../../wp-admin/images/no.png) 2px 2px no-repeat;
+		}
+
+		.prgtha-progress-item {
+			display: none;
+		}
+
+	#prgtha-progress-close {
+		text-align: center
+	}
+
+		#prgtha-progress-close a {
+			color: #0073aa;
+			font-size: 13px;
+			font-weight: normal;
+			text-decoration: underline;
+			margin: 0; padding: 0;
+		}
