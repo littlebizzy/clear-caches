@@ -1,12 +1,20 @@
-# Purge Them All
+# Clear Caches
 
 The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx cache, Transient cache, Varnish cache, and object cache (e.g. Redis).
 
-* [Plugin homepage](https://www.littlebizzy.com/plugins/purge-them-all)
-* [Download (WordPress.org)](https://wordpress.org/plugins/purge-them-all-littlebizzy)
-* [Free Facebook group](https://www.facebook.com/groups/littlebizzy/)
+* [Plugin Homepage (LittleBizzy.com)](https://www.littlebizzy.com/plugins/clear-caches)
+* [Free Facebook Group](https://www.facebook.com/groups/littlebizzy/)
 
-### Support issues
+### Defined Constants
+
+    /* Plugin Meta */
+    define('DISABLE_NAG_NOTICES', true);
+    
+    /* Clear Caches Functions */
+    define('CLEAR_CACHES_NGINX_PATH, '/var/www/cache');
+    define('CLEAR_CACHES_VARNISH_PATH, '/var/www/cache');
+
+### Support Issues
 
 *Please do not submit Pull Requests. Instead, kindly create a new Issue with relevant information if you are an experienced developer, otherwise post your comments in our free Facebook group.*
 
