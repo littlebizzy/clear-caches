@@ -11,8 +11,8 @@ The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx ca
     define('DISABLE_NAG_NOTICES', true);
     
     /* Clear Caches Functions */
-    define('CLEAR_CACHES_NGINX_PATH, '/var/www/cache');
-    define('CLEAR_CACHES_VARNISH_PATH, '/var/www/cache');
+    define('CLEAR_CACHES_NGINX_PATH', '/var/www/cache');
+    define('CLEAR_CACHES_VARNISH_PATH', '/var/www/cache');
 
 ### Support Issues
 
