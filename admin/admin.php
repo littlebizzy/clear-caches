@@ -58,7 +58,7 @@ class Admin {
 	public function menu() {
 
 		// Create submenu page
-		$hook = add_submenu_page('options-general.php', 'Purge Them All', 'Purge Them All', 'manage_options', 'purge-them-all', array(&$this, 'page'));
+		$hook = add_submenu_page('options-general.php', 'Clear Caches', 'Clear Caches', 'manage_options', 'clear-caches', array(&$this, 'page'));
 
 		// Add a load handler
 		if (false !== $hook)
