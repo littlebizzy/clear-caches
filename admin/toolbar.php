@@ -92,10 +92,10 @@ class Toolbar {
 		$menuItems[] = [
 			'id'     => 'prgtha-menu',
 			'parent' => 'top-secondary',
-			'title'  => 'Purge Them All',
+			'title'  => 'Clear Caches',
 			'href'   => '#all',
 			'meta'   => [
-				'title' => 'Clear all cache`s',
+				'title' => '',
 				'tabindex' => -1,
 			],
 		];
@@ -103,10 +103,10 @@ class Toolbar {
 		$menuItems[] = [
 			'id'     => 'prgtha-menu-cloudflare',
 			'parent' => 'prgtha-menu',
-			'title'  => 'Purge Cloudflare cache',
+			'title'  => 'Clear CloudFlare Cache',
 			'href'   => '#cloudflare',
 			'meta'   => [
-				'title' => 'Clear Cloudflare cache`s',
+				'title' => '',
 				'tabindex' => -1,
 			],
 		];
@@ -114,10 +114,10 @@ class Toolbar {
 		$menuItems[] = [
 			'id'     => 'prgtha-menu-opcache',
 			'parent' => 'prgtha-menu',
-			'title'  => 'Purge PHP Opcache',
+			'title'  => 'Clear PHP Opcache',
 			'href'   => '#opcache',
 			'meta'   => [
-				'title' => 'Clear PHP Opcache',
+				'title' => '',
 				'tabindex' => -1,
 			],
 		];
@@ -125,10 +125,10 @@ class Toolbar {
 		$menuItems[] = [
 			'id'     => 'prgtha-menu-nginx',
 			'parent' => 'prgtha-menu',
-			'title'  => 'Purge Nginx cache',
+			'title'  => 'Clear Nginx Cache',
 			'href'   => '#nginx',
 			'meta'   => [
-				'title' => 'Clear Nginx cache',
+				'title' => '',
 				'tabindex' => -1,
 			],
 		];
@@ -136,10 +136,10 @@ class Toolbar {
 		$menuItems[] = [
 			'id'     => 'prgtha-menu-object',
 			'parent' => 'prgtha-menu',
-			'title'  => 'Purge Object Cache',
+			'title'  => 'Clear Object Cache',
 			'href'   => '#object',
 			'meta'   => [
-				'title' => 'Clear Object Cache',
+				'title' => '',
 				'tabindex' => -1,
 			],
 		];
