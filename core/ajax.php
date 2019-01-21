@@ -120,8 +120,9 @@ class AJAX extends Libraries\WP_AJAX {
 	 * Check the correct scope
 	 */
 	private function checkScope() {
-		if (empty($_POST['scope']) || !in_array($_POST['scope'], self::$purgeScopes))
+		if (empty($_POST['scope']) || !in_array($_POST['scope'], self::$purgeScopes)) {
 			$this->outputError('Scope argument missing or incorrect.');
+		}
 	}
 
 

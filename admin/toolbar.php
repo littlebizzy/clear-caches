@@ -55,8 +55,9 @@ class Toolbar {
 	public function init() {
 
 		// Check current user permissions
-		if (!current_user_can('manage_options'))
+		if (!current_user_can('manage_options')) {
 			return;
+		}
 
 		// Load the wrapper object
 		$this->plugin->wrapper = $this->plugin->factory->wrapper;

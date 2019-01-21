@@ -75,8 +75,9 @@ class WP_Options {
 		if (is_array($name)) {
 
 			// Remove each element
-			foreach ($name as $subname)
+			foreach ($name as $subname) {
 				$this->del($subname);
+			}
 
 		// Single value
 		} else {

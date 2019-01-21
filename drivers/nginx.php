@@ -57,8 +57,9 @@ class Nginx {
 	public function updateSettings() {
 
 		// Check submit
-		if (!isset($_POST['nginx_path']))
+		if (!isset($_POST['nginx_path'])) {
 			return;
+		}
 
 		// Save it
 		$this->data->save(['nginx_path' => trim($_POST['nginx_path'])]);
@@ -75,8 +76,9 @@ class Nginx {
 		$this->data->loadNginx();
 
 		// Check path
-		if (!$this->isValidPath())
+		if (!$this->isValidPath()) {
 			return false;
+		}
 
 		// Remove and re-create
 		global $wp_filesystem;
@@ -172,14 +174,16 @@ class Nginx {
 	}
 
 
+
 	private function checkCacheDir() {
 		$path = $this->data->nginxPath;
 
 		// if the cache directory doesn't exist, try to create it
 		if ( ! @file_exists( $path ) ) {
 			@mkdir( $path );
-			if (! @file_exists( $path ))
+			if (! @file_exists( $path )) {
 				return false;
+			}
 		}
 
 		return true;
@@ -198,11 +202,13 @@ class Nginx {
 		try {
 
 			// Check WordPress file API
-			if ( ! function_exists( 'request_filesystem_credentials' ) )
+			if ( ! function_exists( 'request_filesystem_credentials' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
 
-			if ( ! function_exists( 'submit_button' ) )
+			if ( ! function_exists( 'submit_button' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/template.php';
+			}
 
 			// Request credentials
 			$credentials = @request_filesystem_credentials( '', '', false, $path, null, true);
@@ -215,11 +221,13 @@ class Nginx {
 		// Remove output
 		ob_end_clean();
 
-		if ( $credentials === false )
+		if ( $credentials === false ) {
 			return false;
+		}
 
-		if ( ! WP_Filesystem( $credentials, $path, true ) )
+		if ( ! WP_Filesystem( $credentials, $path, true ) ) {
 			return false;
+		}
 
 		return true;
 	}

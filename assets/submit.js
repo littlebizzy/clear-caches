@@ -31,8 +31,9 @@ jQuery(document).ready(function($) {
 			'nonce'  : $('#clrchs-progress').attr('data-nonce')
 		}
 
-		if ('nginx' == scope && null !== value)
+		if ('nginx' == scope && null !== value) {
 			data['nginx_path'] = value;
+		}
 
 		$.post(getServerURL(), data, function(e) {
 
