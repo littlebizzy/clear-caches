@@ -13,11 +13,6 @@ class WP_AJAX {
 
 
 
-	// Properties
-	// ---------------------------------------------------------------------------------------------------
-
-
-
 	/**
 	 * Action submitted
 	 */
@@ -64,11 +59,6 @@ class WP_AJAX {
 
 
 
-	// Initialization
-	// ---------------------------------------------------------------------------------------------------
-
-
-
 	/**
 	 * Start
 	 */
@@ -78,8 +68,9 @@ class WP_AJAX {
 		$this->configure();
 
 		// Check allowed actions
-		if (!$this->checkActions())
+		if (!$this->checkActions()) {
 			return;
+		}
 
 		// Wait to WP init hook
 		if ($this->doWPInit) {
@@ -137,27 +128,24 @@ class WP_AJAX {
 
 
 
-	// Checks
-	// ---------------------------------------------------------------------------------------------------
-
-
-
 	/**
 	 * Determine action scope
 	 */
 	protected function checkActions() {
 
 		// Configured and input values
-		if (empty($this->actions) || empty($_POST['action']))
+		if (empty($this->actions) || empty($_POST['action'])) {
 			return false;
+		}
 
 		// Copy action
 		$this->action = $_POST['action'];
 
 		// Cast to array
 		$actions = $this->actions;
-		if (!is_array($actions))
+		if (!is_array($actions)) {
 			$actions = [$actions];
+		}
 
 		// Check action value
 		return in_array($this->action, $actions);
@@ -171,18 +159,21 @@ class WP_AJAX {
 	protected function checkCapabilities() {
 
 		// Check restrictions and user initialization
-		if (empty($this->capabilities) || !function_exists('current_user_can'))
+		if (empty($this->capabilities) || !function_exists('current_user_can')) {
 			return;
+		}
 
 		// Cast to array if needee
 		$capabilities = $this->capabilities;
-		if (!is_array($capabilities))
+		if (!is_array($capabilities)) {
 			$capabilities = [$capabilities];
+		}
 
 		// Enum capabilities
 		foreach ($capabilities as $capability) {
-			if (current_user_can($capability))
+			if (current_user_can($capability)) {
 				return;
+			}
 		}
 
 		// Error
@@ -197,23 +188,21 @@ class WP_AJAX {
 	protected function checkNonce() {
 
 		// Needs a var name and seed value
-		if (!isset($this->nonceVar) || !isset($this->nonceSeed))
+		if (!isset($this->nonceVar) || !isset($this->nonceSeed)) {
 			return;
+		}
 
 		// Check the post var
-		if (!isset($_POST[$this->nonceVar]))
+		if (!isset($_POST[$this->nonceVar])) {
 			$this->outputError('Operation not allowed due security issues.');
+		}
 
 		// Nonce verification
 		$verified = isset($this->wrapper)? $this->wrapper->verifyNonce($_POST[$this->nonceVar], $this->nonceSeed) : wp_verify_nonce($_POST[$this->nonceVar], $this->nonceSeed);
-		if (!$verified)
+		if (!$verified) {
 			$this->outputError('Security parameters error: please reload the page and try again.');
+		}
 	}
-
-
-
-	// Output
-	// ---------------------------------------------------------------------------------------------------
 
 
 
@@ -233,8 +222,9 @@ class WP_AJAX {
 	protected function outputError($reason, $statusCode = null) {
 
 		// Check status code
-		if (isset($statusCode))
+		if (isset($statusCode)) {
 			$this->statusCode = $statusCode;
+		}
 
 		// Prepare error response
 		$this->response = $this->defaultResponse([
@@ -253,9 +243,9 @@ class WP_AJAX {
 	 */
 	protected function outputResponse() {
 
-        # Prevent browsers to cache response
-        @header("Cache-Control: no-cache, must-revalidate", true); # HTTP/1.1
-        @header("Expires: Sat, 26 Jul 1997 05:00:00 GMT", true);   # Date in the past
+		# Prevent browsers to cache response
+		@header("Cache-Control: no-cache, must-revalidate", true); # HTTP/1.1
+		@header("Expires: Sat, 26 Jul 1997 05:00:00 GMT", true);   # Date in the past
 
 		// JSON content
 		@header('Content-Type: application/json; charset=utf-8', true, $this->statusCode);
