@@ -54,6 +54,14 @@ class Admin {
 	 */
 	public function menu() {
 
+		// Check if this plugin is enabled
+		if (!$this->plugin->enabled('CLEAR_CACHES') ||
+			(!$this->plugin->enabled('CLEAR_CACHES_OPCACHE') && !$this->plugin->enabled('CLEAR_CACHES_NGINX') && !$this->plugin->enabled('CLEAR_CACHES_OBJECT'))) {
+
+			// No modules enabled
+			return;
+		}
+
 		// Create submenu page
 		$hook = add_submenu_page('options-general.php', 'Clear Caches', 'Clear Caches', 'manage_options', 'clear-caches', [$this, 'page']);
 
