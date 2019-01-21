@@ -5,7 +5,6 @@ namespace LittleBizzy\ClearCaches\Core;
 
 // Aliased namespaces
 use \LittleBizzy\ClearCaches\Admin;
-use \LittleBizzy\ClearCaches\API;
 use \LittleBizzy\ClearCaches\Drivers;
 use \LittleBizzy\ClearCaches\Helpers;
 use \LittleBizzy\ClearCaches\Libraries;
@@ -137,24 +136,6 @@ class Factory {
 
 
 	/**
-	 * Creates the Driver Cloudflare object
-	 */
-	private function createCloudflare() {
-		return new Drivers\Cloudflare($this->plugin);
-	}
-
-
-
-	/**
-	 * Creates the API Cloudflare object
-	 */
-	private function createCloudflareAPI($args) {
-		return new API\Cloudflare($args['key'], $args['email']);
-	}
-
-
-
-	/**
 	 * Creates the Driver Opcache object
 	 */
 	 private function createOpcache() {
@@ -222,15 +203,6 @@ class Factory {
 	 */
 	private function createAdminViewOverview($args = null) {
 		return new Admin\Views\Overview($args);
-	}
-
-
-
-	/**
-	 * Admin page Cloudflare
-	 */
-	private function createAdminViewCloudflare($args = null) {
-		return new Admin\Views\CloudFlare($args);
 	}
 
 

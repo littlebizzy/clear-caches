@@ -43,8 +43,9 @@ final class Core {
 	public static function instance($plugin = null) {
 
 		// Check instance
-		if (!isset(self::$instance))
+		if (!isset(self::$instance)) {
 			self::$instance = new self($plugin);
+		}
 
 		// Done
 		return self::$instance;
@@ -75,7 +76,7 @@ final class Core {
 		$this->plugin = $plugin;
 
 		// Set nonce seed
-		$this->plugin->nonceSeed = 'purge-them-all';
+		$this->plugin->nonceSeed = 'clear-caches';
 
 		// Create factory object
 		$this->plugin->factory = new Factory($this->plugin);
@@ -116,16 +117,6 @@ final class Core {
 
 	// Plugin hooks
 	// ---------------------------------------------------------------------------------------------------
-
-
-
-	/**
-	 * On plugin activation
-	 */
-	public function activation() {
-		$data = $this->plugin->factory->data;
-		$data->copyCloudflarePluginSettings();
-	}
 
 
 

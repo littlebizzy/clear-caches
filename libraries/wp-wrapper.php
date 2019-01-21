@@ -6,7 +6,7 @@ namespace LittleBizzy\ClearCaches\Libraries;
 /**
  * A WP functions wrapper class
  *
- * @package CloudFlare
+ * @package Clear Caches
  * @subpackage Libraries
  */
 class WP_Wrapper {

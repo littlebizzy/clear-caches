@@ -53,7 +53,6 @@ class Page extends Libraries\View_Display {
 	 * Subpages
 	 */
 	private $viewOverview;
-	private $viewCloudflare;
 	private $viewOpCache;
 	private $viewNginx;
 	private $viewObjectCache;
@@ -85,16 +84,6 @@ class Page extends Libraries\View_Display {
 
 		// Creates the first view
  		$this->viewOverview = $this->plugin->factory->adminViewOverview;
-
-		// Creates the Cloudflare view
-		$this->viewCloudFlare = $this->plugin->factory->adminViewCloudflare([
-			'key' 			=> $this->data->cloudflareKey,
-			'email' 		=> $this->data->cloudflareEmail,
-			'zone' 			=> $this->data->cloudflareZone,
-			'devMode'		=> $this->data->cloudflareDevMode,
-			'domain' 		=> $this->data->domain,
-			'isCloudFlare' 	=> $this->data->isCloudflare,
-		]);
 
 		// Creates the OpCache view
 		$this->opcache = $this->plugin->factory->opcache;
@@ -135,7 +124,6 @@ class Page extends Libraries\View_Display {
 
 				<h2 id="clrchs-nav-tabs" class="nav-tab-wrapper wp-clearfix">
 					<a id="clrchs-nav-tab-all" href="#" class="nav-tab nav-tab-active">Overview</a>
-					<a id="clrchs-nav-tab-cloudflare" href="#" class="nav-tab">CloudFlare Cache</a>
 					<a id="clrchs-nav-tab-opcache" href="#" class="nav-tab">PHP Opcache</a>
 					<a id="clrchs-nav-tab-nginx" href="#" class="nav-tab">Nginx Cache</a>
 					<a id="clrchs-nav-tab-object" href="#" class="nav-tab">Object Cache</a>
@@ -145,10 +133,6 @@ class Page extends Libraries\View_Display {
 
 					<div id="clrchs-nav-content-all" class="clrchs-nav-content clrchs-nav-content-active">
 						<?php $this->viewOverview->show(); ?>
-					</div>
-
-					<div id="clrchs-nav-content-cloudflare" class="clrchs-nav-content">
-						<?php $this->viewCloudFlare->show(); ?>
 					</div>
 
 					<div id="clrchs-nav-content-opcache" class="clrchs-nav-content">

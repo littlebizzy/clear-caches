@@ -32,10 +32,7 @@ class AJAX extends Libraries\WP_AJAX {
 	 * Actions mapping
 	 */
 	private static $actionsMap = [
-		'purge_them_all' 		=> 'purge',
-		'cloudflare_settings' 	=> 'updateCloudflareSettings',
-		'cloudflare_dev_mode' 	=> 'updateCloudflareDevMode',
-		'cloudflare_purge' 		=> 'purgeCloudflare',
+		'purge' => 'purge',
 	];
 
 
@@ -43,7 +40,7 @@ class AJAX extends Libraries\WP_AJAX {
 	/**
 	 * Scopes allowed in purge action
 	 */
-	private static $purgeScopes = ['all', 'opcache', 'nginx', 'object', 'cloudflare'];
+	private static $purgeScopes = ['all', 'opcache', 'nginx', 'object'];
 
 
 
@@ -107,8 +104,9 @@ class AJAX extends Libraries\WP_AJAX {
 		$this->checkScope();
 		$scopeRequested = $_POST['scope'];
 		foreach (self::$purgeScopes as $scope) {
-			if ('all' == $scope)
+			if ('all' == $scope) {
 				continue;
+			}
 			if ('all' == $scopeRequested || $scope == $scopeRequested) {
 				$method = 'purge'.ucfirst($scope);
 				$this->{$method}();
@@ -128,47 +126,8 @@ class AJAX extends Libraries\WP_AJAX {
 
 
 
-	// Cloudlare actions
-	// ---------------------------------------------------------------------------------------------------
-
-
-
-	/**
-	 * Updates the cloudflare settings
-	 */
-	private function updateCloudflareSettings() {
-		$cloudflare = $this->plugin->factory->cloudflare;
-		if (false === ($zone = $cloudflare->updateSettings()))
-			$this->outputError($cloudflare->getError());
-		$this->response['data']['zone'] = $zone;
-	}
-
-
-
-	/**
-	 * Set the Cloudflare dev mode
-	 */
-	private function updateCloudflareDevMode() {
-		$cloudflare = $this->plugin->factory->cloudflare;
-		if (false === ($devMode = $cloudflare->updateDevMode()))
-			$this->outputError($cloudflare->getError());
-		$this->response['data']['dev_mode'] = $devMode;
-	}
-
-
-
 	// Purge methods
 	// ---------------------------------------------------------------------------------------------------
-
-
-
-	/**
-	 * Purge cloudflare cache
-	 */
-	private function purgeCloudflare() {
-		$cloudflare = $this->plugin->factory->cloudflare;
-		$this->response['data']['cloudflare'] = $cloudflare->purgeCache()? 1 : $cloudflare->getError();
-	}
 
 
 
@@ -213,8 +172,9 @@ class AJAX extends Libraries\WP_AJAX {
 	 */
 	private function prefixActions($actions) {
 		$actions2 = [];
-		foreach ($actions as $action)
+		foreach ($actions as $action) {
 			$actions2[] = $this->plugin->prefix.'_'.$action;
+		}
 		return $actions2;
 	}
 

@@ -33,33 +33,3 @@ p.clrchs-description {
 .clrchs-purge-on { display: none; }
 
 .clrchs-purge-button { width: 150px; }
-
-
-#clrchs-cloudflare-zone-wrapper { display: none; }
-
-#clrchs-cloudflare-settings { margin-bottom: 25px; }
-
-
-#clrchs-cloudflare-dev-mode {
-	width: 100px;
-	display: inline-block;
-}
-
-#clrchs-cloudflare-dev-mode-enabled {
-	color: red;
-	display: none;
-}
-
-#clrchs-cloudflare-dev-mode-disabled {
-	display: none;
-}
-
-#clrchs-cloudflare-dev-mode-button {
-	width: 120px;
-	margin-top: -5px;
-}
-
-#clrchs-cloudflare-dev-mode-message {
-	display: none;
-	margin-top: 15px;
-}

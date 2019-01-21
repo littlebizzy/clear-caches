@@ -101,17 +101,6 @@ class Toolbar {
 		];
 
 		$menuItems[] = [
-			'id'     => 'clrchs-menu-cloudflare',
-			'parent' => 'clrchs-menu',
-			'title'  => 'Clear CloudFlare Cache',
-			'href'   => '#cloudflare',
-			'meta'   => [
-				'title' => '',
-				'tabindex' => -1,
-			],
-		];
-
-		$menuItems[] = [
 			'id'     => 'clrchs-menu-opcache',
 			'parent' => 'clrchs-menu',
 			'title'  => 'Clear PHP Opcache',
@@ -166,17 +155,10 @@ class Toolbar {
 
 				<div id="clrchs-progress-body-inner">
 
-					<p id="clrchs-loading-cloudflare-settings" class="clrchs-progress-item clrchs-progress-loading">Updating Cloudflare settings ...</p>
-					<p id="clrchs-loading-cloudflare-dev-mode" class="clrchs-progress-item clrchs-progress-loading">Updating Cloudflare Dev mode ...</p>
-
 					<p id="clrchs-loading-all" class="clrchs-progress-item clrchs-progress-loading">Removing all cache's ...</p>
-					<p id="clrchs-loading-cloudflare" class="clrchs-progress-item clrchs-progress-loading">Removing Cloudflare cache ...</p>
 					<p id="clrchs-loading-opcache" class="clrchs-progress-item clrchs-progress-loading">Removing OPcache ...</p>
 					<p id="clrchs-loading-nginx" class="clrchs-progress-item clrchs-progress-loading">Removing Nginx cache ...</p>
 					<p id="clrchs-loading-object" class="clrchs-progress-item clrchs-progress-loading">Removing Object cache ...</p>
-
-					<p id="clrchs-done-cloudflare" class="clrchs-progress-item clrchs-progress-success">Cloudflare cache removed.</p>
-					<p id="clrchs-error-cloudflare" class="clrchs-progress-item clrchs-progress-error"></p>
 
 					<p id="clrchs-done-opcache" class="clrchs-progress-item clrchs-progress-success">PHP OPcache removed.</p>
 					<p id="clrchs-error-opcache" class="clrchs-progress-item clrchs-progress-error"></p>
@@ -186,12 +168,6 @@ class Toolbar {
 
 					<p id="clrchs-done-object" class="clrchs-progress-item clrchs-progress-success">Object Cache removed.</p>
 					<p id="clrchs-error-object" class="clrchs-progress-item clrchs-progress-error"></p>
-
-					<p id="clrchs-done-cloudflare-settings" class="clrchs-progress-item clrchs-progress-success">Updated domain info via CloudFlare API.</p>
-					<p id="clrchs-error-cloudflare-settings" class="clrchs-progress-item clrchs-progress-error"></p>
-
-					<p id="clrchs-done-cloudflare-dev-mode" class="clrchs-progress-item clrchs-progress-success">Updated <strong>development mode</strong> status via CloudFlare API.</p>
-					<p id="clrchs-error-cloudflare-dev-mode" class="clrchs-progress-item clrchs-progress-error"></p>
 
 				</div>
 

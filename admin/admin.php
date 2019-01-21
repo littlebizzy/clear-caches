@@ -38,9 +38,6 @@ class Admin {
 		// Set plugin object
 		$this->plugin = $plugin;
 
-		// WP init hook
-		add_action('init', array(&$this, 'disableCloudflarePluginMenu'));
-
 		// Admin menu hook
 		add_action('admin_menu', array(&$this, 'menu'));
 	}
@@ -61,8 +58,9 @@ class Admin {
 		$hook = add_submenu_page('options-general.php', 'Clear Caches', 'Clear Caches', 'manage_options', 'clear-caches', array(&$this, 'page'));
 
 		// Add a load handler
-		if (false !== $hook)
+		if (false !== $hook) {
 			add_action('load-'.$hook, array(&$this, 'onLoad'));
+		}
 	}
 
 
@@ -84,22 +82,6 @@ class Admin {
 	public function page() {
 		$this->page = $this->plugin->factory->adminPage;
 		$this->page->show();
-	}
-
-
-
-	/**
-	 * Hide the cloudflare plugin Options menu
-	 */
-	public function disableCloudflarePluginMenu() {
-
-		// Check Cloudflare plugin Admin class
-		$className = '\LittleBizzy\CloudFlare\Admin\Admin';
-		if (!class_exists($className) || !method_exists($className, 'instance'))
-			return;
-
-		// Remove menu
-		remove_action('admin_menu', array($className::instance(), 'adminMenu'));
 	}
 
 
