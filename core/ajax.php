@@ -101,12 +101,20 @@ class AJAX extends Libraries\WP_AJAX {
 	 * Purge by scope
 	 */
 	private function purge() {
+
+		// Scope
 		$this->checkScope();
+
+		// Enum scopes
 		$scopeRequested = $_POST['scope'];
 		foreach (self::$purgeScopes as $scope) {
+
+			// Skip `all` scope type
 			if ('all' == $scope) {
 				continue;
 			}
+
+			// Scheck requested scope
 			if ('all' == $scopeRequested || $scope == $scopeRequested) {
 				$method = 'purge'.ucfirst($scope);
 				$this->{$method}();
@@ -136,9 +144,23 @@ class AJAX extends Libraries\WP_AJAX {
 	 * Purge nginx web server
 	 */
 	private function purgeNginx() {
-		$nginx = $this->plugin->factory->nginx;
-		$nginx->updateSettings();
-		$this->response['data']['nginx'] = $nginx->purgeCache()? 1 : $nginx->getError();
+
+		// Check plugin
+		if (!$this->plugin->enabled('CLEAR_CACHES')) {
+			$this->response['data']['nginx'] = 'Clear Caches plugin is not enabled.';
+
+		// Check functionality
+		} elseif (!$this->plugin->enabled('CLEAR_CACHES_NGINX')) {
+			$this->response['data']['nginx'] = 'Nginx clear cache functionality is not enabled.';
+
+		// Purge
+		} else {
+
+			// Attempt to remove nginx directory files
+			$nginx = $this->plugin->factory->nginx;
+			$nginx->updateSettings();
+			$this->response['data']['nginx'] = $nginx->purgeCache()? 1 : $nginx->getError();
+		}
 	}
 
 
@@ -147,8 +169,22 @@ class AJAX extends Libraries\WP_AJAX {
 	 * Purge PHP Opcache
 	 */
 	private function purgeOpcache() {
-		$opcache = $this->plugin->factory->opcache;
-		$this->response['data']['opcache'] = $opcache->purgeCache()? 1 : $opcache->getError();
+
+		// Check plugin
+		if (!$this->plugin->enabled('CLEAR_CACHES')) {
+			$this->response['data']['opcache'] = 'Clear Caches plugin is not enabled.';
+
+		// Check functionality
+		} elseif (!$this->plugin->enabled('CLEAR_CACHES_OPCACHE')) {
+			$this->response['data']['opcache'] = 'Opcache clear cache functionality is not enabled.';
+
+		// Purge
+		} else {
+
+			// Attempt to purge Opcache
+			$opcache = $this->plugin->factory->opcache;
+			$this->response['data']['opcache'] = $opcache->purgeCache()? 1 : $opcache->getError();
+		}
 	}
 
 
@@ -157,8 +193,22 @@ class AJAX extends Libraries\WP_AJAX {
 	 * Purge Object cache
 	 */
 	private function purgeObject() {
-		$objectCache = $this->plugin->factory->objectCache;
-		$this->response['data']['object'] = $objectCache->purgeCache()? 1 : $objectCache->getError();
+
+		// Check plugin
+		if (!$this->plugin->enabled('CLEAR_CACHES')) {
+			$this->response['data']['object'] = 'Clear Caches plugin is not enabled.';
+
+		// Check functionality
+		} elseif (!$this->plugin->enabled('CLEAR_CACHES_OBJECT')) {
+			$this->response['data']['object'] = 'Object-Cache clear cache functionality is not enabled.';
+
+		// Purge
+		} else {
+
+			// Attempt to purge object-cache
+			$objectCache = $this->plugin->factory->objectCache;
+			$this->response['data']['object'] = $objectCache->purgeCache()? 1 : $objectCache->getError();
+		}
 	}
 
 

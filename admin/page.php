@@ -124,9 +124,9 @@ class Page extends Libraries\View_Display {
 
 				<h2 id="clrchs-nav-tabs" class="nav-tab-wrapper wp-clearfix">
 					<a id="clrchs-nav-tab-all" href="#" class="nav-tab nav-tab-active">Overview</a>
-					<a id="clrchs-nav-tab-opcache" href="#" class="nav-tab">PHP Opcache</a>
-					<a id="clrchs-nav-tab-nginx" href="#" class="nav-tab">Nginx Cache</a>
-					<a id="clrchs-nav-tab-object" href="#" class="nav-tab">Object Cache</a>
+					<?php if ($this->plugin->enabled('CLEAR_CACHES_OPCACHE')) : ?><a id="clrchs-nav-tab-opcache" href="#" class="nav-tab">PHP Opcache</a><?php endif; ?>
+					<?php if ($this->plugin->enabled('CLEAR_CACHES_NGINX')) : ?><a id="clrchs-nav-tab-nginx" href="#" class="nav-tab">Nginx Cache</a><?php endif; ?>
+					<?php if ($this->plugin->enabled('CLEAR_CACHES_OBJECT')) : ?><a id="clrchs-nav-tab-object" href="#" class="nav-tab">Object Cache</a><?php endif; ?>
 				</h2>
 
 				<div class="clrchs-nav-content-wrapper">
@@ -135,17 +135,23 @@ class Page extends Libraries\View_Display {
 						<?php $this->viewOverview->show(); ?>
 					</div>
 
-					<div id="clrchs-nav-content-opcache" class="clrchs-nav-content">
-						<?php $this->viewOpCache->show(); ?>
-					</div>
+					<?php if ($this->plugin->enabled('CLEAR_CACHES_OPCACHE')) : ?>
+						<div id="clrchs-nav-content-opcache" class="clrchs-nav-content">
+							<?php $this->viewOpCache->show(); ?>
+						</div>
+					<?php endif; ?>
 
-					<div id="clrchs-nav-content-nginx" class="clrchs-nav-content">
-						<?php $this->viewNginx->show(); ?>
-					</div>
+					<?php if ($this->plugin->enabled('CLEAR_CACHES_NGINX')) : ?>
+						<div id="clrchs-nav-content-nginx" class="clrchs-nav-content">
+							<?php $this->viewNginx->show(); ?>
+						</div>
+					<?php endif; ?>
 
-					<div id="clrchs-nav-content-object" class="clrchs-nav-content">
-						<?php $this->viewObjectCache->show(); ?>
-					</div>
+					<?php if ($this->plugin->enabled('CLEAR_CACHES_OBJECT')) : ?>
+						<div id="clrchs-nav-content-object" class="clrchs-nav-content">
+							<?php $this->viewObjectCache->show(); ?>
+						</div>
+					<?php endif; ?>
 
 				</div>
 
