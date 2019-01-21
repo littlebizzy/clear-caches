@@ -27,7 +27,7 @@ jQuery(document).ready(function($) {
 
 		var data = {
 			'scope'  : scope,
-			'action' : 'clrchs_purge_all',
+			'action' : 'clrchs_purge',
 			'nonce'  : $('#clrchs-progress').attr('data-nonce')
 		}
 
