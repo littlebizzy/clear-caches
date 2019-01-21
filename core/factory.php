@@ -77,15 +77,6 @@ class Factory {
 
 
 	/**
-	 * Context object
-	 */
-	private function createContext() {
-		return new Libraries\WP_Context;
-	}
-
-
-
-	/**
 	 * Registrar object
 	 */
 	private function createRegistrar() {

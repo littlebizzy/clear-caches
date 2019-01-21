@@ -17,18 +17,11 @@ Prefix: CLRCHS
 // Plugin namespace
 namespace LittleBizzy\ClearCaches;
 
-// Avoid script calls via plugin URL
-if (!function_exists('add_action')) {
-	die;
-}
-
 // Plugin constants
 const FILE = __FILE__;
 const PREFIX = 'clrchs';
 const VERSION = '1.1.0';
 
-// Loader
-require_once dirname(FILE).'/helpers/loader.php';
-
-// Run the main class
-Helpers\Runner::start('Core\Core', 'instance');
+// Boot
+require_once dirname(FILE).'/helpers/boot.php';
+Helpers\Boot::instance(FILE);
