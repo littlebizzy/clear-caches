@@ -39,7 +39,7 @@ class Toolbar {
 		$this->plugin = $plugin;
 
 		// Admin menu hook
-		add_action('init', array(&$this, 'init'));
+		add_action('init', [$this, 'init']);
 	}
 
 
@@ -62,20 +62,20 @@ class Toolbar {
 		$this->plugin->wrapper = $this->plugin->factory->wrapper;
 
 		// Add the admin bar
-		add_action('admin_bar_menu', array(&$this, 'add'));
+		add_action('admin_bar_menu', [$this, 'add']);
 
 		// Add the footer code
-		add_action('wp_footer', array(&$this, 'footer'));
-		add_action('admin_footer', array(&$this, 'footer'));
+		add_action('wp_footer', [$this, 'footer']);
+		add_action('admin_footer', [$this, 'footer']);
 
 		// Add Toolbar code
-		wp_enqueue_style('clrchs-submit', $this->plugin->wrapper->getURL('assets/submit.css'), array(), $this->plugin->version);
+		wp_enqueue_style('clrchs-submit', $this->plugin->wrapper->getURL('assets/submit.css'), [], $this->plugin->version);
 
 		// Add the lightboxed plugin
-		wp_enqueue_script('clrchs-lightboxed', $this->plugin->wrapper->getURL('assets/lightboxed/jquery.lightboxed.min.js'), array('jquery'), $this->plugin->version, true);
+		wp_enqueue_script('clrchs-lightboxed', $this->plugin->wrapper->getURL('assets/lightboxed/jquery.lightboxed.min.js'), ['jquery'], $this->plugin->version, true);
 
 		// Add the submit handler
-		wp_enqueue_script('clrchs-submit', $this->plugin->wrapper->getURL('assets/submit.js'), array('jquery', 'clrchs-lightboxed'), $this->plugin->version, true);
+		wp_enqueue_script('clrchs-submit', $this->plugin->wrapper->getURL('assets/submit.js'), ['jquery', 'clrchs-lightboxed'], $this->plugin->version, true);
 	}
 
 
@@ -134,8 +134,9 @@ class Toolbar {
 		];
 
 		// Add menus
-		foreach ($menuItems as $menuItem)
+		foreach ($menuItems as $menuItem) {
 			$wp_admin_bar->add_menu($menuItem);
+		}
 	}
 
 
