@@ -3,7 +3,7 @@
 The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx cache, Transient cache, Varnish cache, and object cache (e.g. Redis).
 
 * [Plugin Homepage](https://www.littlebizzy.com/plugins/clear-caches)
-* [Become A Member Today!](https://www.littlebizzy.com/members)
+* [**Become A LittleBizzy.com Member Today!**](https://www.littlebizzy.com/members)
 
 ### Defined Constants
 
@@ -19,6 +19,12 @@ The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx ca
     define('CLEAR_CACHES_TRANSIENTS', true);
     define('CLEAR_CACHES_VARNISH', true);
     define('CLEAR_CACHES_VARNISH_PATH', '/var/www/cache');
+    
+#### Compatibility ####
+
+This plugin has been designed for use on [SlickStack](https://slickstack.io) web servers with PHP 7.2 and MySQL 5.7 to achieve best performance. All of our plugins are meant for single site WordPress installations only; for both performance and usability reasons, we highly recommend avoiding WordPress Multisite for the vast majority of projects.
+
+Any of our WordPress plugins may also be loaded as "Must-Use" plugins (meaning they load first, and cannot be deactivated) by using our free [Autoloader](https://github.com/littlebizzy/autoloader) script in the `mu-plugins` directory.
 
 ### Support Issues
 
