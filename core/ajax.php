@@ -151,7 +151,7 @@ class AJAX extends Libraries\WP_AJAX {
 
 		// Check functionality
 		} elseif (!$this->plugin->enabled('CLEAR_CACHES_NGINX')) {
-			$this->response['data']['nginx'] = 'Nginx clear cache functionality is not enabled.';
+			$this->response['data']['nginx'] = 'Nginx clear cache functionality is disabled.';
 
 		// Purge
 		} else {
@@ -172,7 +172,7 @@ class AJAX extends Libraries\WP_AJAX {
 
 		// Check plugin
 		if (!$this->plugin->enabled('CLEAR_CACHES')) {
-			$this->response['data']['opcache'] = 'Clear Caches plugin is not enabled.';
+			$this->response['data']['opcache'] = 'Clear Caches plugin is disabled.';
 
 		// Check functionality
 		} elseif (!$this->plugin->enabled('CLEAR_CACHES_OPCACHE')) {
@@ -196,7 +196,7 @@ class AJAX extends Libraries\WP_AJAX {
 
 		// Check plugin
 		if (!$this->plugin->enabled('CLEAR_CACHES')) {
-			$this->response['data']['object'] = 'Clear Caches plugin is not enabled.';
+			$this->response['data']['object'] = 'Clear Caches plugin is disabled.';
 
 		// Check functionality
 		} elseif (!$this->plugin->enabled('CLEAR_CACHES_OBJECT')) {
