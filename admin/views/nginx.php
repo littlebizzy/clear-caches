@@ -1,15 +1,15 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Admin\Views;
+namespace LittleBizzy\ClearCaches\Admin\Views;
 
 // Aliased namespaces
-use \LittleBizzy\PurgeThemAll\Libraries;
+use \LittleBizzy\ClearCaches\Libraries;
 
 /**
  * Displays the "Nginx Cache" tab
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Admin
  */
 class Nginx extends Libraries\View_Display {
@@ -23,12 +23,12 @@ class Nginx extends Libraries\View_Display {
 
 		<table class="form-table">
 			<tr>
-				<th scope="row"><label for="prgtha-nginx-path">Cache Zone Path</label></th>
-				<td><input type="text" class="regular-text" id="prgtha-nginx-path" placeholder="/data/nginx/cache" value="<?php echo esc_attr($path); ?>" /></td>
+				<th scope="row"><label for="clrchs-nginx-path">Cache Zone Path</label></th>
+				<td><input type="text" class="regular-text" id="clrchs-nginx-path" placeholder="/data/nginx/cache" value="<?php echo esc_attr($path); ?>" /></td>
 			</tr>
 		</table>
 
-		<p><input type="button" class="button button-primary prgtha-purge-button prgtha-purge-request" value="Purge Now!" /></p>
+		<p><input type="button" class="button button-primary clrchs-purge-button clrchs-purge-request" value="Purge Now!" /></p>
 
 	<?php }
 

@@ -33,7 +33,7 @@
 */
 
 // Moved to the LitteBizzy namespace
-namespace LittleBizzy\PurgeThemAll\Libraries;
+namespace LittleBizzy\ClearCaches\Libraries;
 
 class Ip_Range
 {

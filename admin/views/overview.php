@@ -1,15 +1,15 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Admin\Views;
+namespace LittleBizzy\ClearCaches\Admin\Views;
 
 // Aliased namespaces
-use \LittleBizzy\PurgeThemAll\Libraries;
+use \LittleBizzy\ClearCaches\Libraries;
 
 /**
  * Displays the "Overview" tab
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Admin
  */
 class Overview extends Libraries\View_Display {
@@ -21,9 +21,9 @@ class Overview extends Libraries\View_Display {
 	 */
 	protected function display($args) { extract($args); ?>
 
-		<p class="prgtha-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a tellus vitae ipsum ullamcorper aliquam id at sapien praesent accumsan.</p>
+		<p class="clrchs-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a tellus vitae ipsum ullamcorper aliquam id at sapien praesent accumsan.</p>
 
-		<p class="prgtha-center"><input type="button" class="button button-primary button-large prgtha-purge-request" value="PURGE ALL CACHES!" /></p>
+		<p class="clrchs-center"><input type="button" class="button button-primary button-large clrchs-purge-request" value="PURGE ALL CACHES!" /></p>
 
 	<?php }
 

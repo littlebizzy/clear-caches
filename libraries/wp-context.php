@@ -1,12 +1,12 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Libraries;
+namespace LittleBizzy\ClearCaches\Libraries;
 
 /**
  * Context class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Helpers
  */
 class WP_Context {

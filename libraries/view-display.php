@@ -1,12 +1,12 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Libraries;
+namespace LittleBizzy\ClearCaches\Libraries;
 
 /**
  * A simple View class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Libraries
  */
 class View_Display {

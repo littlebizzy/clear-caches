@@ -1,12 +1,12 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Helpers;
+namespace LittleBizzy\ClearCaches\Helpers;
 
 /**
  * Registrar class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Helpers
  */
 class Registrar {

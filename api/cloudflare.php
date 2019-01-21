@@ -1,12 +1,12 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\API;
+namespace LittleBizzy\ClearCaches\API;
 
 /**
  * Cloudflare API class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage API
  */
 class Cloudflare {

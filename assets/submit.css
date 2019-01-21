@@ -1,4 +1,4 @@
-#prgtha-progress {
+#clrchs-progress {
 
 	display: none;
 
@@ -21,54 +21,54 @@
 /* display: block; margin-left: 500px; */
 }
 
-	#prgtha-progress-header {
+	#clrchs-progress-header {
 		padding: 15px;
 		border-bottom: 1px solid #ccc;
 	}
 
-		#prgtha-progress-header p {
+		#clrchs-progress-header p {
 			font-size: 15px;
 			font-weight: bold;
 			margin: 0; padding: 0;
 		}
 
-	#prgtha-progress-body {
+	#clrchs-progress-body {
 		height: 175px;
 		margin: 0; padding: 0;
 	}
 
-		#prgtha-progress-body-inner {
+		#clrchs-progress-body-inner {
 			padding: 25px;
 		}
 
-		#prgtha-progress-body p {
+		#clrchs-progress-body p {
 			font-size: 14px;
 			margin: 0 0 12px; padding: 0 0 0 25px;
 		}
 
-		.prgtha-progress-loading {
+		.clrchs-progress-loading {
 			background: url(../../../../wp-admin/images/spinner.gif) left top no-repeat;
 		}
 
-		.prgtha-progress-success {
+		.clrchs-progress-success {
 			color: green;
 			background: url(../../../../wp-admin/images/yes.png) 2px 2px no-repeat;
 		}
 
-		.prgtha-progress-error {
+		.clrchs-progress-error {
 			color: red;
 			background: url(../../../../wp-admin/images/no.png) 2px 2px no-repeat;
 		}
 
-		.prgtha-progress-item {
+		.clrchs-progress-item {
 			display: none;
 		}
 
-	#prgtha-progress-close {
+	#clrchs-progress-close {
 		text-align: center
 	}
 
-		#prgtha-progress-close a {
+		#clrchs-progress-close a {
 			color: #0073aa;
 			font-size: 13px;
 			font-weight: normal;

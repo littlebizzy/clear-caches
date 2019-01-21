@@ -15,15 +15,16 @@ Prefix: CLRCHS
 */
 
 // Plugin namespace
-namespace LittleBizzy\PurgeThemAll;
+namespace LittleBizzy\ClearCaches;
 
 // Avoid script calls via plugin URL
-if (!function_exists('add_action'))
+if (!function_exists('add_action')) {
 	die;
+}
 
 // Plugin constants
 const FILE = __FILE__;
-const PREFIX = 'prgtha';
+const PREFIX = 'clrchs';
 const VERSION = '1.1.0';
 
 // Loader

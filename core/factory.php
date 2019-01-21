@@ -1,19 +1,19 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Core;
+namespace LittleBizzy\ClearCaches\Core;
 
 // Aliased namespaces
-use \LittleBizzy\PurgeThemAll\Admin;
-use \LittleBizzy\PurgeThemAll\API;
-use \LittleBizzy\PurgeThemAll\Drivers;
-use \LittleBizzy\PurgeThemAll\Helpers;
-use \LittleBizzy\PurgeThemAll\Libraries;
+use \LittleBizzy\ClearCaches\Admin;
+use \LittleBizzy\ClearCaches\API;
+use \LittleBizzy\ClearCaches\Drivers;
+use \LittleBizzy\ClearCaches\Helpers;
+use \LittleBizzy\ClearCaches\Libraries;
 
 /**
  * Object Factory class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Core
  */
 class Factory {

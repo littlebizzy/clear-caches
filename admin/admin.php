@@ -1,12 +1,12 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Admin;
+namespace LittleBizzy\ClearCaches\Admin;
 
 /**
  * Admin area class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Admin
  */
 class Admin {
@@ -72,8 +72,8 @@ class Admin {
 	 */
 	public function onLoad() {
 		$this->plugin->wrapper = $this->plugin->factory->wrapper;
-		wp_enqueue_style( 'prgtha-admin', $this->plugin->wrapper->getURL('assets/admin.css'), array(), $this->plugin->version);
-		wp_enqueue_script('prgtha-admin', $this->plugin->wrapper->getURL('assets/admin.js'),  array('jquery'), $this->plugin->version, true);
+		wp_enqueue_style( 'clrchs-admin', $this->plugin->wrapper->getURL('assets/admin.css'), array(), $this->plugin->version);
+		wp_enqueue_script('clrchs-admin', $this->plugin->wrapper->getURL('assets/admin.js'),  array('jquery'), $this->plugin->version, true);
 	}
 
 

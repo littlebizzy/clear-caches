@@ -1,7 +1,7 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Libraries;
+namespace LittleBizzy\ClearCaches\Libraries;
 
 /**
  * A WP functions wrapper class

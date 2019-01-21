@@ -35,13 +35,13 @@
 
 
 
-	$.fn.prgtha_lightboxed = function(options) {
+	$.fn.clrchs_lightboxed = function(options) {
 
 		return this.each(function() {
 
 
 
-			var settings = $.extend({}, $.fn.prgtha_lightboxed.defaults, options);
+			var settings = $.extend({}, $.fn.clrchs_lightboxed.defaults, options);
 			var $self = $(this), $overlay;
 
 
@@ -240,7 +240,7 @@
 
 
 
-	$.fn.prgtha_lightboxed.defaults = {
+	$.fn.clrchs_lightboxed.defaults = {
 
 		// Animation
 		appearEffect		: 'fadeIn',
@@ -251,7 +251,7 @@
 		overlaySpeed		: 250,
 
 		// Close
-		closeSelector		: '.prgtha_lightboxed_close',
+		closeSelector		: '.clrchs_lightboxed_close',
 		closeClickOutside	: false,
 		closeEsc			: false,
 
@@ -262,7 +262,7 @@
 
 		// Style
 		centered			: false,
-		classPrefix			: 'prgtha_lbx',
+		classPrefix			: 'clrchs_lbx',
 		zIndex				: 999999,
 		modalCSS 			: { top : '40px' },
 		overlayCSS			: { background : 'black', opacity : .3 }

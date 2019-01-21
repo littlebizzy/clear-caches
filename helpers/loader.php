@@ -1,12 +1,12 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Helpers;
+namespace LittleBizzy\ClearCaches\Helpers;
 
 /**
  * AutoLoader class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Helpers
  */
 final class Loader {

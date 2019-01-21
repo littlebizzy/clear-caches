@@ -1,12 +1,12 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Drivers;
+namespace LittleBizzy\ClearCaches\Drivers;
 
 /**
  * Ningx class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Drivers
  */
 class Nginx {

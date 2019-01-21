@@ -1,12 +1,12 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Admin;
+namespace LittleBizzy\ClearCaches\Admin;
 
 /**
  * Toolbar class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Admin
  */
 class Toolbar {
@@ -69,13 +69,13 @@ class Toolbar {
 		add_action('admin_footer', array(&$this, 'footer'));
 
 		// Add Toolbar code
-		wp_enqueue_style('prgtha-submit', $this->plugin->wrapper->getURL('assets/submit.css'), array(), $this->plugin->version);
+		wp_enqueue_style('clrchs-submit', $this->plugin->wrapper->getURL('assets/submit.css'), array(), $this->plugin->version);
 
 		// Add the lightboxed plugin
-		wp_enqueue_script('prgtha-lightboxed', $this->plugin->wrapper->getURL('assets/lightboxed/jquery.lightboxed.min.js'), array('jquery'), $this->plugin->version, true);
+		wp_enqueue_script('clrchs-lightboxed', $this->plugin->wrapper->getURL('assets/lightboxed/jquery.lightboxed.min.js'), array('jquery'), $this->plugin->version, true);
 
 		// Add the submit handler
-		wp_enqueue_script('prgtha-submit', $this->plugin->wrapper->getURL('assets/submit.js'), array('jquery', 'prgtha-lightboxed'), $this->plugin->version, true);
+		wp_enqueue_script('clrchs-submit', $this->plugin->wrapper->getURL('assets/submit.js'), array('jquery', 'clrchs-lightboxed'), $this->plugin->version, true);
 	}
 
 
@@ -90,7 +90,7 @@ class Toolbar {
 
 		// Top menu
 		$menuItems[] = [
-			'id'     => 'prgtha-menu',
+			'id'     => 'clrchs-menu',
 			'parent' => 'top-secondary',
 			'title'  => 'Clear Caches',
 			'href'   => '#all',
@@ -101,8 +101,8 @@ class Toolbar {
 		];
 
 		$menuItems[] = [
-			'id'     => 'prgtha-menu-cloudflare',
-			'parent' => 'prgtha-menu',
+			'id'     => 'clrchs-menu-cloudflare',
+			'parent' => 'clrchs-menu',
 			'title'  => 'Clear CloudFlare Cache',
 			'href'   => '#cloudflare',
 			'meta'   => [
@@ -112,8 +112,8 @@ class Toolbar {
 		];
 
 		$menuItems[] = [
-			'id'     => 'prgtha-menu-opcache',
-			'parent' => 'prgtha-menu',
+			'id'     => 'clrchs-menu-opcache',
+			'parent' => 'clrchs-menu',
 			'title'  => 'Clear PHP Opcache',
 			'href'   => '#opcache',
 			'meta'   => [
@@ -123,8 +123,8 @@ class Toolbar {
 		];
 
 		$menuItems[] = [
-			'id'     => 'prgtha-menu-nginx',
-			'parent' => 'prgtha-menu',
+			'id'     => 'clrchs-menu-nginx',
+			'parent' => 'clrchs-menu',
 			'title'  => 'Clear Nginx Cache',
 			'href'   => '#nginx',
 			'meta'   => [
@@ -134,8 +134,8 @@ class Toolbar {
 		];
 
 		$menuItems[] = [
-			'id'     => 'prgtha-menu-object',
-			'parent' => 'prgtha-menu',
+			'id'     => 'clrchs-menu-object',
+			'parent' => 'clrchs-menu',
 			'title'  => 'Clear Object Cache',
 			'href'   => '#object',
 			'meta'   => [
@@ -156,48 +156,48 @@ class Toolbar {
 	 */
 	public function footer() { ?>
 
-		<div id="prgtha-progress" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" data-nonce="<?php echo esc_attr($this->plugin->wrapper->createNonce($this->plugin->nonceSeed)); ?>">
+		<div id="clrchs-progress" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" data-nonce="<?php echo esc_attr($this->plugin->wrapper->createNonce($this->plugin->nonceSeed)); ?>">
 
-			<div id="prgtha-progress-header">
+			<div id="clrchs-progress-header">
 				<p>Purge Them All</p>
 			</div>
 
-			<div id="prgtha-progress-body">
+			<div id="clrchs-progress-body">
 
-				<div id="prgtha-progress-body-inner">
+				<div id="clrchs-progress-body-inner">
 
-					<p id="prgtha-loading-cloudflare-settings" class="prgtha-progress-item prgtha-progress-loading">Updating Cloudflare settings ...</p>
-					<p id="prgtha-loading-cloudflare-dev-mode" class="prgtha-progress-item prgtha-progress-loading">Updating Cloudflare Dev mode ...</p>
+					<p id="clrchs-loading-cloudflare-settings" class="clrchs-progress-item clrchs-progress-loading">Updating Cloudflare settings ...</p>
+					<p id="clrchs-loading-cloudflare-dev-mode" class="clrchs-progress-item clrchs-progress-loading">Updating Cloudflare Dev mode ...</p>
 
-					<p id="prgtha-loading-all" class="prgtha-progress-item prgtha-progress-loading">Removing all cache's ...</p>
-					<p id="prgtha-loading-cloudflare" class="prgtha-progress-item prgtha-progress-loading">Removing Cloudflare cache ...</p>
-					<p id="prgtha-loading-opcache" class="prgtha-progress-item prgtha-progress-loading">Removing OPcache ...</p>
-					<p id="prgtha-loading-nginx" class="prgtha-progress-item prgtha-progress-loading">Removing Nginx cache ...</p>
-					<p id="prgtha-loading-object" class="prgtha-progress-item prgtha-progress-loading">Removing Object cache ...</p>
+					<p id="clrchs-loading-all" class="clrchs-progress-item clrchs-progress-loading">Removing all cache's ...</p>
+					<p id="clrchs-loading-cloudflare" class="clrchs-progress-item clrchs-progress-loading">Removing Cloudflare cache ...</p>
+					<p id="clrchs-loading-opcache" class="clrchs-progress-item clrchs-progress-loading">Removing OPcache ...</p>
+					<p id="clrchs-loading-nginx" class="clrchs-progress-item clrchs-progress-loading">Removing Nginx cache ...</p>
+					<p id="clrchs-loading-object" class="clrchs-progress-item clrchs-progress-loading">Removing Object cache ...</p>
 
-					<p id="prgtha-done-cloudflare" class="prgtha-progress-item prgtha-progress-success">Cloudflare cache removed.</p>
-					<p id="prgtha-error-cloudflare" class="prgtha-progress-item prgtha-progress-error"></p>
+					<p id="clrchs-done-cloudflare" class="clrchs-progress-item clrchs-progress-success">Cloudflare cache removed.</p>
+					<p id="clrchs-error-cloudflare" class="clrchs-progress-item clrchs-progress-error"></p>
 
-					<p id="prgtha-done-opcache" class="prgtha-progress-item prgtha-progress-success">PHP OPcache removed.</p>
-					<p id="prgtha-error-opcache" class="prgtha-progress-item prgtha-progress-error"></p>
+					<p id="clrchs-done-opcache" class="clrchs-progress-item clrchs-progress-success">PHP OPcache removed.</p>
+					<p id="clrchs-error-opcache" class="clrchs-progress-item clrchs-progress-error"></p>
 
-					<p id="prgtha-done-nginx" class="prgtha-progress-item prgtha-progress-success">Nginx cache removed.</p>
-					<p id="prgtha-error-nginx" class="prgtha-progress-item prgtha-progress-error"></p>
+					<p id="clrchs-done-nginx" class="clrchs-progress-item clrchs-progress-success">Nginx cache removed.</p>
+					<p id="clrchs-error-nginx" class="clrchs-progress-item clrchs-progress-error"></p>
 
-					<p id="prgtha-done-object" class="prgtha-progress-item prgtha-progress-success">Object Cache removed.</p>
-					<p id="prgtha-error-object" class="prgtha-progress-item prgtha-progress-error"></p>
+					<p id="clrchs-done-object" class="clrchs-progress-item clrchs-progress-success">Object Cache removed.</p>
+					<p id="clrchs-error-object" class="clrchs-progress-item clrchs-progress-error"></p>
 
-					<p id="prgtha-done-cloudflare-settings" class="prgtha-progress-item prgtha-progress-success">Updated domain info via CloudFlare API.</p>
-					<p id="prgtha-error-cloudflare-settings" class="prgtha-progress-item prgtha-progress-error"></p>
+					<p id="clrchs-done-cloudflare-settings" class="clrchs-progress-item clrchs-progress-success">Updated domain info via CloudFlare API.</p>
+					<p id="clrchs-error-cloudflare-settings" class="clrchs-progress-item clrchs-progress-error"></p>
 
-					<p id="prgtha-done-cloudflare-dev-mode" class="prgtha-progress-item prgtha-progress-success">Updated <strong>development mode</strong> status via CloudFlare API.</p>
-					<p id="prgtha-error-cloudflare-dev-mode" class="prgtha-progress-item prgtha-progress-error"></p>
+					<p id="clrchs-done-cloudflare-dev-mode" class="clrchs-progress-item clrchs-progress-success">Updated <strong>development mode</strong> status via CloudFlare API.</p>
+					<p id="clrchs-error-cloudflare-dev-mode" class="clrchs-progress-item clrchs-progress-error"></p>
 
 				</div>
 
 			</div>
 
-			<div id="prgtha-progress-close" class="prgtha-progress-item prgtha_lightboxed_close"><a href="#">Close window</a></div>
+			<div id="clrchs-progress-close" class="clrchs-progress-item clrchs_lightboxed_close"><a href="#">Close window</a></div>
 
 		</div>
 

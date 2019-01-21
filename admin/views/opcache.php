@@ -1,15 +1,15 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Admin\Views;
+namespace LittleBizzy\ClearCaches\Admin\Views;
 
 // Aliased namespaces
-use \LittleBizzy\PurgeThemAll\Libraries;
+use \LittleBizzy\ClearCaches\Libraries;
 
 /**
  * Displays the "PHP OpCache" tab
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Admin
  */
 class OpCache extends Libraries\View_Display {
@@ -33,7 +33,7 @@ class OpCache extends Libraries\View_Display {
 
 			<h3>The PHP Opcache is enabled.</h3>
 
-			<p><input type="button" class="button button-primary prgtha-purge-button prgtha-purge-request" value="Purge Now!" /></p>
+			<p><input type="button" class="button button-primary clrchs-purge-button clrchs-purge-request" value="Purge Now!" /></p>
 
 		<?php endif; ?>
 

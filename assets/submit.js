@@ -2,18 +2,18 @@ jQuery(document).ready(function($) {
 
 
 
-	$('#wp-admin-bar-prgtha-menu a').click(function() {
+	$('#wp-admin-bar-clrchs-menu a').click(function() {
 		var scope = $(this).attr('href').split('#')[1];
 		purgeRequest(scope, null);
 		return false;
 	});
 
-	$('.prgtha-purge-request').click(function() {
+	$('.clrchs-purge-request').click(function() {
 		var value = null;
-		var nav = $(this).closest('.prgtha-nav-content')
-		var scope = nav.attr('id').replace('prgtha-nav-content-', '');
+		var nav = $(this).closest('.clrchs-nav-content')
+		var scope = nav.attr('id').replace('clrchs-nav-content-', '');
 		if ('nginx' == scope)
-			value = $('#prgtha-nginx-path').val();
+			value = $('#clrchs-nginx-path').val();
 		purgeRequest(scope, value);
 		return false;
 	});
@@ -23,12 +23,12 @@ jQuery(document).ready(function($) {
 	function purgeRequest(scope, value) {
 
 		progressShow();
-		$('#prgtha-loading-' + scope).show();
+		$('#clrchs-loading-' + scope).show();
 
 		var data = {
 			'scope'  : scope,
-			'action' : 'prgtha_purge_them_all',
-			'nonce'  : $('#prgtha-progress').attr('data-nonce')
+			'action' : 'clrchs_purge_them_all',
+			'nonce'  : $('#clrchs-progress').attr('data-nonce')
 		}
 
 		if ('nginx' == scope && null !== value)
@@ -44,7 +44,7 @@ jQuery(document).ready(function($) {
 
 			} else if ('ok' == e.status) {
 
-				$('.prgtha-progress-item').hide();
+				$('.clrchs-progress-item').hide();
 
 				if ('all' == scope) {
 					purgeResult('cloudflare', e.data);
@@ -60,25 +60,25 @@ jQuery(document).ready(function($) {
 			alert('Server communication error.' + "\n" + 'Please try again.');
 
 		}).always(function() {
-			$('#prgtha-progress-close').show();
+			$('#clrchs-progress-close').show();
 		});
 	}
 
 	function purgeResult(scope, data) {
-		(1 == data[scope])? $('#prgtha-done-' + scope).show() : $('#prgtha-error-' + scope).html(data[scope]).show();
+		(1 == data[scope])? $('#clrchs-done-' + scope).show() : $('#clrchs-error-' + scope).html(data[scope]).show();
 	}
 
 
-	$('#prgtha-cloudflare-settings').click(function() {
+	$('#clrchs-cloudflare-settings').click(function() {
 
 		progressShow();
-		$('#prgtha-loading-cloudflare-settings').show();
+		$('#clrchs-loading-cloudflare-settings').show();
 
 		var data = {
-			'action' 			: 'prgtha_cloudflare_settings',
-			'nonce'  			: $('#prgtha-form').attr('data-nonce'),
-			'cloudflare_key' 	: $('#prgtha-cloudflare-key').val(),
-			'cloudflare_email' 	: $('#prgtha-cloudflare-email').val()
+			'action' 			: 'clrchs_cloudflare_settings',
+			'nonce'  			: $('#clrchs-form').attr('data-nonce'),
+			'cloudflare_key' 	: $('#clrchs-cloudflare-key').val(),
+			'cloudflare_email' 	: $('#clrchs-cloudflare-email').val()
 		}
 
 		$.post(getServerURL(), data, function(e) {
@@ -87,24 +87,24 @@ jQuery(document).ready(function($) {
 				alert('Unknown error');
 
 			} else if ('error' == e.status) {
-				$('.prgtha-progress-item').hide();
-				$('#prgtha-error-cloudflare-settings').html(e.reason).show();
-				$('#prgtha-cloudflare-zone-wrapper').hide();
-				$('#prgtha-cloudflare-operations').hide();
+				$('.clrchs-progress-item').hide();
+				$('#clrchs-error-cloudflare-settings').html(e.reason).show();
+				$('#clrchs-cloudflare-zone-wrapper').hide();
+				$('#clrchs-cloudflare-operations').hide();
 
 			} else if ('ok' == e.status) {
-				$('.prgtha-progress-item').hide();
-				$('#prgtha-done-cloudflare-settings').show();
+				$('.clrchs-progress-item').hide();
+				$('#clrchs-done-cloudflare-settings').show();
 				displayZoneInfo(e.data.zone);
 				displayDevMode(e.data.zone['development_mode']);
-				$('#prgtha-cloudflare-operations').show();
+				$('#clrchs-cloudflare-operations').show();
 			}
 
 		}).fail(function() {
 			alert('Server communication error.' + "\n" + 'Please try again.');
 
 		}).always(function() {
-			$('#prgtha-progress-close').show();
+			$('#clrchs-progress-close').show();
 		});
 
 		return false;
@@ -112,14 +112,14 @@ jQuery(document).ready(function($) {
 
 
 
-	$('#prgtha-cloudflare-dev-mode-button').click(function() {
+	$('#clrchs-cloudflare-dev-mode-button').click(function() {
 
 		progressShow();
-		$('#prgtha-loading-cloudflare-dev-mode').show();
+		$('#clrchs-loading-cloudflare-dev-mode').show();
 
 		var data = {
-			'action' 	: 'prgtha_cloudflare_dev_mode',
-			'nonce'  	: $('#prgtha-form').attr('data-nonce'),
+			'action' 	: 'clrchs_cloudflare_dev_mode',
+			'nonce'  	: $('#clrchs-form').attr('data-nonce'),
 			'dev_mode'	: ('on' == $(this).attr('data-value'))? 'off' : 'on'
 		}
 
@@ -129,12 +129,12 @@ jQuery(document).ready(function($) {
 				alert('Unknown error');
 
 			} else if ('error' == e.status) {
-				$('.prgtha-progress-item').hide();
-				$('#prgtha-error-cloudflare-dev-mode').html(e.reason).show();
+				$('.clrchs-progress-item').hide();
+				$('#clrchs-error-cloudflare-dev-mode').html(e.reason).show();
 
 			} else if ('ok' == e.status) {
-				$('.prgtha-progress-item').hide();
-				$('#prgtha-done-cloudflare-dev-mode').show();
+				$('.clrchs-progress-item').hide();
+				$('#clrchs-done-cloudflare-dev-mode').show();
 				displayDevMode(e.data.dev_mode > 0);
 			}
 
@@ -142,7 +142,7 @@ jQuery(document).ready(function($) {
 			alert('Server communication error.' + "\n" + 'Please try again.');
 
 		}).always(function() {
-			$('#prgtha-progress-close').show();
+			$('#clrchs-progress-close').show();
 		});
 
 		return false;
@@ -151,8 +151,8 @@ jQuery(document).ready(function($) {
 
 
 	function progressShow() {
-		$('.prgtha-progress-item').hide();
-		$('#prgtha-progress').prgtha_lightboxed({
+		$('.clrchs-progress-item').hide();
+		$('#clrchs-progress').clrchs_lightboxed({
 			centered : true,
 			lightboxSpeed : 0,
 			overlaySpeed : 0,
@@ -168,35 +168,35 @@ jQuery(document).ready(function($) {
 
 
 	function getServerURL() {
-		return $('#prgtha-progress').attr('data-url') + '?_=' + new Date().getTime();
+		return $('#clrchs-progress').attr('data-url') + '?_=' + new Date().getTime();
 	}
 
 
 
 	function displayDevMode(devMode) {
 		if (devMode) {
-			$('#prgtha-cloudflare-dev-mode-enabled').show();
-			$('#prgtha-cloudflare-dev-mode-disabled').hide();
-			$('#prgtha-cloudflare-dev-mode-message').show();
+			$('#clrchs-cloudflare-dev-mode-enabled').show();
+			$('#clrchs-cloudflare-dev-mode-disabled').hide();
+			$('#clrchs-cloudflare-dev-mode-message').show();
 		} else {
-			$('#prgtha-cloudflare-dev-mode-enabled').hide();
-			$('#prgtha-cloudflare-dev-mode-disabled').show();
-			$('#prgtha-cloudflare-dev-mode-message').hide();
+			$('#clrchs-cloudflare-dev-mode-enabled').hide();
+			$('#clrchs-cloudflare-dev-mode-disabled').show();
+			$('#clrchs-cloudflare-dev-mode-message').hide();
 		}
 		var value = devMode? 'on' : 'off';
-		$('#prgtha-cloudflare-dev-mode-button').attr('data-value', value);
-		$('#prgtha-cloudflare-dev-mode-button').val($('#prgtha-cloudflare-dev-mode-button').attr('data-label-' + value));
+		$('#clrchs-cloudflare-dev-mode-button').attr('data-value', value);
+		$('#clrchs-cloudflare-dev-mode-button').val($('#clrchs-cloudflare-dev-mode-button').attr('data-label-' + value));
 	}
 
-	if ('undefined' != typeof prgtha_dev_mode)
-		displayDevMode(prgtha_dev_mode);
+	if ('undefined' != typeof clrchs_dev_mode)
+		displayDevMode(clrchs_dev_mode);
 
 
 
 	function displayZoneInfo(zone) {
 
 		if ('undefined' == typeof zone || '' == zone['id']) {
-			$('#prgtha-cloudflare-zone-wrapper').hide();
+			$('#clrchs-cloudflare-zone-wrapper').hide();
 
 		} else {
 
@@ -205,14 +205,14 @@ jQuery(document).ready(function($) {
 				html += ' (' + zone['status'] + ')';
 			if (zone['paused'])
 				html += ' <strong>PAUSED</strong>';
-			$('#prgtha-cloudflare-zone-info').html(html);
+			$('#clrchs-cloudflare-zone-info').html(html);
 
-			$('#prgtha-cloudflare-zone-wrapper').show();
+			$('#clrchs-cloudflare-zone-wrapper').show();
 		}
 	}
 
-	if ('undefined' != typeof prgtha_zone)
-		displayZoneInfo(prgtha_zone);
+	if ('undefined' != typeof clrchs_zone)
+		displayZoneInfo(clrchs_zone);
 
 
 

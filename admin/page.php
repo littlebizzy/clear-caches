@@ -1,15 +1,15 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Admin;
+namespace LittleBizzy\ClearCaches\Admin;
 
 // Aliased namespaces
-use \LittleBizzy\PurgeThemAll\Libraries;
+use \LittleBizzy\ClearCaches\Libraries;
 
 /**
  * Admin page class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Admin
  */
 class Page extends Libraries\View_Display {
@@ -129,37 +129,37 @@ class Page extends Libraries\View_Display {
 
 		<div class="wrap">
 
-			<h1 id="prgtha-title">Purge Them All</h1>
+			<h1 id="clrchs-title">Clear Caches</h1>
 
-			<form id="prgtha-form" data-nonce="<?php echo $this->plugin->wrapper->createNonce($this->plugin->nonceSeed); ?>">
+			<form id="clrchs-form" data-nonce="<?php echo $this->plugin->wrapper->createNonce($this->plugin->nonceSeed); ?>">
 
-				<h2 id="prgtha-nav-tabs" class="nav-tab-wrapper wp-clearfix">
-					<a id="prgtha-nav-tab-all" href="#" class="nav-tab nav-tab-active">Overview</a>
-					<a id="prgtha-nav-tab-cloudflare" href="#" class="nav-tab">CloudFlare Cache</a>
-					<a id="prgtha-nav-tab-opcache" href="#" class="nav-tab">PHP Opcache</a>
-					<a id="prgtha-nav-tab-nginx" href="#" class="nav-tab">Nginx Cache</a>
-					<a id="prgtha-nav-tab-object" href="#" class="nav-tab">Object Cache</a>
+				<h2 id="clrchs-nav-tabs" class="nav-tab-wrapper wp-clearfix">
+					<a id="clrchs-nav-tab-all" href="#" class="nav-tab nav-tab-active">Overview</a>
+					<a id="clrchs-nav-tab-cloudflare" href="#" class="nav-tab">CloudFlare Cache</a>
+					<a id="clrchs-nav-tab-opcache" href="#" class="nav-tab">PHP Opcache</a>
+					<a id="clrchs-nav-tab-nginx" href="#" class="nav-tab">Nginx Cache</a>
+					<a id="clrchs-nav-tab-object" href="#" class="nav-tab">Object Cache</a>
 				</h2>
 
-				<div class="prgtha-nav-content-wrapper">
+				<div class="clrchs-nav-content-wrapper">
 
-					<div id="prgtha-nav-content-all" class="prgtha-nav-content prgtha-nav-content-active">
+					<div id="clrchs-nav-content-all" class="clrchs-nav-content clrchs-nav-content-active">
 						<?php $this->viewOverview->show(); ?>
 					</div>
 
-					<div id="prgtha-nav-content-cloudflare" class="prgtha-nav-content">
+					<div id="clrchs-nav-content-cloudflare" class="clrchs-nav-content">
 						<?php $this->viewCloudFlare->show(); ?>
 					</div>
 
-					<div id="prgtha-nav-content-opcache" class="prgtha-nav-content">
+					<div id="clrchs-nav-content-opcache" class="clrchs-nav-content">
 						<?php $this->viewOpCache->show(); ?>
 					</div>
 
-					<div id="prgtha-nav-content-nginx" class="prgtha-nav-content">
+					<div id="clrchs-nav-content-nginx" class="clrchs-nav-content">
 						<?php $this->viewNginx->show(); ?>
 					</div>
 
-					<div id="prgtha-nav-content-object" class="prgtha-nav-content">
+					<div id="clrchs-nav-content-object" class="clrchs-nav-content">
 						<?php $this->viewObjectCache->show(); ?>
 					</div>
 

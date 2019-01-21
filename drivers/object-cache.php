@@ -1,12 +1,12 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Drivers;
+namespace LittleBizzy\ClearCaches\Drivers;
 
 /**
  * Object cache class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Drivers
  */
 class Object_Cache {

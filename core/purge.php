@@ -1,12 +1,12 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Core;
+namespace LittleBizzy\ClearCaches\Core;
 
 /**
  * Purge class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Core
  */
 class Purge {

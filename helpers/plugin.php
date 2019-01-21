@@ -1,12 +1,12 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Helpers;
+namespace LittleBizzy\ClearCaches\Helpers;
 
 /**
  * Plugin class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Helpers
  */
 class Plugin {

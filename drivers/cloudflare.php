@@ -1,12 +1,12 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Drivers;
+namespace LittleBizzy\ClearCaches\Drivers;
 
 /**
  * Cloudflare class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Drivers
  */
 class Cloudflare {

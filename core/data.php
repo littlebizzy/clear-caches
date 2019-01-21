@@ -1,15 +1,15 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Core;
+namespace LittleBizzy\ClearCaches\Core;
 
 // Aliased namespaces
-use \LittleBizzy\PurgeThemAll\Libraries;
+use \LittleBizzy\ClearCaches\Libraries;
 
 /**
  * Data class
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Core
  */
 class Data {

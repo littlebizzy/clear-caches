@@ -1,15 +1,15 @@
 <?php
 
 // Subpackage namespace
-namespace LittleBizzy\PurgeThemAll\Admin\Views;
+namespace LittleBizzy\ClearCaches\Admin\Views;
 
 // Aliased namespaces
-use \LittleBizzy\PurgeThemAll\Libraries;
+use \LittleBizzy\ClearCaches\Libraries;
 
 /**
  * Displays the "Object Cache" tab
  *
- * @package Purge Them All
+ * @package Clear Caches
  * @subpackage Admin
  */
 class Object_Cache extends Libraries\View_Display {
@@ -29,7 +29,7 @@ class Object_Cache extends Libraries\View_Display {
 
 			<h3>The Object Cache is enabled.</h3>
 
-			<p><input type="button" class="button button-primary prgtha-purge-button prgtha-purge-request" value="Purge Now!" /></p>
+			<p><input type="button" class="button button-primary clrchs-purge-button clrchs-purge-request" value="Purge Now!" /></p>
 
 		<?php endif; ?>
 
