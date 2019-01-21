@@ -114,8 +114,23 @@ class AJAX extends Libraries\WP_AJAX {
 				continue;
 			}
 
-			// Scheck requested scope
+			// Check requested scope
 			if ('all' == $scopeRequested || $scope == $scopeRequested) {
+
+				// Early functionality check
+				if ('all' == $scopeRequested) {
+
+					// Verify any type of clear cache
+					if (('opcache' == $scope && !$this->plugin->enabled('CLEAR_CACHES_OPCACHE')) ||
+						('nginx' == $scope && !$this->plugin->enabled('CLEAR_CACHES_NGINX')) ||
+						('object' == $scope && !$this->plugin->enabled('CLEAR_CACHES_OBJECT'))) {
+
+						// Skipped
+						continue;
+					}
+				}
+
+				// Do it
 				$method = 'purge'.ucfirst($scope);
 				$this->{$method}();
 			}
