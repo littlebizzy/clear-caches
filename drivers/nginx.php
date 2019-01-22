@@ -257,7 +257,7 @@ class Nginx {
 	/**
 	 * Attempt to initialize the WP File System object
 	 */
-	private function initializeFilesystem() {
+	private function initializeFilesystem($path) {
 
 		// Buffering
 		ob_start();
