@@ -1,36 +1,29 @@
-=== Plugin Name ===
+=== Clear Caches ===
 
 Contributors: littlebizzy
 Donate link: https://www.patreon.com/littlebizzy
-Tags: five, keywords, separated, by, commas
+Tags: clear, purge, empty, cache, nginx
 Requires at least: 4.4
 Tested up to: 5.0
 Requires PHP: 7.2
 Multisite support: No
-Stable tag: 1.2.3
+Stable tag: 1.1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Text Domain: plugin-name-littlebizzy
-Domain Path: /lang
-Prefix: ABCXYZ
+Prefix: CLRCHS
 
-Description of the plugin goes here, limited to 150 characters or less and should be a single well-written sentence that includes some of your most important keywords.
+The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx cache, Transient cache, Varnish cache, and object cache (e.g. Redis).
 
 == Description ==
 
-Description of the plugin goes here, limited to 150 characters or less and should be a single well-written sentence that includes some of your most important keywords.
+The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx cache, Transient cache, Varnish cache, and object cache (e.g. Redis).
 
-* [**Join our FREE Facebook group for support**](https://www.facebook.com/groups/littlebizzy/)
-* [**Worth a 5-star review? Thank you!**](https://wordpress.org/support/plugin/example-littlebizzy/reviews/?rate=5#new-post)
-* [Plugin Homepage](https://www.littlebizzy.com/plugins/disable-emojis)
-* [Plugin GitHub](https://github.com/littlebizzy/disable-emojis)
-* [SlickStack](https://slickstack.io)
+* [Plugin Homepage](https://www.littlebizzy.com/plugins/clear-caches)
+* [Plugin GitHub](https://github.com/littlebizzy/clear-caches)
 
 #### The Long Version ####
 
-Here you can place a longer description of the plugin and its features, separated into paragraphs.
-
-    code snippet is indented with four spaces;
+Designed for SlickStack or other LEMP stack servers to provide a centralized cache clearing menu. Currently supports PHP Opcache, Nginx FastCGI cache, and most any WordPress object cache. Soon will support general WordPress cache (in the case of using a page cache plugin etc) and Varnish cache, and perhaps more.
 
 #### Compatibility ####
 
@@ -40,25 +33,21 @@ Note: Any WordPress plugin may also be loaded as "Must-Use" by using the [Autolo
 
 #### Defined Constants ####
 
-The following defined constants are supported by this plugin:
-
-* `define('DISABLE_NAG_NOTICES', true);`
-
-Why no quotes? Adding quotes evaluates the 'false' or "false" values as a string, and the boolean evaluation of any string returns true (except for empty strings).
-
-It is a little bit weird but PHP works this way because it does not require strong data typing. There are special operatos (the triple equality ===) to ensure the right data type, but adds complexity and it is used normally where you are not sure of the input variable data type.
-
-It is true that there are constants that expects both boolean and string values, but the important thing here is that the false value does not contain quotes, e.g.:
-
-define('DISABLE_CART_FRAGMENTS', true);
-define('DISABLE_CART_FRAGMENTS', false);
-define('DISABLE_CART_FRAGMENTS', '123,456,789');
+    /* Plugin Meta */
+    define('DISABLE_NAG_NOTICES', true);
+    
+    /* Clear Caches Functions */
+    define('CLEAR_CACHES', true);
+    define('CLEAR_CACHES_NGINX', true);
+    define('CLEAR_CACHES_NGINX_PATH', '/var/www/cache');
+    define('CLEAR_CACHES_OBJECT', true);
+    define('CLEAR_CACHES_OPCACHE', true);
 
 #### Plugin Features ####
 
-* Parent Plugin: [**SEO Genius**](https://www.littlebizzy.com/plugins/seo-genius)
+* Parent Plugin: n/a
 * Disable Nag Notices: [[Yes](https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices#Disable_Nag_Notices)]
-* Settings Page: No
+* Settings Page: Yes
 * PHP Namespaces: Yes
 * Object-Oriented Code: Yes
 * Includes Media (images, icons, etc): No
@@ -73,35 +62,23 @@ define('DISABLE_CART_FRAGMENTS', '123,456,789');
 * Multisite Support: No
 * Uninstalls Data: Yes
 
-#### Inspiration ####
-
-* [Some Name](https://wordpress.org/plugins/plugin-name/)
-* [Another Name](https://wordpress.org/plugins/plugin-name/)
-
-#### Special Thanks ####
-
-[Alex Georgiou](https://www.alexgeorgiou.gr), [Automattic](https://automattic.com), [Brad Touesnard](https://bradt.ca), [Daniel Auener](http://www.danielauener.com), [Delicious Brains](https://deliciousbrains.com), [Greg Rickaby](https://gregrickaby.com), [Matt Mullenweg](https://ma.tt), [Mika Epstein](https://halfelf.org), [Mike Garrett](https://mikengarrett.com), [Samuel Wood](http://ottopress.com), [Scott Reilly](http://coffee2code.com), [Jan Dembowski](https://profiles.wordpress.org/jdembowski), [Jeff Starr](https://perishablepress.com), [Jeff Chandler](https://jeffc.me), [Jeff Matson](https://jeffmatson.net), [Jeremy Wagner](https://jeremywagner.me), [John James Jacoby](https://jjj.blog), [Leland Fiegel](https://leland.me), [Luke Cavanagh](https://github.com/lukecav), [Mike Jolley](https://mikejolley.com), [Pau Iglesias](https://pauiglesias.com), [Paul Irish](https://www.paulirish.com), [Rahul Bansal](https://profiles.wordpress.org/rahul286), [Roots](https://roots.io), [rtCamp](https://rtcamp.com), [Ryan Hellyer](https://geek.hellyer.kiwi), [WP Chat](https://wpchat.com), [WP Tavern](https://wptavern.com)
-
 #### Disclaimer ####
 
-We released this plugin in response to our managed hosting clients asking for better access to their server, and our primary goal will remain supporting that purpose. Although we are 100% open to fielding requests from the WordPress community, we kindly ask that you keep the above-mentioned goals in mind... thanks!
+We released this plugin in response to our managed hosting clients asking for better access to their server, and our primary goal will remain supporting that purpose. Although we are 100% open to fielding requests from the WordPress community, we kindly ask that you keep these conditions in mind, and refrain from slandering, threatening, or harassing our team members in order to get a feature added, or to otherwise get "free" support. The only place you should be contacting us is in our free [**Facebook group**](https://www.facebook.com/groups/littlebizzy/) which has been setup for this purpose, or via GitHub if you are an experienced developer. Thank you!
 
-#### Keywords ####
+#### Our Philosophy ####
 
-* Terms:
+> "Decisions, not options." -- WordPress.org
 
-* Phrases:
+> "Everything should be made as simple as possible, but not simpler." -- Albert Einstein, et al
 
-* Plugins:
+> "Write programs that do one thing and do it well... write programs to work together." -- Doug McIlroy
 
-### Philosophy ####
-
-Inspired by the likes of Unix and W. Edwards Deming, we believe in creating high quality software "components" that can stand on their own, or be integrated into other software. At a certain point, this approach has practical limits, which is why we are beginning to combine certain features into premium plugins. Still, we aim to reduce redundancy wherever possible, and present a unified UI in our premium plugins that in fact combines multiple small indepdent functions behind the scenes.
-https://www.johndcook.com/blog/2010/06/30/where-the-unix-philosophy-breaks-down/
+> "The innovation that this industry talks about so much is bullshit. Anybody can innovate... 99% of it is 'Get the work done.' The real work is in the details." -- Linus Torvalds
 
 == Installation ==
 
-1. Upload to `/wp-content/plugins/some-name-littlebizzy`
+1. Upload to `/wp-content/plugins/clear-caches-littlebizzy`
 2. Activate via WP Admin > Plugins
 3. Test plugin is working
 
@@ -109,7 +86,7 @@ https://www.johndcook.com/blog/2010/06/30/where-the-unix-philosophy-breaks-down/
 
 = How can I change this plugin's settings? =
 
-There is a settings page where you can exclude certain types of query strings.
+Use the defined constants or use the provided settings page, but the constants will take priority in case you try both.
 
 = I have a suggestion, how can I let you know? =
 
@@ -117,19 +94,18 @@ Please avoid leaving negative reviews in order to get a feature implemented. Ins
 
 == Changelog ==
 
-= 1.1.1 =
-
-* Moved context method to Plugin class and removed from Factory class
-* New enabled method in Plugin class for quick plugin constant checks
-* Minor structure changes in Context class
-
 = 1.1.0 =
-* major changes/new features
-* tested with PHP 7.1
-* tested with PHP 7.2
-
-= 1.0.1 =
-* minor tweaks/patches
+* changed plugin name from Purge Them All to Clear Caches
+* PBP v1.1.1
+* tested with PHP 7.0, 7.1, 7.2
+* tested with PHP 5.6 (no fatal errors only)
+* CLEAR_CACHES
+* CLEAR_CACHES_NGINX
+* CLEAR_CACHES_NGINX_PATH
+* CLEAR_CACHES_OBJECT
+* CLEAR_CACHES_OPCACHE
+* removed all CloudFlare integration
+* (focus going forward will be on-server caches only)
 
 = 1.0.0 =
 * initial release
