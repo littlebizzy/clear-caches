@@ -106,7 +106,7 @@ final class Core {
 
 		// AJAX request
 		} elseif ($context->ajax() && !empty($_POST['action']) &&
-				  0 === strpos($_POST['action'], $this->plugin->prefix.'_')) {
+			0 === strpos($_POST['action'], $this->plugin->prefix.'_')) {
 			$this->plugin->factory->ajax();
 		}
 	}
