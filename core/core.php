@@ -13,11 +13,6 @@ final class Core {
 
 
 
-	// Properties
-	// ---------------------------------------------------------------------------------------------------
-
-
-
 	/**
 	 * Single class instance
 	 */
@@ -29,11 +24,6 @@ final class Core {
 	 * Plugin object
 	 */
 	public $plugin;
-
-
-
-	// Initialization
-	// ---------------------------------------------------------------------------------------------------
 
 
 
@@ -113,18 +103,11 @@ final class Core {
 
 
 
-	// Plugin hooks
-	// ---------------------------------------------------------------------------------------------------
-
-
-
 	/**
 	 * On plugin uninstall
 	 */
 	public static function onUninstall() {
-		// require_once factory, etc. ..TODO
-		$data = $this->plugin->factory->data;
-		$data->remove();
+		delete_option('clrchs_nginx_path');
 	}
 
 
