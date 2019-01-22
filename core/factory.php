@@ -106,7 +106,7 @@ class Factory {
 	 * Create Data object
 	 */
 	private function createData() {
-		$options = new Libraries\WP_Options($this->plugin->prefix);
+		$options = new Libraries\WP_Options($this->plugin->prefix.'_');
 		return new Data($options);
 	}
 
