@@ -97,16 +97,17 @@ final class Core {
 
 		// Admin area
 		if ($context->admin()) {
-			$this->plugin->admin = $this->plugin->factory->admin;
-			$this->plugin->toolbar = $this->plugin->factory->toolbar;
+			$this->plugin->factory->admin();
+			$this->plugin->factory->toolbar();
 
 		// Front-end
 		} elseif ($context->front()) {
-			$this->plugin->toolbar = $this->plugin->factory->toolbar;
+			$this->plugin->factory->toolbar();
 
 		// AJAX request
-		} elseif ($context->ajax() && !empty($_POST['action']) && 0 === strpos($_POST['action'], $this->plugin->prefix.'_')) {
-			$this->plugin->ajax = $this->plugin->factory->ajax;
+		} elseif ($context->ajax() && !empty($_POST['action']) &&
+				  0 === strpos($_POST['action'], $this->plugin->prefix.'_')) {
+			$this->plugin->factory->ajax();
 		}
 	}
 

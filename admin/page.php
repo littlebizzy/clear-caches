@@ -92,9 +92,13 @@ class Page extends Libraries\View_Display {
 			'enabled'		=> $this->opcache->isEnabled(),
 		]);
 
+		// Prepares nginx path by constant
+		$pathByConstant = defined('CLEAR_CACHES_NGINX_PATH')? constant('CLEAR_CACHES_NGINX_PATH') : false;
+
 		// Creates the Nginx view
 		$this->viewNginx = $this->plugin->factory->adminViewNginx([
-			'path'			=> $this->data->nginxPath,
+			'path' => $this->data->nginxPath,
+			'pathByConstant' => $pathByConstant,
 		]);
 
 		// Creates the Object Cache view

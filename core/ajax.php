@@ -102,8 +102,10 @@ class AJAX extends Libraries\WP_AJAX {
 	 */
 	private function purge() {
 
-		// Scope
-		$this->checkScope();
+		// Verify the correct scope
+		if (empty($_POST['scope']) || !in_array($_POST['scope'], self::$purgeScopes)) {
+			$this->outputError('Scope argument missing or incorrect.');
+		}
 
 		// Enum scopes
 		$scopeRequested = $_POST['scope'];
@@ -134,17 +136,6 @@ class AJAX extends Libraries\WP_AJAX {
 				$method = 'purge'.ucfirst($scope);
 				$this->{$method}();
 			}
-		}
-	}
-
-
-
-	/**
-	 * Check the correct scope
-	 */
-	private function checkScope() {
-		if (empty($_POST['scope']) || !in_array($_POST['scope'], self::$purgeScopes)) {
-			$this->outputError('Scope argument missing or incorrect.');
 		}
 	}
 

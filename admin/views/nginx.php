@@ -24,7 +24,8 @@ class Nginx extends Libraries\View_Display {
 		<table class="form-table">
 			<tr>
 				<th scope="row"><label for="clrchs-nginx-path">Cache Zone Path</label></th>
-				<td><input type="text" class="regular-text" id="clrchs-nginx-path" placeholder="/data/nginx/cache" value="<?php echo esc_attr($path); ?>" /></td>
+				<?php if (!empty($pathByConstant)) : ?><td><input type="text" disabled class="regular-text" id="clrchs-nginx-path" value="<?php echo esc_attr($pathByConstant); ?>" /></td>
+				<?php else : ?><td><input type="text" class="regular-text" id="clrchs-nginx-path" placeholder="/data/nginx/cache" value="<?php echo esc_attr($path); ?>" /></td><?php endif; ?>
 			</tr>
 		</table>
 
