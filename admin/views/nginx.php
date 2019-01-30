@@ -28,11 +28,11 @@ class Nginx extends Libraries\View_Display {
 		<tr>
 			<td><label for="clrchs-nginx-path">Cache Zone Path</label></td>
 			<?php if (empty($pathByConstant)) : ?><td id="clrchs-action-nginx-save" class="clrchs-action"><input type="text" class="regular-text code" id="clrchs-nginx-path" placeholder="/data/nginx/cache" value="<?php echo esc_attr($path); ?>" />
-			&nbsp; <input type="button" class="button button-primary clrchs-purge-button clrchs-purge-request" value="Save" /></td>
+			&nbsp; <input type="button" class="button clrchs-purge-button-save clrchs-purge-request" value="Save" /></td>
 			<?php else : ?><td><input type="text" disabled class="regular-text code" id="clrchs-nginx-path" value="<?php echo esc_attr($pathByConstant); ?>" /></td><?php endif; ?>
 		</tr>
 		<tr>
-			<td><label>Nginx cache files</label></td>
+			<td><label>NGINX cache files</label></td>
 			<td id="clrchs-action-nginx" class="clrchs-action"><input type="button" class="button button-primary clrchs-purge-button clrchs-purge-request" value="Purge Now!" /></td>
 		</tr>
 
