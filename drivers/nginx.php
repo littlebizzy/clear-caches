@@ -196,12 +196,12 @@ class Nginx {
 		}
 
 		if (!$this->checkCacheDir($path)) {
-			$this->error = 'Nginx cache directory does not exist and cannot be created:<br /><span class="clrchs-nginx-path">'.esc_html($path).'</span>';
+			$this->error = 'Nginx cache directory does not exist and cannot be created: <span class="clrchs-nginx-path">'.esc_html($path).'</span>';
 			return false;
 		}
 
 		if (!$this->initializeFilesystem($path)) {
-			$this->error = 'Nginx cache error: Filesystem API could not be initialized in:<br /><span class="clrchs-nginx-path">'.esc_html($path).'</span>';
+			$this->error = 'Nginx cache error: Filesystem API could not be initialized in <span class="clrchs-nginx-path">'.esc_html($path).'</span>';
 			return false;
 		}
 
@@ -210,26 +210,26 @@ class Nginx {
 
 		// Check entire path
 		if (!$wp_filesystem->exists($path)) {
-			$this->error = 'Nginx cache path does not exist: <span class="clrchs-nginx-path"><br />'.esc_html($path).'</span>';
+			$this->error = 'Nginx cache path does not exist: <span class="clrchs-nginx-path">'.esc_html($path).'</span>';
 			return false;
 		}
 
 		// Ensures it is a directory
 		if (!$wp_filesystem->is_dir($path)) {
-			$this->error = 'Nginx cache path is not a directory: <span class="clrchs-nginx-path"><br />'.esc_html($path).'</span>';
+			$this->error = 'Nginx cache path is not a directory: <span class="clrchs-nginx-path">'.esc_html($path).'</span>';
 			return false;
 		}
 
 		// Find expected file format in directory files
 		$list = $wp_filesystem->dirlist($path, true, true);
 		if (!$this->validateDirList($list)) {
-			$this->error = 'Nginx cache path does not appear to be a Nginx cache zone directory:<br /><span class="clrchs-nginx-path">'.esc_html($path).'</span>';
+			$this->error = 'Nginx cache path does not appear to be a Nginx cache zone directory: <span class="clrchs-nginx-path">'.esc_html($path).'</span>';
 			return false;
 		}
 
 		// And finally check if we can write
 		if (!$wp_filesystem->is_writable($path)) {
-			$this->error = 'Nginx cache path is not writable: <span class="clrchs-nginx-path"><br />'.esc_html($path).'</span>';
+			$this->error = 'Nginx cache path is not writable: <span class="clrchs-nginx-path">'.esc_html($path).'</span>';
 			return false;
 		}
 

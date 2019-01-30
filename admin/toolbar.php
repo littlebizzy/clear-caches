@@ -166,7 +166,7 @@ class Toolbar {
 					<p id="clrchs-done-opcache" class="clrchs-progress-item clrchs-progress-success">PHP OPcache removed.</p>
 					<p id="clrchs-error-opcache" class="clrchs-progress-item clrchs-progress-error"></p>
 
-					<p id="clrchs-done-nginx" class="clrchs-progress-item clrchs-progress-success">NGINX cache removed:<br /><span class="clrchs-nginx-path"></span></p>
+					<p id="clrchs-done-nginx" class="clrchs-progress-item clrchs-progress-success">NGINX cache removed: <span class="clrchs-nginx-path"></span></p>
 					<p id="clrchs-error-nginx" class="clrchs-progress-item clrchs-progress-error"></p>
 
 					<p id="clrchs-done-nginx-path" class="clrchs-progress-item clrchs-progress-success">NGINX path saved.</p>
