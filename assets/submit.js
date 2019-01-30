@@ -42,7 +42,7 @@ jQuery(document).ready(function($) {
 			'nonce'  : $('#clrchs-progress').attr('data-nonce')
 		}
 
-		if ('nginx' == scope && null !== value) {
+		if ('nginx-path' == scope && null !== value) {
 			data['nginx_path'] = value;
 		}
 

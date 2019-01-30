@@ -40,7 +40,7 @@ class AJAX extends Libraries\WP_AJAX {
 	/**
 	 * Scopes allowed in purge action
 	 */
-	private static $purgeScopes = ['all', 'opcache', 'nginx', 'object'];
+	private static $purgeScopes = ['all', 'opcache', 'nginx', 'nginx-path', 'object'];
 
 
 
@@ -133,7 +133,7 @@ class AJAX extends Libraries\WP_AJAX {
 				}
 
 				// Do it
-				$method = 'purge'.ucfirst($scope);
+				$method = ($scope == 'nginx-path')? 'saveNginxPath' : 'purge'.ucfirst($scope);
 				$this->{$method}();
 			}
 		}
@@ -164,9 +164,19 @@ class AJAX extends Libraries\WP_AJAX {
 
 			// Attempt to remove nginx directory files
 			$nginx = $this->plugin->factory->nginx;
-			$nginx->updateSettings();
 			$this->response['data']['nginx'] = $nginx->purgeCache()? 1 : $nginx->getError();
 		}
+	}
+
+
+
+	/**
+	 * Saves nginx path
+	 */
+	private function saveNginxPath() {
+		$nginx = $this->plugin->factory->nginx;
+		$nginx->updateSettings();
+		$this->response['data']['nginx-path'] = 1;
 	}
 
 

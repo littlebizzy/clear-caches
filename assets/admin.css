@@ -18,7 +18,7 @@
 	#clrchs-form .form-table td h3,
 	#clrchs-form .form-table td h4 { margin: 0; padding: 0; }
 
-	#clrchs-form .form-table #clrchs-action-nginx-path input[type="text"] { width: 200px; }
+	#clrchs-form .form-table input#clrchs-nginx-path { width: 200px; }
 
 	#clrchs-form .form-table .clrchs-purge-button { width: 150px; }
 	#clrchs-form .form-table .clrchs-purge-button-save { width: 100px; }
