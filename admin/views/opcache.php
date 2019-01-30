@@ -21,21 +21,21 @@ class OpCache extends Libraries\View_Display {
 	 */
 	protected function display($args) { extract($args); ?>
 
-		<?php if (!$loaded) : ?>
+		<tr>
+			<td><label><h4>PHP OPcache</h4></label></td>
 
-			 <h3>The PHP OPcache extension is not installed.</h3>
+			<?php if (!$loaded) : ?>
+				<td>The PHP OPcache extension is not installed.</td>
 
-		<?php elseif (!$enabled) : ?>
+			<?php elseif (!$enabled) : ?>
+				<td>The PHP OPcache extension is not enabled.</td>
 
-			<h3>The PHP OPcache extension is not enabled.</h3>
+			<?php else : ?>
+				<td id="clrchs-action-opcache" class="clrchs-action"><input type="button" class="button button-primary clrchs-purge-button clrchs-purge-request" value="Purge Now!" /></td>
 
-		<?php else : ?>
+			<?php endif; ?>
 
-			<h3>The PHP Opcache is enabled.</h3>
-
-			<p><input type="button" class="button button-primary clrchs-purge-button clrchs-purge-request" value="Purge Now!" /></p>
-
-		<?php endif; ?>
+		</tr>
 
 	<?php }
 

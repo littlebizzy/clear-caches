@@ -21,6 +21,8 @@ class Nginx extends Libraries\View_Display {
 	 */
 	protected function display($args) { extract($args); ?>
 
+		<h2>Nginx Cache</h2>
+
 		<table class="form-table">
 			<tr>
 				<th scope="row"><label for="clrchs-nginx-path">Cache Zone Path</label></th>

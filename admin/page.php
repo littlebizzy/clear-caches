@@ -126,38 +126,26 @@ class Page extends Libraries\View_Display {
 
 			<form id="clrchs-form" data-nonce="<?php echo $this->plugin->wrapper->createNonce($this->plugin->nonceSeed); ?>">
 
-				<h2 id="clrchs-nav-tabs" class="nav-tab-wrapper wp-clearfix">
-					<a id="clrchs-nav-tab-all" href="#" class="nav-tab nav-tab-active">Overview</a>
-					<?php if ($this->plugin->enabled('CLEAR_CACHES_OPCACHE')) : ?><a id="clrchs-nav-tab-opcache" href="#" class="nav-tab">PHP Opcache</a><?php endif; ?>
-					<?php if ($this->plugin->enabled('CLEAR_CACHES_NGINX')) : ?><a id="clrchs-nav-tab-nginx" href="#" class="nav-tab">Nginx Cache</a><?php endif; ?>
-					<?php if ($this->plugin->enabled('CLEAR_CACHES_OBJECT')) : ?><a id="clrchs-nav-tab-object" href="#" class="nav-tab">Object Cache</a><?php endif; ?>
-				</h2>
+				<table class="form-table">
 
-				<div class="clrchs-nav-content-wrapper">
+					<?php $this->viewOverview->show(); ?>
 
-					<div id="clrchs-nav-content-all" class="clrchs-nav-content clrchs-nav-content-active">
-						<?php $this->viewOverview->show(); ?>
+					<?php if ($this->plugin->enabled('CLEAR_CACHES_OPCACHE')) $this->viewOpCache->show(); ?>
+
+				</table>
+
+
+				<?php if ($this->plugin->enabled('CLEAR_CACHES_NGINX')) : ?>
+					<div id="clrchs-nav-content-nginx" class="clrchs-nav-content clrchs-nav-content-active">
+						<?php $this->viewNginx->show(); ?>
 					</div>
+				<?php endif; ?>
 
-					<?php if ($this->plugin->enabled('CLEAR_CACHES_OPCACHE')) : ?>
-						<div id="clrchs-nav-content-opcache" class="clrchs-nav-content">
-							<?php $this->viewOpCache->show(); ?>
-						</div>
-					<?php endif; ?>
-
-					<?php if ($this->plugin->enabled('CLEAR_CACHES_NGINX')) : ?>
-						<div id="clrchs-nav-content-nginx" class="clrchs-nav-content">
-							<?php $this->viewNginx->show(); ?>
-						</div>
-					<?php endif; ?>
-
-					<?php if ($this->plugin->enabled('CLEAR_CACHES_OBJECT')) : ?>
-						<div id="clrchs-nav-content-object" class="clrchs-nav-content">
-							<?php $this->viewObjectCache->show(); ?>
-						</div>
-					<?php endif; ?>
-
-				</div>
+				<?php if ($this->plugin->enabled('CLEAR_CACHES_OBJECT')) : ?>
+					<div id="clrchs-nav-content-object" class="clrchs-nav-content clrchs-nav-content-active">
+						<?php $this->viewObjectCache->show(); ?>
+					</div>
+				<?php endif; ?>
 
 			</form>
 

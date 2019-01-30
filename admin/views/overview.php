@@ -21,9 +21,10 @@ class Overview extends Libraries\View_Display {
 	 */
 	protected function display($args) { extract($args); ?>
 
-		<p class="clrchs-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a tellus vitae ipsum ullamcorper aliquam id at sapien praesent accumsan.</p>
-
-		<p class="clrchs-center"><input type="button" class="button button-primary button-large clrchs-purge-request" value="PURGE ALL CACHES!" /></p>
+		<tr>
+			<td><label><h3>All Caches</h3></label></td>
+			<td id="clrchs-action-all" class="clrchs-action"><input type="button" class="button button-primary button-large clrchs-purge-request" value="PURGE ALL CACHES!" /></td>
+		</tr>
 
 	<?php }
 
