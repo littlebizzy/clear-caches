@@ -18,8 +18,7 @@
 	#clrchs-form .form-table td h3,
 	#clrchs-form .form-table td h4 { margin: 0; padding: 0; }
 
-	#clrchs-form .form-table #clrchs-action-nginx-save input[type="text"] { width: 200px; }
-
+	#clrchs-form .form-table #clrchs-action-nginx-path input[type="text"] { width: 200px; }
 
 
 

@@ -14,7 +14,7 @@ jQuery(document).ready(function($) {
 		var scope = parent.attr('id').replace('clrchs-action-', '');
 
 		value = null
-		if ('nginx' == scope) {
+		if ('nginx-path' == scope) {
 			value = $('#clrchs-nginx-path').val();
 		}
 

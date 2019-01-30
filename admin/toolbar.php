@@ -115,7 +115,7 @@ class Toolbar {
 		$menuItems[] = [
 			'id'     => 'clrchs-menu-nginx',
 			'parent' => 'clrchs-menu',
-			'title'  => 'Clear Nginx Cache',
+			'title'  => 'Clear NGINX Cache',
 			'href'   => '#nginx',
 			'meta'   => [
 				'title' => '',
@@ -159,14 +159,18 @@ class Toolbar {
 
 					<p id="clrchs-loading-all" class="clrchs-progress-item clrchs-progress-loading">Removing all cache's ...</p>
 					<p id="clrchs-loading-opcache" class="clrchs-progress-item clrchs-progress-loading">Removing OPcache ...</p>
-					<p id="clrchs-loading-nginx" class="clrchs-progress-item clrchs-progress-loading">Removing Nginx cache ...</p>
+					<p id="clrchs-loading-nginx" class="clrchs-progress-item clrchs-progress-loading">Removing NGINX cache ...</p>
+					<p id="clrchs-loading-nginx-path" class="clrchs-progress-item clrchs-progress-loading">Saving NGINX path ...</p>
 					<p id="clrchs-loading-object" class="clrchs-progress-item clrchs-progress-loading">Removing Object cache ...</p>
 
 					<p id="clrchs-done-opcache" class="clrchs-progress-item clrchs-progress-success">PHP OPcache removed.</p>
 					<p id="clrchs-error-opcache" class="clrchs-progress-item clrchs-progress-error"></p>
 
-					<p id="clrchs-done-nginx" class="clrchs-progress-item clrchs-progress-success">Nginx cache removed.</p>
+					<p id="clrchs-done-nginx" class="clrchs-progress-item clrchs-progress-success">NGINX cache removed.</p>
 					<p id="clrchs-error-nginx" class="clrchs-progress-item clrchs-progress-error"></p>
+
+					<p id="clrchs-done-nginx-path" class="clrchs-progress-item clrchs-progress-success">NGINX path saved.</p>
+					<p id="clrchs-error-nginx-path" class="clrchs-progress-item clrchs-progress-error"></p>
 
 					<p id="clrchs-done-object" class="clrchs-progress-item clrchs-progress-success">Object Cache removed.</p>
 					<p id="clrchs-error-object" class="clrchs-progress-item clrchs-progress-error"></p>
