@@ -130,22 +130,13 @@ class Page extends Libraries\View_Display {
 
 					<?php $this->viewOverview->show(); ?>
 
+					<?php if ($this->plugin->enabled('CLEAR_CACHES_NGINX')) $this->viewNginx->show(); ?>
+
 					<?php if ($this->plugin->enabled('CLEAR_CACHES_OPCACHE')) $this->viewOpCache->show(); ?>
 
+					<?php if ($this->plugin->enabled('CLEAR_CACHES_OBJECT')) $this->viewObjectCache->show(); ?>
+
 				</table>
-
-
-				<?php if ($this->plugin->enabled('CLEAR_CACHES_NGINX')) : ?>
-					<div id="clrchs-nav-content-nginx" class="clrchs-nav-content clrchs-nav-content-active">
-						<?php $this->viewNginx->show(); ?>
-					</div>
-				<?php endif; ?>
-
-				<?php if ($this->plugin->enabled('CLEAR_CACHES_OBJECT')) : ?>
-					<div id="clrchs-nav-content-object" class="clrchs-nav-content clrchs-nav-content-active">
-						<?php $this->viewObjectCache->show(); ?>
-					</div>
-				<?php endif; ?>
 
 			</form>
 

@@ -9,7 +9,14 @@
 	width: auto;
 }
 
-	#clrchs-form .form-table td { padding: 10px 20px 10px 0; }
+	#clrchs-form .form-table td { padding: 5px 20px 10px 0; }
+	#clrchs-form .form-table tr.section td { padding: 25px 20px 5px 0; }
+
+	#clrchs-form .form-table td:first-child { min-width: 150px; }
+
+	#clrchs-form .form-table td h2,
+	#clrchs-form .form-table td h3,
+	#clrchs-form .form-table td h4 { margin: 0; padding: 0; }
 
 
 

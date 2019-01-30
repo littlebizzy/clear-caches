@@ -21,19 +21,11 @@ class Object_Cache extends Libraries\View_Display {
 	 */
 	protected function display($args) { extract($args); ?>
 
-		<h2>Object Cache</h2>
-
-		<?php if (!$enabled) : ?>
-
-			<h4>The Object Cache is not enabled.</h4>
-
-		<?php else : ?>
-
-			<h4>The Object Cache is enabled.</h4>
-
-			<p><input type="button" class="button button-primary clrchs-purge-button clrchs-purge-request" value="Purge Now!" /></p>
-
-		<?php endif; ?>
+		<tr class="section">
+			<td><label><h4>Object Cache</h4></label></td>
+			<?php if (!$enabled) : ?><td>The Object Cache is not enabled.</td>
+			<?php else : ?><td id="clrchs-action-object" class="clrchs-action"><input type="button" class="button button-primary clrchs-purge-button clrchs-purge-request" value="Purge Now!" /></td><?php endif; ?>
+		</tr>
 
 	<?php }
 

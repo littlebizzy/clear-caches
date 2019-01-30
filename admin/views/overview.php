@@ -21,8 +21,8 @@ class Overview extends Libraries\View_Display {
 	 */
 	protected function display($args) { extract($args); ?>
 
-		<tr>
-			<td><label><h3>All Caches</h3></label></td>
+		<tr class="section">
+			<td><label><h4>All Caches</h4></label></td>
 			<td id="clrchs-action-all" class="clrchs-action"><input type="button" class="button button-primary button-large clrchs-purge-request" value="PURGE ALL CACHES!" /></td>
 		</tr>
 
