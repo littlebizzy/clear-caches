@@ -20,34 +20,5 @@
 
 	#clrchs-form .form-table #clrchs-action-nginx-path input[type="text"] { width: 200px; }
 
-
-
-.clrchs-nav-content-wrapper {
-	width: 625px;
-	padding: 15px 0 0 12px;
-}
-
-.clrchs-nav-content { display: none; }
-.clrchs-nav-content-active { display: block; }
-
-p.clrchs-description {
-	font-weight: 400;
-	line-height: 1.6em;
-	font-size: 19px;
-}
-
-.clrchs-center {
-	text-align: center;
-}
-
-#clrchs-nav-content-all .button.button-large {
-	height: 40px;
-	line-height: 40px;
-	padding: 0 22px 12px;
-	font-size: 16px;
-}
-
-.clrchs-purge-on { display: none; }
-
-.clrchs-purge-button { width: 150px; }
-.clrchs-purge-button-save { width: 100px; }
+	#clrchs-form .form-table .clrchs-purge-button { width: 150px; }
+	#clrchs-form .form-table .clrchs-purge-button-save { width: 100px; }
