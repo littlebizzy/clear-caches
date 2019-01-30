@@ -2,8 +2,17 @@
 
 #clrchs-title {
 	font-size: 26px;
-	margin: 0 0 8px 7px;
+	margin: 0 0 8px 0;
 }
+
+#clrchs-form .form-table {
+	width: auto;
+}
+
+	#clrchs-form .form-table td { padding: 10px 20px 10px 0; }
+
+
+
 
 .clrchs-nav-content-wrapper {
 	width: 625px;

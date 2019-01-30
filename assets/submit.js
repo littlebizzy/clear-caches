@@ -9,12 +9,23 @@ jQuery(document).ready(function($) {
 	});
 
 	$('.clrchs-purge-request').click(function() {
-		var value = null;
-		var nav = $(this).closest('.clrchs-nav-content')
-		var scope = nav.attr('id').replace('clrchs-nav-content-', '');
-		if ('nginx' == scope)
+
+		var parent = $(this).closest('.clrchs-action')
+		var scope = parent.attr('id').replace('clrchs-action-', '');
+
+		value = null
+		if ('nginx' == scope) {
 			value = $('#clrchs-nginx-path').val();
+		}
+
 		purgeRequest(scope, value);
+
+		return false;
+	});
+
+
+
+	$('#clrchs-form').submit(function() {
 		return false;
 	});
 
