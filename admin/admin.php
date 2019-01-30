@@ -79,7 +79,6 @@ class Admin {
 	public function onLoad() {
 		$this->plugin->wrapper = $this->plugin->factory->wrapper;
 		wp_enqueue_style( 'clrchs-admin', $this->plugin->wrapper->getURL('assets/admin.css'), [], $this->plugin->version);
-		wp_enqueue_script('clrchs-admin', $this->plugin->wrapper->getURL('assets/admin.js'),  ['jquery'], $this->plugin->version, true);
 	}
 
 
