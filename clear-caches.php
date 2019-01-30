@@ -3,7 +3,7 @@
 Plugin Name: Clear Caches
 Plugin URI: https://www.littlebizzy.com/plugins/clear-caches
 Description: The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx cache, Transient cache, Varnish cache, and object cache (e.g. Redis).
-Version: 1.1.0
+Version: 1.1.1
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
@@ -20,7 +20,7 @@ namespace LittleBizzy\ClearCaches;
 // Plugin constants
 const FILE = __FILE__;
 const PREFIX = 'clrchs';
-const VERSION = '1.1.0';
+const VERSION = '1.1.1';
 
 // Boot
 require_once dirname(FILE).'/helpers/boot.php';
