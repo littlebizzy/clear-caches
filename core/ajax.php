@@ -123,7 +123,8 @@ class AJAX extends Libraries\WP_AJAX {
 				if ('all' == $scopeRequested) {
 
 					// Verify any type of clear cache
-					if (('opcache' == $scope && !$this->plugin->enabled('CLEAR_CACHES_OPCACHE')) ||
+					if ('nginx-path' == $scope ||
+						('opcache' == $scope && !$this->plugin->enabled('CLEAR_CACHES_OPCACHE')) ||
 						('nginx' == $scope && !$this->plugin->enabled('CLEAR_CACHES_NGINX')) ||
 						('object' == $scope && !$this->plugin->enabled('CLEAR_CACHES_OBJECT'))) {
 
@@ -133,7 +134,7 @@ class AJAX extends Libraries\WP_AJAX {
 				}
 
 				// Do it
-				$method = ($scope == 'nginx-path')? 'saveNginxPath' : 'purge'.ucfirst($scope);
+				$method = ('nginx-path' == $scope)? 'saveNginxPath' : 'purge'.ucfirst($scope);
 				$this->{$method}();
 			}
 		}
@@ -165,6 +166,7 @@ class AJAX extends Libraries\WP_AJAX {
 			// Attempt to remove nginx directory files
 			$nginx = $this->plugin->factory->nginx;
 			$this->response['data']['nginx'] = $nginx->purgeCache()? 1 : $nginx->getError();
+			$this->response['data']['nginx_path'] = $nginx->lastPath();
 		}
 	}
 
@@ -177,6 +179,7 @@ class AJAX extends Libraries\WP_AJAX {
 		$nginx = $this->plugin->factory->nginx;
 		$nginx->updateSettings();
 		$this->response['data']['nginx-path'] = 1;
+		$this->response['data']['nginx_path'] = $nginx->data()->nginxPath;
 	}
 
 

@@ -65,6 +65,8 @@ jQuery(document).ready(function($) {
 				} else {
 					purgeResult(scope, e.data)
 				}
+
+				$('.clrchs-nginx-path').html(e.data.nginx_path? e.data.nginx_path : '');
 			}
 
 		}).fail(function() {

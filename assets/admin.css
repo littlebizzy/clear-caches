@@ -22,3 +22,5 @@
 
 	#clrchs-form .form-table .clrchs-purge-button { width: 150px; }
 	#clrchs-form .form-table .clrchs-purge-button-save { width: 100px; }
+
+.clrchs-nginx-path { color: #000; }
