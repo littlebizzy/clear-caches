@@ -150,7 +150,7 @@ class Toolbar {
 		<div id="clrchs-progress" data-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" data-nonce="<?php echo esc_attr($this->plugin->wrapper->createNonce($this->plugin->nonceSeed)); ?>">
 
 			<div id="clrchs-progress-header">
-				<p>Purge Them All</p>
+				<p>Clear Caches</p>
 			</div>
 
 			<div id="clrchs-progress-body">
