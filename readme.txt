@@ -7,7 +7,7 @@ Requires at least: 4.4
 Tested up to: 5.0
 Requires PHP: 7.2
 Multisite support: No
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Prefix: CLRCHS
@@ -93,6 +93,11 @@ Use the defined constants or use the provided settings page, but the constants w
 Please avoid leaving negative reviews in order to get a feature implemented. Instead, we kindly ask that you post your feedback on the wordpress.org support forums by tagging this plugin in your post. If needed, you may also contact our homepage.
 
 == Changelog ==
+
+= 1.1.1 =
+* simplied settings page to be single page (no tabs)
+* new button `Save Nginx Path`
+* popup modal outputs the Nginx path when caches are cleared
 
 = 1.1.0 =
 * changed plugin name from Purge Them All to Clear Caches
