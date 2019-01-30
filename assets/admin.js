@@ -11,8 +11,4 @@ jQuery(document).ready(function($) {
 		return false;
 	});
 
-	$('#clrchs-form').submit(function() {
-		return false;
-	});
-
 });
