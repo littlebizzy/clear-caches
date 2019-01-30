@@ -64,6 +64,8 @@
 			display: none;
 		}
 
+		.clrchs-nginx-path { color: #000; }
+
 	#clrchs-progress-close {
 		text-align: center
 	}
