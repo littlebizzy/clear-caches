@@ -166,7 +166,7 @@ class AJAX extends Libraries\WP_AJAX {
 			// Attempt to remove nginx directory files
 			$nginx = $this->plugin->factory->nginx;
 			$this->response['data']['nginx'] = $nginx->purgeCache()? 1 : $nginx->getError();
-			$this->response['data']['nginx_path'] = $nginx->lastPath();
+			$this->response['data']['nginx_path'] = esc_html($nginx->lastPath());
 		}
 	}
 
@@ -179,7 +179,7 @@ class AJAX extends Libraries\WP_AJAX {
 		$nginx = $this->plugin->factory->nginx;
 		$nginx->updateSettings();
 		$this->response['data']['nginx-path'] = 1;
-		$this->response['data']['nginx_path'] = $nginx->data()->nginxPath;
+		$this->response['data']['nginx_path'] = esc_html($nginx->data()->nginxPath);
 	}
 
 
