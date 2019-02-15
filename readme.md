@@ -8,6 +8,7 @@ The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx ca
 ### Defined Constants
 
     /* Plugin Meta */
+    define('AUTOMATIC_UPDATE_PLUGINS', false);
     define('DISABLE_NAG_NOTICES', true);
     
     /* Clear Caches Functions */
