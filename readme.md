@@ -3,23 +3,21 @@
 The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx cache, Transient cache, Varnish cache, and object cache (e.g. Redis).
 
 * [Plugin Homepage](https://www.littlebizzy.com/plugins/clear-caches)
+* [Download Latest Version (ZIP)](https://github.com/littlebizzy/clear-caches/archive/1.2.0.zip)
 * [**Become A LittleBizzy.com Member Today!**](https://www.littlebizzy.com/members)
 
 ### Defined Constants
 
     /* Plugin Meta */
-    define('AUTOMATIC_UPDATE_PLUGINS', false);
-    define('DISABLE_NAG_NOTICES', true);
+    define('AUTOMATIC_UPDATE_PLUGINS', false); // default = false
+    define('DISABLE_NAG_NOTICES', true); // default = true
     
     /* Clear Caches Functions */
-    define('CLEAR_CACHES', true);
-    define('CLEAR_CACHES_NGINX', true);
-    define('CLEAR_CACHES_NGINX_PATH', '/var/www/cache');
-    define('CLEAR_CACHES_OBJECT', true);
-    define('CLEAR_CACHES_OPCACHE', true);
-    define('CLEAR_CACHES_TRANSIENTS', true);
-    define('CLEAR_CACHES_VARNISH', true);
-    define('CLEAR_CACHES_VARNISH_PATH', '/var/www/cache');
+    define('CLEAR_CACHES', true); // default = true
+    define('CLEAR_CACHES_NGINX', true); // default = true
+    define('CLEAR_CACHES_NGINX_PATH', '/var/www/cache'); // default = /var/www/cache (for SlickStack servers)
+    define('CLEAR_CACHES_OBJECT', true); // default = true
+    define('CLEAR_CACHES_OPCACHE', true); // default = true
     
 ### Compatibility
 
