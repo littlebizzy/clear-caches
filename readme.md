@@ -15,7 +15,7 @@ The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx ca
     /* Clear Caches Functions */
     define('CLEAR_CACHES', true); // default = true
     define('CLEAR_CACHES_NGINX', true); // default = true
-    define('CLEAR_CACHES_NGINX_PATH', '/var/www/cache'); // default = /var/www/cache (for SlickStack servers)
+    define('CLEAR_CACHES_NGINX_PATH', '/var/www/cache'); // default = /var/www/cache (SlickStack servers)
     define('CLEAR_CACHES_OBJECT', true); // default = true
     define('CLEAR_CACHES_OPCACHE', true); // default = true
     
