@@ -1,0 +1,16 @@
+{
+    "name": "littlebizzy/clear-caches",
+    "type": "wordpress-plugin",
+    "license": "GPLv3",
+    "homepage": "https://www.littlebizzy.com/plugins/clear-caches",
+    "description": "The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx cache, Transient cache, Varnish cache, and object cache (e.g. Redis).",
+    "keywords": ["wordpress","plugin","clear","purge","empty","cache","caches","nginx","fastcgi","redis","object","opcache"],
+    "support": {
+        "issues": "https://github.com/littlebizzy/clear-caches/issues",
+        "forum": "https://www.littlebizzy.com/members"
+    }
+    "require": {
+        "php": "^7.2",
+        "composer/installers": "~1.0"
+    }
+}
