@@ -23,7 +23,7 @@ class Overview extends Libraries\View_Display {
 
 		<tr class="section">
 			<td><label><h4>All Caches</h4></label></td>
-			<td id="clrchs-action-all" class="clrchs-action"><input type="button" class="button button-primary button-large clrchs-purge-request" value="PURGE ALL CACHES!" /></td>
+			<td id="clrchs-action-all" class="clrchs-action"><input type="button" class="button button-primary button-large clrchs-purge-request" value="PURGE THEM ALL" /></td>
 		</tr>
 
 	<?php }
