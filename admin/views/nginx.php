@@ -33,7 +33,7 @@ class Nginx extends Libraries\View_Display {
 		</tr>
 		<tr>
 			<td><label>NGINX cache files</label></td>
-			<td id="clrchs-action-nginx" class="clrchs-action"><input type="button" class="button button-primary clrchs-purge-button clrchs-purge-request" value="Purge Now!" /></td>
+			<td id="clrchs-action-nginx" class="clrchs-action"><input type="button" class="button button-primary clrchs-purge-button clrchs-purge-request" value="Clear Nginx Cache" /></td>
 		</tr>
 
 	<?php }
