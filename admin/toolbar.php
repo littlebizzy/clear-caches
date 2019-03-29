@@ -104,7 +104,7 @@ class Toolbar {
 		$menuItems[] = [
 			'id'     => 'clrchs-menu-opcache',
 			'parent' => 'clrchs-menu',
-			'title'  => 'Clear PHP Opcache',
+			'title'  => 'Clear PHP OPcache',
 			'href'   => '#opcache',
 			'meta'   => [
 				'title' => '',
@@ -115,7 +115,7 @@ class Toolbar {
 		$menuItems[] = [
 			'id'     => 'clrchs-menu-nginx',
 			'parent' => 'clrchs-menu',
-			'title'  => 'Clear NGINX Cache',
+			'title'  => 'Clear Nginx Cache',
 			'href'   => '#nginx',
 			'meta'   => [
 				'title' => '',
