@@ -3,7 +3,7 @@
 The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx cache, Transient cache, Varnish cache, and object cache (e.g. Redis).
 
 * [Plugin Homepage](https://www.littlebizzy.com/plugins/clear-caches)
-* [Download Latest Version (ZIP)](https://github.com/littlebizzy/clear-caches/archive/1.2.0.zip)
+* [Download Latest Version (ZIP)](https://github.com/littlebizzy/clear-caches/archive/1.2.1.zip)
 * [**Become A LittleBizzy.com Member Today!**](https://www.littlebizzy.com/members)
 
 ### Defined Constants
