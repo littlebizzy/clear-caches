@@ -19,6 +19,10 @@ The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx ca
     define('CLEAR_CACHES_OBJECT', true); // default = true
     define('CLEAR_CACHES_OPCACHE', true); // default = true
     
+### Included Modules
+
+* (n/a)
+
 ### Compatibility
 
 This plugin has been designed for use on [SlickStack](https://slickstack.io) web servers with PHP 7.2 and MySQL 5.7 to achieve best performance. All of our plugins are meant for single site WordPress installations only — for both performance and usability reasons, we strongly recommend avoiding WordPress Multisite for the vast majority of your projects.
