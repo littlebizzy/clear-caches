@@ -16,6 +16,9 @@ The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx ca
 
 == Changelog ==
 
+= 1.2.2 =
+* fixed undefined variable error (new default $modified = false)
+
 = 1.2.1 =
 * tweaked spelling of various buttons
 * tested with WP 5.1
