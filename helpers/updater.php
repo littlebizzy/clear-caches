@@ -119,12 +119,12 @@ class Updater {
 		if (empty($data) || !is_array($data)) {
 			return $args;
 		}
-
+		
 		// Plugins list
+		$modified = false;
 		if (!empty($data['plugins']) && is_array($data['plugins']) && isset($data['plugins'][$this->key])) {
 			$modified = true;
 			unset($data['plugins'][$this->key]);
-		}
 
 		// Check active plugins
 		if (!empty($data['active']) && is_array($data['active']) && in_array($this->key, $data['active'])) {
