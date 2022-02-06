@@ -7,7 +7,7 @@ Requires at least: 4.4
 Tested up to: 5.1
 Requires PHP: 7.2
 Multisite support: No
-Stable tag: 1.2.1
+Stable tag: 1.2.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Prefix: CLRCHS
@@ -15,6 +15,9 @@ Prefix: CLRCHS
 The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx cache, Transient cache, Varnish cache, and object cache (e.g. Redis).
 
 == Changelog ==
+
+= 1.2.3 =
+* fixed fatal error (missing bracket)
 
 = 1.2.2 =
 * fixed undefined variable error (new default $modified = false)
