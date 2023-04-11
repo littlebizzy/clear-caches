@@ -1,6 +1,6 @@
 # Clear Caches
 
-The easiest way to clear caches including WordPress cache, PHP Opcache, Nginx cache, Transient cache, Varnish cache, and object cache (e.g. Redis).
+Purge all of the WordPress caches
 
 ### Defined Constants
 
