@@ -1,0 +1,5 @@
+/phpcs.xml
+/phpmd.xml
+/phpstan.neon
+/psalm.xml
+/.editorconfig
