@@ -1,23 +1,30 @@
 /* global clearCachesData */
 window.ClearCaches = ($ => {
 	const ClearCaches = function () {
+		this.purge = (event, cacheType) => {
+			event.preventDefault()
 
-	}
+			const links = Array.from(document.querySelector('.clear-caches-links').getElementsByTagName('a'))
+			links.map(link => {
+				link.style.pointerEvents = 'none'
+			})
 
-	ClearCaches.prototype.purgeAll = () => {
-		console.log(clearCachesData.clearCachesNonce, 'purgeAll')
-	}
+			$.post(
+				clearCachesData.ajaxUrl,
+				{action: 'clear_caches_purge', cacheType, _wpnonce: clearCachesData.nonce},
+				response => {
+					if (response.success) {
+						alert(event.target.text + ' done successfully!');
+					} else {
+						alert(response.data);
+					}
 
-	ClearCaches.prototype.purgeNginx = () => {
-		console.log(clearCachesData.clearCachesNginxNonce, 'purgeNginx')
-	}
-
-	ClearCaches.prototype.purgeOPcache = () => {
-		console.log(clearCachesData.clearCachesOpcache, 'purgeOPcache')
-	}
-
-	ClearCaches.prototype.purgeObject = () => {
-		console.log(clearCachesData.clearCachesObjectNonce, 'purgeObject')
+					links.map(link => {
+						link.style.pointerEvents = null
+					})
+				}
+			)
+		}
 	}
 
 	return new ClearCaches()

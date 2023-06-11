@@ -40,39 +40,29 @@ class AdminBar {
 				'id'     => 'clear-caches',
 				'title'  => __( 'Purge All Caches', 'clear-caches' ),
 				'href'   => '#',
-				'meta'   => array( 'onclick' => 'ClearCaches.purgeAll()' ),
+				'meta'   => array( 'class' => 'clear-caches-links', 'onclick' => 'ClearCaches.purge(event, "all")' ),
 			)
 		);
-		$wp_admin_bar->add_node(
-			array(
-				'parent' => 'clear-caches',
-				'id'     => 'clear-caches-nginx',
-				'title'  => __( 'Purge Nginx Cache', 'clear-caches' ),
-				'href'   => '#',
-				'meta'   => array( 'onclick' => 'ClearCaches.purgeNginx()' ),
-			)
-		);
-		$wp_admin_bar->add_node(
-			array(
-				'parent' => 'clear-caches',
-				'id'     => 'clear-caches-opcache',
-				'title'  => __( 'Purge OPcache cache', 'clear-caches' ),
-				'href'   => '#',
-				'meta'   => array( 'onclick' => 'ClearCaches.purgeOPcache()' ),
-			)
-		);
-		$wp_admin_bar->add_node(
-			array(
-				'parent' => 'clear-caches',
-				'id'     => 'clear-caches-object',
-				'title'  => __( 'Purge Object Cache', 'clear-caches' ),
-				'href'   => '#',
-				'meta'   => array( 'onclick' => 'ClearCaches.purgeObject()' ),
-			)
-		);
+
+		foreach ( Plugin::get_cache_types() as $id => $data ) {
+			$wp_admin_bar->add_node(
+				array(
+					'parent' => 'clear-caches',
+					'id'     => 'clear-caches-' . $id,
+					'title'  => $data['title'],
+					'href'   => '#',
+					'meta'   => array( 'onclick' => 'ClearCaches.purge(event, "' . $id . '")' ),
+				)
+			);
+		}
 	}
 
-	public function enqueue_scripts() {
+	/**
+	 * Enqueue scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts(): void {
 		wp_enqueue_script(
 			'clear-caches',
 			plugin_dir_url( CLEAR_CACHE_FILE ) . '/assets/clear-caches.js',
@@ -85,12 +75,9 @@ class AdminBar {
 			'clear-caches',
 			'clearCachesData',
 			array(
-				'clearCachesNonce'       => wp_create_nonce( 'clear-caches' ),
-				'clearCachesNginxNonce'  => wp_create_nonce( 'clear-caches-nginx' ),
-				'clearCachesOpcache'     => wp_create_nonce( 'clear-caches-opcache' ),
-				'clearCachesObjectNonce' => wp_create_nonce( 'clear-caches-object' ),
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'clear-caches' ),
 			)
 		);
 	}
-
 }

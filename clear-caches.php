@@ -26,6 +26,6 @@ defined( 'ABSPATH' ) || exit;
 
 define( 'CLEAR_CACHE_FILE', __FILE__ );
 
-require_once __DIR__ . '/src/Bootstrap.php';
+require_once __DIR__ . '/src/Plugin.php';
 
-new Bootstrap();
+new Plugin();
