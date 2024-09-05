@@ -1,5 +1,4 @@
 <?php
-
 /*
 Plugin Name: Clear Caches
 Plugin URI: https://www.littlebizzy.com/plugins/clear-caches
@@ -24,7 +23,7 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
 });
 
 // Define constants
-if ( ! defined( 'CLEAR_CACHES_USER_LEVEL' ) ) define( 'CLEAR_CACHES_USER_LEVEL', 'manage_options' ); // Admin by default
+if ( ! defined( 'CLEAR_CACHES_USER_LEVEL' ) ) define( 'CLEAR_CACHES_USER_LEVEL', 'manage_options' ); // Default to Admin level
 if ( ! defined( 'CLEAR_CACHES_OPCACHE' ) ) define( 'CLEAR_CACHES_OPCACHE', true );
 if ( ! defined( 'CLEAR_CACHES_NGINX' ) ) define( 'CLEAR_CACHES_NGINX', true );
 if ( ! defined( 'CLEAR_CACHES_OBJECT' ) ) define( 'CLEAR_CACHES_OBJECT', true );
@@ -38,7 +37,12 @@ function clear_caches_get_user_capability() {
 
 // Add Clear Caches dropdown to the admin bar
 add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
-    if ( ! is_user_logged_in() || ! current_user_can( clear_caches_get_user_capability() ) ) return;
+    $required_capability = clear_caches_get_user_capability();
+    
+    // Ensure user has at least 'edit_posts' capability and the defined capability
+    if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) || ( $required_capability !== 'edit_posts' && ! current_user_can( $required_capability ) ) ) {
+        return;
+    }
 
     $wp_admin_bar->add_node( [
         'id'     => 'clear_caches',
@@ -103,7 +107,10 @@ add_action( 'wp_enqueue_scripts', function() {
 
 // Handle AJAX requests
 add_action( 'wp_ajax_clear_caches_action', function() {
-    if ( ! current_user_can( clear_caches_get_user_capability() ) ) {
+    $required_capability = clear_caches_get_user_capability();
+
+    // Ensure user has at least 'edit_posts' capability and the defined capability
+    if ( ! current_user_can( 'edit_posts' ) || ( $required_capability !== 'edit_posts' && ! current_user_can( $required_capability ) ) ) {
         wp_send_json_error( [ 'message' => 'Permission denied' ] );
     }
 
