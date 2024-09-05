@@ -1,4 +1,5 @@
 <?php
+
 /*
 Plugin Name: Clear Caches
 Plugin URI: https://www.littlebizzy.com/plugins/clear-caches
@@ -24,9 +25,25 @@ add_filter('gu_override_dot_org', function ($overrides) {
     return $overrides;
 });
 
-// Define the default Nginx cache path
+// Define default constants if not already defined
 if (!defined('CLEAR_CACHES_NGINX_PATH')) {
     define('CLEAR_CACHES_NGINX_PATH', '/var/www/cache/nginx/');
+}
+
+if (!defined('CLEAR_CACHES_OBJECT')) {
+    define('CLEAR_CACHES_OBJECT', true); // Default value to show Clear Object Cache link
+}
+
+if (!defined('CLEAR_CACHES_OPCACHE')) {
+    define('CLEAR_CACHES_OPCACHE', true); // Default value to show Clear PHP Opcache link
+}
+
+if (!defined('CLEAR_CACHES_TRANSIENTS')) {
+    define('CLEAR_CACHES_TRANSIENTS', true); // Default value to show Clear Transients link
+}
+
+if (!defined('CLEAR_CACHES_NGINX')) {
+    define('CLEAR_CACHES_NGINX', true); // Default value to show Clear Nginx Cache link
 }
 
 // Add Clear Caches dropdown to the WP Admin bar
@@ -42,37 +59,49 @@ add_action('admin_bar_menu', function ($wp_admin_bar) {
         'meta'   => ['class' => 'clear-caches-admin-bar']
     ]);
 
-    $wp_admin_bar->add_node([
-        'id'     => 'clear_php_opcache',
-        'parent' => 'clear_caches',
-        'title'  => 'Clear PHP Opcache',
-        'href'   => 'javascript:void(0);',  // Use href='javascript:void(0);' to prevent page reload
-        'meta'   => ['class' => 'clear-cache-php-opcache']
-    ]);
+    // Conditionally add Clear PHP Opcache link based on CLEAR_CACHES_OPCACHE
+    if (CLEAR_CACHES_OPCACHE) {
+        $wp_admin_bar->add_node([
+            'id'     => 'clear_php_opcache',
+            'parent' => 'clear_caches',
+            'title'  => 'Clear PHP Opcache',
+            'href'   => 'javascript:void(0);',
+            'meta'   => ['class' => 'clear-cache-php-opcache']
+        ]);
+    }
 
-    $wp_admin_bar->add_node([
-        'id'     => 'clear_nginx_cache',
-        'parent' => 'clear_caches',
-        'title'  => 'Clear Nginx Cache',
-        'href'   => 'javascript:void(0);',  // Use href='javascript:void(0);' to prevent page reload
-        'meta'   => ['class' => 'clear-cache-nginx']
-    ]);
+    // Conditionally add Clear Nginx Cache link based on CLEAR_CACHES_NGINX
+    if (CLEAR_CACHES_NGINX) {
+        $wp_admin_bar->add_node([
+            'id'     => 'clear_nginx_cache',
+            'parent' => 'clear_caches',
+            'title'  => 'Clear Nginx Cache',
+            'href'   => 'javascript:void(0);',
+            'meta'   => ['class' => 'clear-cache-nginx']
+        ]);
+    }
 
-    $wp_admin_bar->add_node([
-        'id'     => 'clear_object_cache',
-        'parent' => 'clear_caches',
-        'title'  => 'Clear Object Cache',
-        'href'   => 'javascript:void(0);',  // Use href='javascript:void(0);' to prevent page reload
-        'meta'   => ['class' => 'clear-cache-object']
-    ]);
+    // Conditionally add Clear Object Cache link based on CLEAR_CACHES_OBJECT
+    if (CLEAR_CACHES_OBJECT) {
+        $wp_admin_bar->add_node([
+            'id'     => 'clear_object_cache',
+            'parent' => 'clear_caches',
+            'title'  => 'Clear Object Cache',
+            'href'   => 'javascript:void(0);',
+            'meta'   => ['class' => 'clear-cache-object']
+        ]);
+    }
 
-    $wp_admin_bar->add_node([
-        'id'     => 'clear_transients',
-        'parent' => 'clear_caches',
-        'title'  => 'Clear Transients',
-        'href'   => 'javascript:void(0);',  // Use href='javascript:void(0);' to prevent page reload
-        'meta'   => ['class' => 'clear-cache-transients']
-    ]);
+    // Conditionally add Clear Transients link based on CLEAR_CACHES_TRANSIENTS
+    if (CLEAR_CACHES_TRANSIENTS) {
+        $wp_admin_bar->add_node([
+            'id'     => 'clear_transients',
+            'parent' => 'clear_caches',
+            'title'  => 'Clear Transients',
+            'href'   => 'javascript:void(0);',
+            'meta'   => ['class' => 'clear-cache-transients']
+        ]);
+    }
 }, 100);
 
 // Enqueue JavaScript for clearing caches site-wide on both frontend and backend
