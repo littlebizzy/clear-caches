@@ -27,7 +27,7 @@ add_filter('gu_override_dot_org', function ($overrides) {
 
 // Define default constants if not already defined
 if (!defined('CLEAR_CACHES_NGINX_PATH')) {
-    define('CLEAR_CACHES_NGINX_PATH', '/var/www/cache/nginx/');
+    define('CLEAR_CACHES_NGINX_PATH', '/var/www/cache/nginx'); // Removed trailing slash
 }
 
 if (!defined('CLEAR_CACHES_OBJECT')) {
@@ -162,15 +162,22 @@ function clear_php_opcache() {
 }
 
 function clear_nginx_cache() {
-    $nginx_cache_path = defined('CLEAR_CACHES_NGINX_PATH') ? CLEAR_CACHES_NGINX_PATH : '/var/www/cache/nginx/';
+    $nginx_cache_path = defined('CLEAR_CACHES_NGINX_PATH') ? CLEAR_CACHES_NGINX_PATH : '/var/www/cache/nginx';
     if (file_exists($nginx_cache_path) && is_dir($nginx_cache_path) && is_writable($nginx_cache_path)) {
-        $files = glob("$nginx_cache_path/*");
-        if ($files) {
-            array_map('unlink', $files);
-            wp_send_json_success(['message' => 'Nginx Cache cleared successfully.']);
-        } else {
-            wp_send_json_error(['message' => 'Nginx Cache is empty or unable to read files.']);
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($nginx_cache_path, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($files as $fileinfo) {
+            if ($fileinfo->isDir()) {
+                rmdir($fileinfo->getRealPath());
+            } else {
+                unlink($fileinfo->getRealPath());
+            }
         }
+
+        wp_send_json_success(['message' => 'Nginx Cache cleared successfully.']);
     } else {
         wp_send_json_error(['message' => 'Nginx Cache path does not exist, is not a directory, or is not writable.']);
     }
