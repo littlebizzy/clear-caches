@@ -1,4 +1,5 @@
 <?php
+
 /*
 Plugin Name: Clear Caches
 Plugin URI: https://www.littlebizzy.com/plugins/clear-caches
@@ -23,7 +24,7 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
 });
 
 // Define constants
-if ( ! defined( 'CLEAR_CACHES_USER_LEVEL' ) ) define( 'CLEAR_CACHES_USER_LEVEL', 'manage_options' ); // Default to Admin level
+if ( ! defined( 'CLEAR_CACHES_MIN_CAPABILITY' ) ) define( 'CLEAR_CACHES_MIN_CAPABILITY', 'manage_options' ); // Default to Admin level
 if ( ! defined( 'CLEAR_CACHES_OPCACHE' ) ) define( 'CLEAR_CACHES_OPCACHE', true );
 if ( ! defined( 'CLEAR_CACHES_NGINX' ) ) define( 'CLEAR_CACHES_NGINX', true );
 if ( ! defined( 'CLEAR_CACHES_OBJECT' ) ) define( 'CLEAR_CACHES_OBJECT', true );
@@ -31,16 +32,16 @@ if ( ! defined( 'CLEAR_CACHES_TRANSIENTS' ) ) define( 'CLEAR_CACHES_TRANSIENTS',
 if ( ! defined( 'CLEAR_CACHES_NGINX_PATH' ) ) define( 'CLEAR_CACHES_NGINX_PATH', '/var/www/cache/nginx' );
 
 // Get required user capability
-function clear_caches_get_user_capability() {
-    return CLEAR_CACHES_USER_LEVEL;
+function clear_caches_get_min_capability() {
+    return CLEAR_CACHES_MIN_CAPABILITY;
 }
 
 // Add Clear Caches dropdown to the admin bar
 add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
-    $required_capability = clear_caches_get_user_capability();
+    $min_capability = clear_caches_get_min_capability();
     
     // Ensure user has at least 'edit_posts' capability and the defined capability
-    if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) || ( $required_capability !== 'edit_posts' && ! current_user_can( $required_capability ) ) ) {
+    if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
         return;
     }
 
@@ -107,10 +108,10 @@ add_action( 'wp_enqueue_scripts', function() {
 
 // Handle AJAX requests
 add_action( 'wp_ajax_clear_caches_action', function() {
-    $required_capability = clear_caches_get_user_capability();
+    $min_capability = clear_caches_get_min_capability();
 
     // Ensure user has at least 'edit_posts' capability and the defined capability
-    if ( ! current_user_can( 'edit_posts' ) || ( $required_capability !== 'edit_posts' && ! current_user_can( $required_capability ) ) ) {
+    if ( ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
         wp_send_json_error( [ 'message' => 'Permission denied' ] );
     }
 
