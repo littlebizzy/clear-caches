@@ -1,100 +1,109 @@
-jQuery(document).ready(($) => {
-    // Assign click events using event delegation with modern syntax
-    $('body').on('click', '.clear-cache-php-opcache', (e) => {
-        e.preventDefault();  // Prevent default link action
-        clearCache('php_opcache'); // Pass the cache type as an argument
-    });
-
-    $('body').on('click', '.clear-cache-nginx', (e) => {
-        e.preventDefault();  // Prevent default link action
-        clearCache('nginx_cache'); // Pass the cache type as an argument
-    });
-
-    $('body').on('click', '.clear-cache-object', (e) => {
-        e.preventDefault();  // Prevent default link action
-        clearCache('object_cache'); // Pass the cache type as an argument
-    });
-
-    $('body').on('click', '.clear-cache-transients', (e) => {
-        e.preventDefault();  // Prevent default link action
-        clearCache('clear_transients'); // Pass the cache type as an argument
-    });
+jQuery(document).ready($ => {
+    // Flag to prevent multiple modals and AJAX requests
+    let isProcessing = false;
 
     // Function to handle cache clearing via AJAX
-    const clearCache = (type) => {
-        showModal('Processing...', 'info');  // Show modal immediately upon click
+    const clearCache = type => {
+        if (isProcessing) {
+            return; // Prevent action if already processing
+        }
+
+        // Set processing flag and disable all links
+        isProcessing = true;
+        toggleLinksState(true); // Disable all links
+
+        showModal('Processing...'); // Show modal immediately
 
         $.ajax({
-            url: clearCachesData.ajaxurl, // Use localized script variable for AJAX URL
+            url: clearCachesData.ajaxurl,
             type: 'POST',
             data: {
-                action: 'clear_caches_action', // Correct action name for WordPress
-                cache_type: type, // Send the cache type to the server-side PHP
-                security: clearCachesData.nonce // Security nonce for verification
+                action: 'clear_caches_action',
+                cache_type: type,
+                security: clearCachesData.nonce
             },
-            success: (response) => {
-                if (response.success) {
-                    showModal(response.data.message, 'success');
-                } else {
-                    showModal('Error: ' + response.data.message, 'error');
-                }
+            success: response => {
+                const message = response.success ? response.data.message : 'Error: ' + response.data.message;
+                showModal(message, response.success ? 'success' : 'error');
             },
-            error: (xhr, status, error) => {
-                console.error('Error: ', xhr, status, error);
+            error: () => {
                 showModal('An error occurred while clearing the cache.', 'error');
+            },
+            complete: () => {
+                // Re-enable all links after 2 seconds
+                setTimeout(() => {
+                    isProcessing = false;
+                    toggleLinksState(false); // Enable all links
+                }, 2000);
             }
         });
     };
 
+    // Toggle the enabled/disabled state of all cache links
+    const toggleLinksState = disable => {
+        const action = disable ? 'addClass' : 'removeClass';
+        $('.clear-cache-php-opcache, .clear-cache-nginx, .clear-cache-object, .clear-cache-transients')[action]('disabled');
+    };
+
+    // Assign click events to all cache links
+    $('.clear-cache-php-opcache').on('click', e => handleClick(e, 'php_opcache'));
+    $('.clear-cache-nginx').on('click', e => handleClick(e, 'nginx_cache'));
+    $('.clear-cache-object').on('click', e => handleClick(e, 'object_cache'));
+    $('.clear-cache-transients').on('click', e => handleClick(e, 'clear_transients'));
+
+    // Handle click event and call clearCache
+    const handleClick = (e, cacheType) => {
+        e.preventDefault();
+        if (!$(e.currentTarget).hasClass('disabled')) {
+            clearCache(cacheType);
+        }
+    };
+
     // Function to display a modal with a message
-    const showModal = (message, type) => {
-        // Create overlay and modal elements
-        const overlay = $('<div id="cache-clear-overlay"></div>').css({
-            'position': 'fixed',
-            'top': 0,
-            'left': 0,
-            'width': '100%',
-            'height': '100%',
-            'background-color': 'rgba(0, 0, 0, 0.5)', // Transparent gray background
-            'z-index': 9998
-        });
+    function showModal(message, type) {
+        // Create overlay if not exists
+        if ($('#cache-clear-overlay').length === 0) {
+            $('<div id="cache-clear-overlay"></div>').css({
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                zIndex: 9998
+            }).appendTo('body');
+        }
 
-        const modal = $('<div id="cache-clear-modal" role="alert"></div>').css({
-            'position': 'fixed',
-            'top': '50%',
-            'left': '50%',
-            'transform': 'translate(-50%, -50%)',
-            'background-color': '#fff',
-            'padding': '20px',
-            'z-index': 9999,
-            'width': '300px',  // Static width for desktop
-            'max-width': '80%',  // Responsive width for mobile
-            'text-align': 'center',
-            'font-size': '16px',
-            'color': '#333',
-            'line-height': '1.5',
-            'display': 'flex',
-            'align-items': 'center',
-            'justify-content': 'center',
-            'min-height': '100px'
-        });
+        // Create modal if not exists
+        if ($('#cache-clear-modal').length === 0) {
+            $('<div id="cache-clear-modal"></div>').css({
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                backgroundColor: '#fff',
+                padding: '20px',
+                zIndex: 9999,
+                width: '300px',
+                maxWidth: '80%',
+                textAlign: 'center',
+                fontSize: '16px',
+                color: '#333',
+                lineHeight: '1.5',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '100px'
+            }).appendTo('body');
+        }
 
-        // Adding message content with consistent styling
-        const messageContent = $('<p></p>').text(message).css({
-            'margin': '0',
-            'padding': '0'
-        });
-
-        modal.append(messageContent);
-
-        // Append elements to body
-        $('body').append(overlay).append(modal);
+        $('#cache-clear-modal').html('<p>' + message + '</p>');
 
         // Automatically hide modal and overlay after 2 seconds
         setTimeout(() => {
             $('#cache-clear-modal, #cache-clear-overlay').remove();
         }, 2000);
-    };
+    }
 });
 
 // Ref: ChatGPT
