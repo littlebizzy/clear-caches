@@ -26,29 +26,33 @@ add_filter('gu_override_dot_org', function ($overrides) {
 });
 
 // Define default constants if not already defined
-if (!defined('CLEAR_CACHES_NGINX_PATH')) {
-    define('CLEAR_CACHES_NGINX_PATH', '/var/www/cache/nginx'); // Removed trailing slash
-}
-
-if (!defined('CLEAR_CACHES_OBJECT')) {
-    define('CLEAR_CACHES_OBJECT', true); // Default value to show Clear Object Cache link
+if (!defined('CLEAR_CACHES_USER_LEVEL')) {
+    define('CLEAR_CACHES_USER_LEVEL', 'manage_options'); // Default to Admin level
 }
 
 if (!defined('CLEAR_CACHES_OPCACHE')) {
     define('CLEAR_CACHES_OPCACHE', true); // Default value to show Clear PHP Opcache link
 }
 
-if (!defined('CLEAR_CACHES_TRANSIENTS')) {
-    define('CLEAR_CACHES_TRANSIENTS', true); // Default value to show Clear Transients link
-}
-
 if (!defined('CLEAR_CACHES_NGINX')) {
     define('CLEAR_CACHES_NGINX', true); // Default value to show Clear Nginx Cache link
 }
 
+if (!defined('CLEAR_CACHES_OBJECT')) {
+    define('CLEAR_CACHES_OBJECT', true); // Default value to show Clear Object Cache link
+}
+
+if (!defined('CLEAR_CACHES_TRANSIENTS')) {
+    define('CLEAR_CACHES_TRANSIENTS', true); // Default value to show Clear Transients Cache link
+}
+
+if (!defined('CLEAR_CACHES_NGINX_PATH')) {
+    define('CLEAR_CACHES_NGINX_PATH', '/var/www/cache/nginx'); // Nginx cache path without trailing slash
+}
+
 // Add Clear Caches dropdown to the WP Admin bar
 add_action('admin_bar_menu', function ($wp_admin_bar) {
-    if (!is_user_logged_in() || !current_user_can('manage_options')) {
+    if (!is_user_logged_in() || !current_user_can(CLEAR_CACHES_USER_LEVEL)) {
         return;
     }
 
@@ -59,7 +63,7 @@ add_action('admin_bar_menu', function ($wp_admin_bar) {
         'meta'   => ['class' => 'clear-caches-admin-bar']
     ]);
 
-    // Conditionally add Clear PHP Opcache link based on CLEAR_CACHES_OPCACHE
+    // Logical order for dropdown options
     if (CLEAR_CACHES_OPCACHE) {
         $wp_admin_bar->add_node([
             'id'     => 'clear_php_opcache',
@@ -70,7 +74,6 @@ add_action('admin_bar_menu', function ($wp_admin_bar) {
         ]);
     }
 
-    // Conditionally add Clear Nginx Cache link based on CLEAR_CACHES_NGINX
     if (CLEAR_CACHES_NGINX) {
         $wp_admin_bar->add_node([
             'id'     => 'clear_nginx_cache',
@@ -81,7 +84,6 @@ add_action('admin_bar_menu', function ($wp_admin_bar) {
         ]);
     }
 
-    // Conditionally add Clear Object Cache link based on CLEAR_CACHES_OBJECT
     if (CLEAR_CACHES_OBJECT) {
         $wp_admin_bar->add_node([
             'id'     => 'clear_object_cache',
@@ -92,12 +94,11 @@ add_action('admin_bar_menu', function ($wp_admin_bar) {
         ]);
     }
 
-    // Conditionally add Clear Transients link based on CLEAR_CACHES_TRANSIENTS
     if (CLEAR_CACHES_TRANSIENTS) {
         $wp_admin_bar->add_node([
             'id'     => 'clear_transients',
             'parent' => 'clear_caches',
-            'title'  => 'Clear Transients',
+            'title'  => 'Clear Transients Cache',
             'href'   => 'javascript:void(0);',
             'meta'   => ['class' => 'clear-cache-transients']
         ]);
@@ -122,7 +123,7 @@ add_action('wp_enqueue_scripts', function () {
 
 // Handle AJAX request to clear caches or clear transients
 add_action('wp_ajax_clear_caches_action', function () {
-    if (!current_user_can('manage_options')) {
+    if (!current_user_can(CLEAR_CACHES_USER_LEVEL)) {
         wp_send_json_error(['message' => 'Permission denied']);
     }
 
