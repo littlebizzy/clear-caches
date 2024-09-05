@@ -1,5 +1,4 @@
 <?php
-
 /*
 Plugin Name: Clear Caches
 Plugin URI: https://www.littlebizzy.com/plugins/clear-caches
@@ -31,14 +30,9 @@ if ( ! defined( 'CLEAR_CACHES_OBJECT' ) ) define( 'CLEAR_CACHES_OBJECT', true );
 if ( ! defined( 'CLEAR_CACHES_TRANSIENTS' ) ) define( 'CLEAR_CACHES_TRANSIENTS', true );
 if ( ! defined( 'CLEAR_CACHES_NGINX_PATH' ) ) define( 'CLEAR_CACHES_NGINX_PATH', '/var/www/cache/nginx' );
 
-// Get required user capability
-function clear_caches_get_min_capability() {
-    return CLEAR_CACHES_MIN_CAPABILITY;
-}
-
 // Add Clear Caches dropdown to the admin bar
 add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
-    $min_capability = clear_caches_get_min_capability();
+    $min_capability = CLEAR_CACHES_MIN_CAPABILITY;
     
     // Ensure user has at least 'edit_posts' capability and the defined capability
     if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
@@ -108,7 +102,7 @@ add_action( 'wp_enqueue_scripts', function() {
 
 // Handle AJAX requests
 add_action( 'wp_ajax_clear_caches_action', function() {
-    $min_capability = clear_caches_get_min_capability();
+    $min_capability = CLEAR_CACHES_MIN_CAPABILITY;
 
     // Ensure user has at least 'edit_posts' capability and the defined capability
     if ( ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
@@ -139,11 +133,16 @@ add_action( 'wp_ajax_clear_caches_action', function() {
 
 // Clear PHP OPcache
 function clear_php_opcache() {
+    // Check if OPcache functions are available
     if ( function_exists( 'opcache_reset' ) ) {
-        opcache_reset();
-        wp_send_json_success( [ 'message' => 'PHP OPcache cleared successfully.' ] );
+        // Attempt to reset OPcache
+        if ( opcache_reset() ) {
+            wp_send_json_success( [ 'message' => 'PHP OPcache cleared successfully.' ] );
+        } else {
+            wp_send_json_error( [ 'message' => 'Failed to clear OPcache.' ] );
+        }
     } else {
-        wp_send_json_error( [ 'message' => 'PHP OPcache is not enabled.' ] );
+        wp_send_json_error( [ 'message' => 'OPcache not installed.' ] );
     }
 }
 
