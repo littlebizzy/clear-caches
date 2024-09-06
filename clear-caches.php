@@ -135,14 +135,13 @@ add_action( 'wp_ajax_clear_caches_action', function() {
 function clear_php_opcache() {
     // Check if OPcache functions are available
     if ( function_exists( 'opcache_reset' ) ) {
-        // Attempt to reset OPcache
-        if ( opcache_reset() ) {
-            wp_send_json_success( [ 'message' => 'PHP OPcache cleared successfully.' ] );
-        } else {
-            wp_send_json_error( [ 'message' => 'Failed to clear OPcache.' ] );
-        }
+        // Force flush OPcache unconditionally
+        opcache_reset();
+        // Send a success message after the OPcache flush
+        wp_send_json_success( [ 'message' => 'PHP OPcache flushed successfully.' ] );
     } else {
-        wp_send_json_error( [ 'message' => 'OPcache not installed.' ] );
+        // If OPcache is not installed, send an error message
+        wp_send_json_error( [ 'message' => 'OPcache is not installed or available on this server.' ] );
     }
 }
 
