@@ -150,13 +150,7 @@ function clear_nginx_cache() {
     $nginx_cache_path = CLEAR_CACHES_NGINX_PATH;
 
     // Check if the path exists, is a directory, and is writable
-    if ( ! file_exists( $nginx_cache_path ) ) {
-        wp_send_json_error( [ 'message' => 'Nginx Cache path does not exist.' ] );
-    } elseif ( ! is_dir( $nginx_cache_path ) ) {
-        wp_send_json_error( [ 'message' => 'Nginx Cache path is not a directory.' ] );
-    } elseif ( ! is_writable( $nginx_cache_path ) ) {
-        wp_send_json_error( [ 'message' => 'Nginx Cache path is not writable.' ] );
-    } else {
+    if ( file_exists( $nginx_cache_path ) && is_dir( $nginx_cache_path ) && is_writable( $nginx_cache_path ) ) {
         // Use RecursiveIterator to delete files and subdirectories
         $files = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator( $nginx_cache_path, RecursiveDirectoryIterator::SKIP_DOTS ),
@@ -166,7 +160,7 @@ function clear_nginx_cache() {
         $errors = [];
 
         foreach ( $files as $fileinfo ) {
-            // Attempt to delete the files and directories
+            // Attempt to delete the files and directories unconditionally
             if ( $fileinfo->isDir() ) {
                 if ( ! @rmdir( $fileinfo->getRealPath() ) ) {
                     $errors[] = $fileinfo->getRealPath();
@@ -178,12 +172,14 @@ function clear_nginx_cache() {
             }
         }
 
-        // Handle errors during deletion
+        // Handle the result: if no errors occurred, return success
         if ( empty( $errors ) ) {
             wp_send_json_success( [ 'message' => 'Nginx Cache cleared successfully.' ] );
         } else {
             wp_send_json_error( [ 'message' => 'Failed to clear some cache files. Please check permissions.' ] );
         }
+    } else {
+        wp_send_json_error( [ 'message' => 'Nginx Cache path does not exist, is not a directory, or is not writable.' ] );
     }
 }
 
