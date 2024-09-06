@@ -8,10 +8,8 @@ jQuery(document).ready($ => {
             return; // Prevent action if already processing
         }
 
-        // Set processing flag and disable all links
+        // Set processing flag
         isProcessing = true;
-        toggleLinksState(true); // Disable all links
-
         showModal('Processing...'); // Show modal immediately
 
         $.ajax({
@@ -24,25 +22,21 @@ jQuery(document).ready($ => {
             },
             success: response => {
                 const message = response.success ? response.data.message : 'Error: ' + response.data.message;
-                showModal(message, response.success ? 'success' : 'error');
+                updateModal(message, response.success ? 'success' : 'error'); // Update modal with final message
             },
             error: () => {
-                showModal('An error occurred while clearing the cache.', 'error');
+                updateModal('An error occurred while clearing the cache.', 'error'); // Update modal with error message
             },
             complete: () => {
-                // Re-enable all links after 2 seconds
+                // Reset the processing flag after the request completes
+                isProcessing = false;
+
+                // Automatically hide the modal after 2 seconds once the final message is shown
                 setTimeout(() => {
-                    isProcessing = false;
-                    toggleLinksState(false); // Enable all links
+                    $('#cache-clear-modal, #cache-clear-overlay').remove();
                 }, 2000);
             }
         });
-    };
-
-    // Toggle the enabled/disabled state of all cache links
-    const toggleLinksState = disable => {
-        const action = disable ? 'addClass' : 'removeClass';
-        $('.clear-cache-php-opcache, .clear-cache-nginx, .clear-cache-object, .clear-cache-transients')[action]('disabled');
     };
 
     // Assign click events to all cache links
@@ -54,13 +48,13 @@ jQuery(document).ready($ => {
     // Handle click event and call clearCache
     const handleClick = (e, cacheType) => {
         e.preventDefault();
-        if (!$(e.currentTarget).hasClass('disabled')) {
+        if (!isProcessing) {
             clearCache(cacheType);
         }
     };
 
-    // Function to display a modal with a message
-    function showModal(message, type) {
+    // Function to display the initial modal with the "Processing..." message
+    function showModal(message) {
         // Create overlay if not exists
         if ($('#cache-clear-overlay').length === 0) {
             $('<div id="cache-clear-overlay"></div>').css({
@@ -69,40 +63,35 @@ jQuery(document).ready($ => {
                 left: 0,
                 width: '100%',
                 height: '100%',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                zIndex: 9998
+                backgroundColor: 'rgba(0, 0, 0, 0.7)', // Darker background
+                zIndex: 99999, // Ensure the highest z-index
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
             }).appendTo('body');
         }
 
         // Create modal if not exists
         if ($('#cache-clear-modal').length === 0) {
             $('<div id="cache-clear-modal"></div>').css({
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
                 backgroundColor: '#fff',
                 padding: '20px',
-                zIndex: 9999,
-                width: '300px',
-                maxWidth: '80%',
                 textAlign: 'center',
                 fontSize: '16px',
                 color: '#333',
                 lineHeight: '1.5',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: '100px'
-            }).appendTo('body');
+                zIndex: 100000, // Ensure the modal is on top of everything
+                minWidth: '300px',
+                maxWidth: '80%'
+            }).appendTo('#cache-clear-overlay');
         }
 
         $('#cache-clear-modal').html('<p>' + message + '</p>');
+    }
 
-        // Automatically hide modal and overlay after 2 seconds
-        setTimeout(() => {
-            $('#cache-clear-modal, #cache-clear-overlay').remove();
-        }, 2000);
+    // Function to update the modal with the final message (success or error)
+    function updateModal(message, type) {
+        $('#cache-clear-modal').html('<p>' + message + '</p>');
     }
 });
 
