@@ -33,7 +33,7 @@ if ( ! defined( 'CLEAR_CACHES_NGINX_PATH' ) ) define( 'CLEAR_CACHES_NGINX_PATH',
 // Add Clear Caches dropdown to the admin bar
 add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
     $min_capability = CLEAR_CACHES_MIN_CAPABILITY;
-    
+
     // Ensure user has at least 'edit_posts' capability and the defined capability
     if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
         return;
@@ -272,10 +272,15 @@ function clear_object_cache() {
 
     // Relay: A PECL extension for high-performance Redis
     elseif ( function_exists( 'relay_flush' ) ) {
-        if ( relay_flush() ) {  // Force flush unconditionally
-            wp_send_json_success( [ 'message' => 'Object Cache (Relay) cleared successfully, but verification not supported.' ] );
+        // Force flush unconditionally
+        relay_flush();
+
+        // Check if flush was successful
+        if ( relay_flush() ) {
+            // Send success message
+            wp_send_json_success( [ 'message' => 'Object Cache (Relay) cleared successfully.' ] );
         } else {
-            // Treat failure to flush as a connection or configuration problem
+            // Send error message if flush fails
             wp_send_json_error( [ 'message' => 'Failed to flush Object Cache (Relay). Check server connection or configuration.' ] );
         }
     }
@@ -293,10 +298,21 @@ function clear_object_cache() {
 function clear_all_transients() {
     global $wpdb;
 
-    $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
-    $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_site_transient_%'" );
+    // Delete site and regular transients from the database
+    $transients_deleted = $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
+    $site_transients_deleted = $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_site_transient_%'" );
 
-    wp_send_json_success( [ 'message' => 'All transients cleared successfully.' ] );
+    // Check if any rows were affected in both queries
+    if ( $transients_deleted === false || $site_transients_deleted === false ) {
+        // SQL query failed for one or both queries
+        wp_send_json_error( [ 'message' => 'Failed to clear transients from the database. Please check database permissions or try again.' ] );
+    } elseif ( $transients_deleted === 0 && $site_transients_deleted === 0 ) {
+        // No transients were found or deleted
+        wp_send_json_success( [ 'message' => 'No transients found to delete.' ] );
+    } else {
+        // Transients were successfully deleted
+        wp_send_json_success( [ 'message' => 'All transients cleared successfully.' ] );
+    }
 }
 
 // Ref: ChatGPT
