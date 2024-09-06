@@ -39,6 +39,9 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
         return;
     }
 
+    // Create the nonce URL parameter
+    $nonce = wp_create_nonce( 'clear_caches_nonce' );
+
     $wp_admin_bar->add_node( [
         'id'     => 'clear_caches',
         'parent' => 'top-secondary',
@@ -52,7 +55,7 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
             'parent' => 'clear_caches',
             'title'  => 'Clear PHP OPcache',
             'href'   => 'javascript:void(0);',
-            'meta'   => [ 'class' => 'clear-cache-php-opcache' ]
+            'meta'   => [ 'class' => 'clear-cache-php-opcache', 'nonce' => $nonce ]
         ] );
     }
 
@@ -62,7 +65,7 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
             'parent' => 'clear_caches',
             'title'  => 'Clear Nginx Cache',
             'href'   => 'javascript:void(0);',
-            'meta'   => [ 'class' => 'clear-cache-nginx' ]
+            'meta'   => [ 'class' => 'clear-cache-nginx', 'nonce' => $nonce ]
         ] );
     }
 
@@ -72,7 +75,7 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
             'parent' => 'clear_caches',
             'title'  => 'Clear Object Cache',
             'href'   => 'javascript:void(0);',
-            'meta'   => [ 'class' => 'clear-cache-object' ]
+            'meta'   => [ 'class' => 'clear-cache-object', 'nonce' => $nonce ]
         ] );
     }
 
@@ -82,7 +85,7 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
             'parent' => 'clear_caches',
             'title'  => 'Clear Transients Cache',
             'href'   => 'javascript:void(0);',
-            'meta'   => [ 'class' => 'clear-cache-transients' ]
+            'meta'   => [ 'class' => 'clear-cache-transients', 'nonce' => $nonce ]
         ] );
     }
 }, 100 );
@@ -113,6 +116,14 @@ add_action( 'wp_ajax_clear_caches_action', function() {
 
     $cache_type = sanitize_text_field( $_POST['cache_type'] ?? '' );
 
+    // Define valid cache types
+    $valid_cache_types = ['php_opcache', 'nginx_cache', 'object_cache', 'clear_transients'];
+
+    // Ensure cache type is valid
+    if ( ! in_array( $cache_type, $valid_cache_types, true ) ) {
+        wp_send_json_error( [ 'message' => 'Invalid cache type specified.' ] );
+    }
+
     switch ( $cache_type ) {
         case 'php_opcache':
             clear_php_opcache();
@@ -126,8 +137,6 @@ add_action( 'wp_ajax_clear_caches_action', function() {
         case 'clear_transients':
             clear_all_transients();
             break;
-        default:
-            wp_send_json_error( [ 'message' => 'Invalid cache type specified.' ] );
     }
 });
 
