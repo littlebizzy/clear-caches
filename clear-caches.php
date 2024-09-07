@@ -3,7 +3,7 @@
 Plugin Name: Clear Caches
 Plugin URI: https://www.littlebizzy.com/plugins/clear-caches
 Description: Purge all of the WordPress caches
-Version: 2.0.0
+Version: 2.0.1
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
@@ -90,8 +90,8 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
     }
 }, 100 );
 
-// Enqueue JavaScript for admin bar
-add_action( 'wp_enqueue_scripts', function() {
+// Enqueue JavaScript for both frontend and backend
+function enqueue_clear_caches_scripts() {
     if ( is_admin_bar_showing() ) {
         wp_enqueue_script( 'clear-caches-script', plugin_dir_url( __FILE__ ) . 'clear-caches.js', [ 'jquery' ], null, true );
 
@@ -101,7 +101,9 @@ add_action( 'wp_enqueue_scripts', function() {
             'nonce'   => wp_create_nonce( 'clear_caches_nonce' )
         ] );
     }
-});
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_clear_caches_scripts' ); // Frontend
+add_action( 'admin_enqueue_scripts', 'enqueue_clear_caches_scripts' ); // Backend
 
 // Handle AJAX requests
 add_action( 'wp_ajax_clear_caches_action', function() {
