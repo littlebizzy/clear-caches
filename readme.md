@@ -4,6 +4,9 @@ Purge all of the WordPress caches
 
 ## Changelog
 
+### 2.0.1
+- fixed enqueue of jQuery both frontend and backend
+
 ### 2.0.0
 - completely refactored to WordPress coding standards
 - now supports multiple object cache softwares (Memcached, Memcache, Redis, Predis, Relay Cache, and default WordPress object cache)
