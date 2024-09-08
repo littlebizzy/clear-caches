@@ -4,6 +4,9 @@ Purge all of the WordPress caches
 
 ## Changelog
 
+### 2.0.2
+- fixed `gu_override_dot_org` snippet
+
 ### 2.0.1
 - fixed enqueue of jQuery both frontend and backend
 
