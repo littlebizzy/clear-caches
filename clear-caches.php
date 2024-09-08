@@ -3,7 +3,7 @@
 Plugin Name: Clear Caches
 Plugin URI: https://www.littlebizzy.com/plugins/clear-caches
 Description: Purge all of the WordPress caches
-Version: 2.0.1
+Version: 2.0.2
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
@@ -17,8 +17,8 @@ Prefix: CLRCHS
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Disable WordPress.org updates for this plugin
-add_filter( 'gu_override_dot_org', function( $overrides ) {
-    $overrides['clear-caches/clear-caches.php'] = true;
+add_filter('gu_override_dot_org', function ($overrides) {
+    $overrides[] = 'clear-caches/clear-caches.php';
     return $overrides;
 });
 
