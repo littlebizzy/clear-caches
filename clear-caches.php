@@ -172,13 +172,13 @@ function clear_php_opcache() {
     }
 }
 
-// Clear Nginx Cache
+// clear nginx cache
 function clear_nginx_cache() {
     $nginx_cache_path = CLEAR_CACHES_NGINX_PATH;
 
-    // Check if the path exists, is a directory, and is writable
+    // check if path exists, is a directory, and is writable
     if ( file_exists( $nginx_cache_path ) && is_dir( $nginx_cache_path ) && is_writable( $nginx_cache_path ) ) {
-        // Use RecursiveIterator to delete files and subdirectories
+        // delete files and directories recursively
         $files = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator( $nginx_cache_path, RecursiveDirectoryIterator::SKIP_DOTS ),
             RecursiveIteratorIterator::CHILD_FIRST
@@ -187,137 +187,119 @@ function clear_nginx_cache() {
         $errors = [];
 
         foreach ( $files as $fileinfo ) {
-            // Attempt to delete the files and directories unconditionally
+            $path = $fileinfo->getRealPath();
+
             if ( $fileinfo->isDir() ) {
-                if ( ! @rmdir( $fileinfo->getRealPath() ) ) {
-                    $errors[] = $fileinfo->getRealPath();
+                if ( ! @rmdir( $path ) ) {
+                    $errors[] = $path;
                 }
             } else {
-                if ( ! @unlink( $fileinfo->getRealPath() ) ) {
-                    $errors[] = $fileinfo->getRealPath();
+                if ( ! @unlink( $path ) ) {
+                    $errors[] = $path;
                 }
             }
         }
 
-        // Handle the result: if no errors occurred, return success
+        // send success or error response
         if ( empty( $errors ) ) {
-            wp_send_json_success( [ 'message' => 'Nginx Cache cleared successfully.' ] );
+            wp_send_json_success( [ 'message' => 'Nginx cache cleared successfully.' ] );
         } else {
-            wp_send_json_error( [ 'message' => 'Failed to clear some cache files. Please check permissions.' ] );
+            wp_send_json_error( [ 'message' => 'Failed to clear some cache files. Check permissions.' ] );
         }
     } else {
-        wp_send_json_error( [ 'message' => 'Nginx Cache path does not exist, is not a directory, or is not writable.' ] );
+        wp_send_json_error( [ 'message' => 'Nginx cache path does not exist, is not a directory, or is not writable.' ] );
     }
 }
 
-// Clear Object Cache
+// clear object cache
 function clear_object_cache() {
 
-    // Memcached: Official PHP extension for Memcached
+    // memcached extension
     if ( class_exists( 'Memcached' ) ) {
         $memcached = new Memcached();
-        // Attempt to add server for Memcached
         if ( $memcached->addServer( '127.0.0.1', 11211 ) ) {
-            $memcached->flush();  // Force flush unconditionally
-
-            // Test if the flush worked by setting and retrieving a test key
+            $memcached->flush();
             $memcached->set( 'test_key', 'test_value', 10 );
             if ( $memcached->get( 'test_key' ) === 'test_value' ) {
-                wp_send_json_success( [ 'message' => 'Object Cache (Memcached) cleared successfully.' ] );
+                wp_send_json_success( [ 'message' => 'Object cache (Memcached) cleared successfully.' ] );
             } else {
-                wp_send_json_error( [ 'message' => 'Object Cache (Memcached) flush succeeded, but verification failed.' ] );
+                wp_send_json_error( [ 'message' => 'Memcached flush succeeded, but verification failed.' ] );
             }
         } else {
-            wp_send_json_error( [ 'message' => 'Failed to connect to Memcached server.' ] );
+            wp_send_json_error( [ 'message' => 'Could not connect to Memcached server.' ] );
         }
     }
 
-    // Memcache: Legacy PHP extension for Memcache
+    // memcache extension
     elseif ( class_exists( 'Memcache' ) ) {
         $memcache = new Memcache();
-        // Attempt to add server for Memcache
         if ( $memcache->addServer( '127.0.0.1', 11211 ) ) {
-            $memcache->flush();  // Force flush unconditionally
-
-            // Test if the flush worked by setting and retrieving a test key
+            $memcache->flush();
             $memcache->set( 'test_key', 'test_value', 0, 10 );
             if ( $memcache->get( 'test_key' ) === 'test_value' ) {
-                wp_send_json_success( [ 'message' => 'Object Cache (Memcache) cleared successfully.' ] );
+                wp_send_json_success( [ 'message' => 'Object cache (Memcache) cleared successfully.' ] );
             } else {
-                wp_send_json_error( [ 'message' => 'Object Cache (Memcache) flush succeeded, but verification failed.' ] );
+                wp_send_json_error( [ 'message' => 'Memcache flush succeeded, but verification failed.' ] );
             }
         } else {
-            wp_send_json_error( [ 'message' => 'Failed to connect to Memcache server.' ] );
+            wp_send_json_error( [ 'message' => 'Could not connect to Memcache server.' ] );
         }
     }
 
-    // Redis: PHPRedis (PECL Redis extension) or a Redis drop-in replacement
+    // phpredis extension
     elseif ( class_exists( 'Redis' ) ) {
         $redis = new Redis();
         try {
-            // Attempt to connect to Redis
             if ( $redis->connect( '127.0.0.1', 6379 ) ) {
-                $redis->flushAll();  // Force flush unconditionally
-
-                // Test if the flush worked by setting and retrieving a test key
+                $redis->flushAll();
                 $redis->set( 'test_key', 'test_value', 10 );
                 if ( $redis->get( 'test_key' ) === 'test_value' ) {
-                    wp_send_json_success( [ 'message' => 'Object Cache (Redis, PhpRedis) cleared successfully.' ] );
+                    wp_send_json_success( [ 'message' => 'Object cache (Redis) cleared successfully.' ] );
                 } else {
-                    wp_send_json_error( [ 'message' => 'Object Cache (Redis, PhpRedis) flush succeeded, but verification failed.' ] );
+                    wp_send_json_error( [ 'message' => 'Redis flush succeeded, but verification failed.' ] );
                 }
             } else {
-                wp_send_json_error( [ 'message' => 'Failed to connect to Redis server.' ] );
+                wp_send_json_error( [ 'message' => 'Could not connect to Redis server.' ] );
             }
         } catch ( Exception $e ) {
-            wp_send_json_error( [ 'message' => 'Redis connection error: ' . $e->getMessage() ] );
+            wp_send_json_error( [ 'message' => 'Redis error: ' . $e->getMessage() ] );
         }
     }
 
-    // Predis: A PHP-based client for Redis
+    // predis client
     elseif ( class_exists( 'Predis\Client' ) ) {
         try {
             $predis = new Predis\Client();
-            // Attempt to connect to Predis server
             if ( $predis->connect() ) {
-                $predis->flushall();  // Force flush unconditionally
-
-                // Test if the flush worked by setting and retrieving a test key
+                $predis->flushall();
                 $predis->set( 'test_key', 'test_value' );
                 if ( $predis->get( 'test_key' ) === 'test_value' ) {
-                    wp_send_json_success( [ 'message' => 'Object Cache (Predis) cleared successfully.' ] );
+                    wp_send_json_success( [ 'message' => 'Object cache (Predis) cleared successfully.' ] );
                 } else {
-                    wp_send_json_error( [ 'message' => 'Object Cache (Predis) flush succeeded, but verification failed.' ] );
+                    wp_send_json_error( [ 'message' => 'Predis flush succeeded, but verification failed.' ] );
                 }
             } else {
-                wp_send_json_error( [ 'message' => 'Failed to connect to Predis server.' ] );
+                wp_send_json_error( [ 'message' => 'Could not connect to Predis server.' ] );
             }
         } catch ( Exception $e ) {
-            wp_send_json_error( [ 'message' => 'Predis connection error: ' . $e->getMessage() ] );
+            wp_send_json_error( [ 'message' => 'Predis error: ' . $e->getMessage() ] );
         }
     }
 
-    // Relay: A PECL extension for high-performance Redis
+    // relay extension
     elseif ( function_exists( 'relay_flush' ) ) {
-        // Force flush unconditionally
         relay_flush();
-
-        // Check if flush was successful
         if ( relay_flush() ) {
-            // Send success message
-            wp_send_json_success( [ 'message' => 'Object Cache (Relay) cleared successfully.' ] );
+            wp_send_json_success( [ 'message' => 'Object cache (Relay) cleared successfully.' ] );
         } else {
-            // Send error message if flush fails
-            wp_send_json_error( [ 'message' => 'Failed to flush Object Cache (Relay). Check server connection or configuration.' ] );
+            wp_send_json_error( [ 'message' => 'Relay flush failed. Check server configuration.' ] );
         }
     }
 
-    // Default WordPress object cache
+    // default wordpress object cache
     else {
-        wp_cache_flush();  // Force flush unconditionally
-
-        // No verification supported, so issue a generic success message
-        wp_send_json_success( [ 'message' => 'Object Cache (WordPress default) cleared successfully, but verification not supported.' ] );
+        wp_cache_flush();
+        wp_send_json_success( [ 'message' => 'Object cache (WordPress) cleared. Verification not supported.' ] );
     }
 }
 
