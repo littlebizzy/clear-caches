@@ -304,9 +304,21 @@ function clear_object_cache() {
 function clear_all_transients() {
     global $wpdb;
 
-    // delete regular and site transients
-    $transients_deleted = $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
-    $site_transients_deleted = $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_site_transient_%'" );
+    // delete regular transients
+    $transients_deleted = $wpdb->query(
+        $wpdb->prepare(
+            "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
+            $wpdb->esc_like( '_transient_' ) . '%'
+        )
+    );
+
+    // delete site transients
+    $site_transients_deleted = $wpdb->query(
+        $wpdb->prepare(
+            "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
+            $wpdb->esc_like( '_site_transient_' ) . '%'
+        )
+    );
 
     // check for query failure
     if ( $transients_deleted === false || $site_transients_deleted === false ) {
