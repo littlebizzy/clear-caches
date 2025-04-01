@@ -57,7 +57,7 @@ jQuery( document ).ready( $ => {
 				left: 0,
 				width: '100%',
 				height: '100%',
-				backgroundColor: 'rgba(0, 0, 0, 0.7)',
+				backgroundColor: 'rgba(0, 0, 0, 0.6)',
 				zIndex: 99999,
 				display: 'flex',
 				justifyContent: 'center',
@@ -67,15 +67,19 @@ jQuery( document ).ready( $ => {
 
 		if ( $( '#cache-clear-modal' ).length === 0 ) {
 			$( '<div id="cache-clear-modal"></div>' ).css( {
-				backgroundColor: '#fff',
-				padding: '20px',
+				backgroundColor: '#ffffff',
+				padding: '24px 32px',
 				textAlign: 'center',
-				fontSize: '16px',
-				color: '#333',
-				lineHeight: '1.5',
+				fontSize: '15px',
+				color: '#222',
+				lineHeight: '1.6',
+				boxShadow: '0 6px 20px rgba(0, 0, 0, 0.15)',
+				borderRadius: '8px',
 				zIndex: 100000,
-				minWidth: '300px',
-				maxWidth: '80%'
+				minWidth: '280px',
+				maxWidth: '90%',
+				maxHeight: '80%',
+				overflowY: 'auto'
 			} ).appendTo( '#cache-clear-overlay' );
 		}
 
