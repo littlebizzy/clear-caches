@@ -288,8 +288,8 @@ function clear_object_cache() {
 
     // relay extension
     elseif ( function_exists( 'relay_flush' ) ) {
-        relay_flush();
-        if ( relay_flush() ) {
+        $flushed = relay_flush();
+        if ( $flushed ) {
             wp_send_json_success( [ 'message' => 'Object cache (Relay) cleared successfully.' ] );
         } else {
             wp_send_json_error( [ 'message' => 'Relay flush failed. Check server configuration.' ] );
