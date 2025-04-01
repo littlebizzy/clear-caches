@@ -3,7 +3,7 @@
 Plugin Name: Clear Caches
 Plugin URI: https://www.littlebizzy.com/plugins/clear-caches
 Description: Purge all of the WordPress caches
-Version: 2.0.3
+Version: 2.1.0
 Requires PHP: 7.0
 Tested up to: 6.7
 Author: LittleBizzy
@@ -46,7 +46,7 @@ function get_clear_caches_nonce() {
 
 // add clear caches dropdown to the admin bar
 add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
-    $min_capability = CLEAR_CACHES_MIN_CAPABILITY;
+    $min_capability = get_clear_caches_capability();
 
     // ensure user has required capability
     if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
@@ -101,6 +101,7 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
         ] );
     }
 }, 100 );
+
 // enqueue javascript for both frontend and backend
 function enqueue_clear_caches_scripts() {
     if ( is_admin_bar_showing() ) {
