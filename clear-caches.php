@@ -37,21 +37,23 @@ if ( ! defined( 'CLEAR_CACHES_NGINX_PATH' ) ) define( 'CLEAR_CACHES_NGINX_PATH',
 
 // return a fresh nonce for clear caches ajax
 function get_clear_caches_nonce() {
-    return wp_create_nonce( 'clear_caches_nonce' );
+    static $nonce = null;
+    if ( $nonce === null ) {
+        $nonce = wp_create_nonce( 'clear_caches_nonce' );
+    }
+    return $nonce;
 }
 
-// Add Clear Caches dropdown to the admin bar
+// add clear caches dropdown to the admin bar
 add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
     $min_capability = CLEAR_CACHES_MIN_CAPABILITY;
 
-    // Ensure user has at least 'edit_posts' capability and the defined capability
+    // ensure user has required capability
     if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
         return;
     }
 
-    // Create the nonce URL parameter
-    $nonce = wp_create_nonce( 'clear_caches_nonce' );
-
+    // create top-level menu node
     $wp_admin_bar->add_node( [
         'id'     => 'clear_caches',
         'parent' => 'top-secondary',
@@ -65,7 +67,7 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
             'parent' => 'clear_caches',
             'title'  => 'Clear PHP OPcache',
             'href'   => 'javascript:void(0);',
-            'meta'   => [ 'class' => 'clear-cache-php-opcache', 'nonce' => $nonce ]
+            'meta'   => [ 'class' => 'clear-cache-php-opcache' ]
         ] );
     }
 
@@ -75,7 +77,7 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
             'parent' => 'clear_caches',
             'title'  => 'Clear Nginx Cache',
             'href'   => 'javascript:void(0);',
-            'meta'   => [ 'class' => 'clear-cache-nginx', 'nonce' => $nonce ]
+            'meta'   => [ 'class' => 'clear-cache-nginx' ]
         ] );
     }
 
@@ -85,7 +87,7 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
             'parent' => 'clear_caches',
             'title'  => 'Clear Object Cache',
             'href'   => 'javascript:void(0);',
-            'meta'   => [ 'class' => 'clear-cache-object', 'nonce' => $nonce ]
+            'meta'   => [ 'class' => 'clear-cache-object' ]
         ] );
     }
 
@@ -95,11 +97,10 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
             'parent' => 'clear_caches',
             'title'  => 'Clear Transients Cache',
             'href'   => 'javascript:void(0);',
-            'meta'   => [ 'class' => 'clear-cache-transients', 'nonce' => $nonce ]
+            'meta'   => [ 'class' => 'clear-cache-transients' ]
         ] );
     }
 }, 100 );
-
 // enqueue javascript for both frontend and backend
 function enqueue_clear_caches_scripts() {
     if ( is_admin_bar_showing() ) {
@@ -119,27 +120,27 @@ add_action( 'wp_enqueue_scripts', 'enqueue_clear_caches_scripts' );
 // enqueue for backend
 add_action( 'admin_enqueue_scripts', 'enqueue_clear_caches_scripts' );
 
-// Handle AJAX requests
+// handle ajax requests
 add_action( 'wp_ajax_clear_caches_action', function() {
     $min_capability = CLEAR_CACHES_MIN_CAPABILITY;
 
-    // Ensure user has at least 'edit_posts' capability and the defined capability
+    // deny if user lacks required capability
     if ( ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
         wp_send_json_error( [ 'message' => 'Permission denied' ] );
     }
 
+    // verify nonce
     check_ajax_referer( 'clear_caches_nonce', 'security' );
 
+    // get and validate cache type
     $cache_type = sanitize_text_field( $_POST['cache_type'] ?? '' );
+    $valid_cache_types = [ 'php_opcache', 'nginx_cache', 'object_cache', 'clear_transients' ];
 
-    // Define valid cache types
-    $valid_cache_types = ['php_opcache', 'nginx_cache', 'object_cache', 'clear_transients'];
-
-    // Ensure cache type is valid
     if ( ! in_array( $cache_type, $valid_cache_types, true ) ) {
         wp_send_json_error( [ 'message' => 'Invalid cache type specified.' ] );
     }
 
+    // run the requested cache clear action
     switch ( $cache_type ) {
         case 'php_opcache':
             clear_php_opcache();
