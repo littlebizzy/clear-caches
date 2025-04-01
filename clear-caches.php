@@ -27,13 +27,18 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
     return $overrides;
 }, 999 );
 
-// Define constants
-if ( ! defined( 'CLEAR_CACHES_MIN_CAPABILITY' ) ) define( 'CLEAR_CACHES_MIN_CAPABILITY', 'manage_options' ); // Default to Admin level
+// define constants
+if ( ! defined( 'CLEAR_CACHES_MIN_CAPABILITY' ) ) define( 'CLEAR_CACHES_MIN_CAPABILITY', 'manage_options' ); // default to admin level
 if ( ! defined( 'CLEAR_CACHES_OPCACHE' ) ) define( 'CLEAR_CACHES_OPCACHE', true );
 if ( ! defined( 'CLEAR_CACHES_NGINX' ) ) define( 'CLEAR_CACHES_NGINX', true );
 if ( ! defined( 'CLEAR_CACHES_OBJECT' ) ) define( 'CLEAR_CACHES_OBJECT', true );
 if ( ! defined( 'CLEAR_CACHES_TRANSIENTS' ) ) define( 'CLEAR_CACHES_TRANSIENTS', true );
 if ( ! defined( 'CLEAR_CACHES_NGINX_PATH' ) ) define( 'CLEAR_CACHES_NGINX_PATH', '/var/www/cache/nginx' );
+
+// return a fresh nonce for clear caches ajax
+function get_clear_caches_nonce() {
+    return wp_create_nonce( 'clear_caches_nonce' );
+}
 
 // Add Clear Caches dropdown to the admin bar
 add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
@@ -95,20 +100,24 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
     }
 }, 100 );
 
-// Enqueue JavaScript for both frontend and backend
+// enqueue javascript for both frontend and backend
 function enqueue_clear_caches_scripts() {
     if ( is_admin_bar_showing() ) {
         wp_enqueue_script( 'clear-caches-script', plugin_dir_url( __FILE__ ) . 'clear-caches.js', [ 'jquery' ], null, true );
 
-        // Pass AJAX URL and nonce to JavaScript
+        // pass ajax url and nonce to javascript
         wp_localize_script( 'clear-caches-script', 'clearCachesData', [
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
-            'nonce'   => wp_create_nonce( 'clear_caches_nonce' )
+            'nonce'   => get_clear_caches_nonce()
         ] );
     }
 }
-add_action( 'wp_enqueue_scripts', 'enqueue_clear_caches_scripts' ); // Frontend
-add_action( 'admin_enqueue_scripts', 'enqueue_clear_caches_scripts' ); // Backend
+
+// enqueue for frontend
+add_action( 'wp_enqueue_scripts', 'enqueue_clear_caches_scripts' );
+
+// enqueue for backend
+add_action( 'admin_enqueue_scripts', 'enqueue_clear_caches_scripts' );
 
 // Handle AJAX requests
 add_action( 'wp_ajax_clear_caches_action', function() {
@@ -147,17 +156,18 @@ add_action( 'wp_ajax_clear_caches_action', function() {
     }
 });
 
-// Clear PHP OPcache
+// clear php opcache
 function clear_php_opcache() {
-    // Check if OPcache functions are available
+    // check if opcache functions are available
     if ( function_exists( 'opcache_reset' ) ) {
-        // Force flush OPcache unconditionally
+        // flush opcache
         opcache_reset();
-        // Send a success message after the OPcache flush
-        wp_send_json_success( [ 'message' => 'PHP OPcache flushed successfully.' ] );
+
+        // send success response
+        wp_send_json_success( [ 'message' => 'PHP OPcache cleared successfully.' ] );
     } else {
-        // If OPcache is not installed, send an error message
-        wp_send_json_error( [ 'message' => 'OPcache is not installed or available on this server.' ] );
+        // send error if opcache is not available
+        wp_send_json_error( [ 'message' => 'PHP OPcache is not available on this server.' ] );
     }
 }
 
@@ -310,25 +320,26 @@ function clear_object_cache() {
     }
 }
 
-// Clear all transients
+// clear all transients
 function clear_all_transients() {
     global $wpdb;
 
-    // Delete site and regular transients from the database
+    // delete regular and site transients
     $transients_deleted = $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
     $site_transients_deleted = $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_site_transient_%'" );
 
-    // Check if any rows were affected in both queries
+    // check for query failure
     if ( $transients_deleted === false || $site_transients_deleted === false ) {
-        // SQL query failed for one or both queries
-        wp_send_json_error( [ 'message' => 'Failed to clear transients from the database. Please check database permissions or try again.' ] );
-    } elseif ( $transients_deleted === 0 && $site_transients_deleted === 0 ) {
-        // No transients were found or deleted
-        wp_send_json_success( [ 'message' => 'No transients found to delete.' ] );
-    } else {
-        // Transients were successfully deleted
-        wp_send_json_success( [ 'message' => 'All transients cleared successfully.' ] );
+        wp_send_json_error( [ 'message' => 'Failed to clear transients. Check database permissions.' ] );
     }
+
+    // check if no rows were deleted
+    if ( $transients_deleted === 0 && $site_transients_deleted === 0 ) {
+        wp_send_json_success( [ 'message' => 'No transients found to delete.' ] );
+    }
+
+    // send success response
+    wp_send_json_success( [ 'message' => 'Transients cleared successfully.' ] );
 }
 
 // Ref: ChatGPT
