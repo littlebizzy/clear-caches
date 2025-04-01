@@ -57,10 +57,12 @@ function clear_caches_get_nonce() {
 add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
     $min_capability = get_clear_caches_capability();
 
+    // check user is logged in and has minimum capability
     if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
         return;
     }
 
+    // add main menu item
     $wp_admin_bar->add_node( [
         'id'     => 'clear_caches',
         'parent' => 'top-secondary',
@@ -68,6 +70,7 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
         'meta'   => [ 'class' => 'clear-caches-admin-bar' ]
     ] );
 
+    // add submenu for php opcache
     if ( CLEAR_CACHES_OPCACHE ) {
         $wp_admin_bar->add_node( [
             'id'     => 'clear_php_opcache',
@@ -78,6 +81,7 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
         ] );
     }
 
+    // add submenu for nginx cache
     if ( CLEAR_CACHES_NGINX ) {
         $wp_admin_bar->add_node( [
             'id'     => 'clear_nginx_cache',
@@ -88,6 +92,7 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
         ] );
     }
 
+    // add submenu for object cache
     if ( CLEAR_CACHES_OBJECT ) {
         $wp_admin_bar->add_node( [
             'id'     => 'clear_object_cache',
@@ -98,6 +103,7 @@ add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
         ] );
     }
 
+    // add submenu for transients
     if ( CLEAR_CACHES_TRANSIENTS ) {
         $wp_admin_bar->add_node( [
             'id'     => 'clear_transients',
@@ -126,7 +132,6 @@ function enqueue_clear_caches_scripts() {
         ] );
     }
 }
-
 add_action( 'wp_enqueue_scripts', 'enqueue_clear_caches_scripts' );
 add_action( 'admin_enqueue_scripts', 'enqueue_clear_caches_scripts' );
 
@@ -238,6 +243,7 @@ function clear_nginx_cache() {
 
 // clear object cache
 function clear_object_cache() {
+    // handle memcached backend
     if ( class_exists( 'Memcached' ) ) {
         $memcached = new Memcached();
         if ( $memcached->addServer( CLEAR_CACHES_MEMCACHED_HOST, CLEAR_CACHES_MEMCACHED_PORT ) ) {
@@ -254,7 +260,10 @@ function clear_object_cache() {
             wp_send_json_error( [ 'message' => 'Could not connect to Memcached server.' ] );
             wp_die();
         }
-    } elseif ( class_exists( 'Memcache' ) ) {
+    }
+
+    // handle memcache backend
+    elseif ( class_exists( 'Memcache' ) ) {
         $memcache = new Memcache();
         if ( $memcache->addServer( CLEAR_CACHES_MEMCACHED_HOST, CLEAR_CACHES_MEMCACHED_PORT ) ) {
             $memcache->flush();
@@ -270,7 +279,10 @@ function clear_object_cache() {
             wp_send_json_error( [ 'message' => 'Could not connect to Memcache server.' ] );
             wp_die();
         }
-    } elseif ( class_exists( 'Redis' ) ) {
+    }
+
+    // handle redis extension
+    elseif ( class_exists( 'Redis' ) ) {
         $redis = new Redis();
         try {
             if ( $redis->connect( CLEAR_CACHES_REDIS_HOST, CLEAR_CACHES_REDIS_PORT ) ) {
@@ -291,7 +303,10 @@ function clear_object_cache() {
             wp_send_json_error( [ 'message' => 'Redis error: ' . $e->getMessage() ] );
             wp_die();
         }
-    } elseif ( class_exists( 'Predis\Client' ) ) {
+    }
+
+    // handle predis client
+    elseif ( class_exists( 'Predis\Client' ) ) {
         try {
             $predis = new Predis\Client();
             $predis->flushall();
@@ -307,7 +322,10 @@ function clear_object_cache() {
             wp_send_json_error( [ 'message' => 'Predis error: ' . $e->getMessage() ] );
             wp_die();
         }
-    } elseif ( function_exists( 'relay_flush' ) ) {
+    }
+
+    // handle relay backend
+    elseif ( function_exists( 'relay_flush' ) ) {
         $flushed = relay_flush();
         if ( $flushed ) {
             wp_send_json_success( [ 'message' => 'Object cache (Relay) cleared successfully.' ] );
@@ -316,7 +334,10 @@ function clear_object_cache() {
             wp_send_json_error( [ 'message' => 'Relay flush failed. Check server configuration.' ] );
             wp_die();
         }
-    } else {
+    }
+
+    // fallback to wordpress object cache flush
+    else {
         wp_cache_flush();
         wp_send_json_success( [ 'message' => 'Object cache (WordPress) cleared. Verification not supported.' ] );
         wp_die();
