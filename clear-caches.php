@@ -123,7 +123,7 @@ add_action( 'admin_enqueue_scripts', 'enqueue_clear_caches_scripts' );
 
 // handle ajax requests
 add_action( 'wp_ajax_clear_caches_action', function() {
-    $min_capability = CLEAR_CACHES_MIN_CAPABILITY;
+    $min_capability = get_clear_caches_capability();
 
     // deny if user lacks required capability
     if ( ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
@@ -271,16 +271,12 @@ function clear_object_cache() {
     elseif ( class_exists( 'Predis\Client' ) ) {
         try {
             $predis = new Predis\Client();
-            if ( $predis->connect() ) {
-                $predis->flushall();
-                $predis->set( 'test_key', 'test_value' );
-                if ( $predis->get( 'test_key' ) === 'test_value' ) {
-                    wp_send_json_success( [ 'message' => 'Object cache (Predis) cleared successfully.' ] );
-                } else {
-                    wp_send_json_error( [ 'message' => 'Predis flush succeeded, but verification failed.' ] );
-                }
+            $predis->flushall();
+            $predis->set( 'test_key', 'test_value' );
+            if ( $predis->get( 'test_key' ) === 'test_value' ) {
+                wp_send_json_success( [ 'message' => 'Object cache (Predis) cleared successfully.' ] );
             } else {
-                wp_send_json_error( [ 'message' => 'Could not connect to Predis server.' ] );
+                wp_send_json_error( [ 'message' => 'Predis flush succeeded, but verification failed.' ] );
             }
         } catch ( Exception $e ) {
             wp_send_json_error( [ 'message' => 'Predis error: ' . $e->getMessage() ] );
