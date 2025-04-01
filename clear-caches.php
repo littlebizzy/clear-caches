@@ -44,16 +44,19 @@ function get_clear_caches_nonce() {
     return $nonce;
 }
 
+// return the minimum user capability
+function get_clear_caches_capability() {
+    return CLEAR_CACHES_MIN_CAPABILITY;
+}
+
 // add clear caches dropdown to the admin bar
 add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
     $min_capability = get_clear_caches_capability();
 
-    // ensure user has required capability
     if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
         return;
     }
 
-    // create top-level menu node
     $wp_admin_bar->add_node( [
         'id'     => 'clear_caches',
         'parent' => 'top-secondary',
