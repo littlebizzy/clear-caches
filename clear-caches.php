@@ -208,7 +208,22 @@ function clear_php_opcache() {
 
 // clear nginx cache
 function clear_nginx_cache() {
-    $nginx_cache_path = CLEAR_CACHES_NGINX_PATH;
+    $nginx_cache_path = realpath( CLEAR_CACHES_NGINX_PATH );
+
+    // allow only specific known nginx cache paths
+    $allowed_paths = [
+        '/var/www/cache/nginx',
+        '/var/cache/nginx',
+        '/var/run/nginx-cache',
+        '/var/nginx/cache',
+        '/tmp/nginx-cache'
+    ];
+
+    // abort if resolved path is not in the allowed list
+    if ( ! $nginx_cache_path || ! in_array( $nginx_cache_path, $allowed_paths, true ) ) {
+        wp_send_json_error( [ 'message' => 'Nginx cache path is not allowed.' ] );
+        wp_die();
+    }
 
     // check if nginx cache path is valid and writable
     if ( file_exists( $nginx_cache_path ) && is_dir( $nginx_cache_path ) && is_writable( $nginx_cache_path ) ) {
