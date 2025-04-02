@@ -3,7 +3,7 @@
 Plugin Name: Clear Caches
 Plugin URI: https://www.littlebizzy.com/plugins/clear-caches
 Description: Purge all of the WordPress caches
-Version: 2.1.0
+Version: 3.0.0
 Requires PHP: 7.0
 Tested up to: 6.7
 Author: LittleBizzy
@@ -29,11 +29,11 @@ add_filter( 'gu_override_dot_org', function( $overrides ) {
 
 // define constants
 if ( ! defined( 'CLEAR_CACHES_MIN_CAPABILITY' ) ) define( 'CLEAR_CACHES_MIN_CAPABILITY', 'manage_options' );
-if ( ! defined( 'CLEAR_CACHES_OPCACHE' ) ) define( 'CLEAR_CACHES_OPCACHE', true );
 if ( ! defined( 'CLEAR_CACHES_NGINX' ) ) define( 'CLEAR_CACHES_NGINX', true );
-if ( ! defined( 'CLEAR_CACHES_OBJECT' ) ) define( 'CLEAR_CACHES_OBJECT', true );
-if ( ! defined( 'CLEAR_CACHES_TRANSIENTS' ) ) define( 'CLEAR_CACHES_TRANSIENTS', true );
 if ( ! defined( 'CLEAR_CACHES_NGINX_PATH' ) ) define( 'CLEAR_CACHES_NGINX_PATH', '/var/www/cache/nginx' );
+if ( ! defined( 'CLEAR_CACHES_OBJECT' ) ) define( 'CLEAR_CACHES_OBJECT', true );
+if ( ! defined( 'CLEAR_CACHES_OPCACHE' ) ) define( 'CLEAR_CACHES_OPCACHE', true );
+if ( ! defined( 'CLEAR_CACHES_TRANSIENTS' ) ) define( 'CLEAR_CACHES_TRANSIENTS', true );
 if ( ! defined( 'CLEAR_CACHES_MEMCACHED_HOST' ) ) define( 'CLEAR_CACHES_MEMCACHED_HOST', '127.0.0.1' );
 if ( ! defined( 'CLEAR_CACHES_MEMCACHED_PORT' ) ) define( 'CLEAR_CACHES_MEMCACHED_PORT', 11211 );
 if ( ! defined( 'CLEAR_CACHES_REDIS_HOST' ) ) define( 'CLEAR_CACHES_REDIS_HOST', '127.0.0.1' );
