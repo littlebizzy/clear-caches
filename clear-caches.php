@@ -41,7 +41,18 @@ if ( ! defined( 'CLEAR_CACHES_REDIS_PORT' ) ) define( 'CLEAR_CACHES_REDIS_PORT',
 
 // return required capability
 function get_clear_caches_capability() {
-    return CLEAR_CACHES_MIN_CAPABILITY;
+    if ( defined( 'CLEAR_CACHES_MIN_CAPABILITY' ) ) {
+        $min_cap = CLEAR_CACHES_MIN_CAPABILITY;
+    } else {
+        $min_cap = 'manage_options';
+    }
+
+    // fallback if user-defined cap is lower than edit_posts
+    if ( ! current_user_can( 'edit_posts' ) || ! current_user_can( $min_cap ) ) {
+        return 'manage_options';
+    }
+
+    return $min_cap;
 }
 
 // return a fresh nonce for clear caches ajax
