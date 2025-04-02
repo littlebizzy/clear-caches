@@ -60,29 +60,34 @@ jQuery( document ).ready( $ => {
 				left: 0,
 				width: '100%',
 				height: '100%',
-				backgroundColor: 'rgba(0, 0, 0, 0.6)',
-				zIndex: 99999,
 				display: 'flex',
 				justifyContent: 'center',
-				alignItems: 'center'
+				alignItems: 'center',
+				backgroundColor: 'rgba(0, 0, 0, 0.7)',
+				zIndex: 99999
 			} ).appendTo( 'body' );
 		}
 
 		if ( $( '#clear-caches-modal' ).length === 0 ) {
-			$( '<div id="clear-caches-modal"></div>' ).css( {
-				backgroundColor: '#ffffff',
-				padding: '24px 32px',
-				textAlign: 'center',
-				fontSize: '15px',
-				color: '#222',
-				lineHeight: '1.6',
-				boxShadow: '0 6px 20px rgba(0, 0, 0, 0.15)',
-				borderRadius: '8px',
-				zIndex: 100000,
-				minWidth: '280px',
+			$( '<div id="clear-caches-modal" role="alertdialog" aria-live="assertive" aria-modal="true"></div>' ).css( {
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
+				flexDirection: 'column',
+				width: '320px',
 				maxWidth: '90%',
-				maxHeight: '80%',
-				overflowY: 'auto'
+				minHeight: '60px',
+				overflowY: 'auto',
+				padding: '16px 24px',
+				backgroundColor: '#fff',
+				color: '#23282d',
+				fontSize: '13px',
+				fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif',
+				textAlign: 'center',
+				lineHeight: '1.5',
+				borderRadius: '4px',
+				boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+				zIndex: 100000
 			} ).appendTo( '#clear-caches-overlay' );
 		}
 
