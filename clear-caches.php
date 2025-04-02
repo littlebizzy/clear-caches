@@ -348,6 +348,7 @@ function clear_object_cache() {
 function clear_all_transients() {
     global $wpdb;
 
+    // delete _transient_ keys for current site only
     $transients_deleted = $wpdb->query(
         $wpdb->prepare(
             "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
@@ -355,6 +356,7 @@ function clear_all_transients() {
         )
     );
 
+    // delete _site_transient_ keys for current site only
     $site_transients_deleted = $wpdb->query(
         $wpdb->prepare(
             "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
@@ -362,8 +364,10 @@ function clear_all_transients() {
         )
     );
 
-    if ( is_multisite() ) {
-        $wpdb->query(
+    // delete network-wide transients from sitemeta (super admin only)
+    $sitemeta_deleted = true;
+    if ( is_multisite() && is_super_admin() ) {
+        $sitemeta_deleted = $wpdb->query(
             $wpdb->prepare(
                 "DELETE FROM {$wpdb->sitemeta} WHERE meta_key LIKE %s",
                 $wpdb->esc_like( '_site_transient_' ) . '%'
@@ -371,17 +375,26 @@ function clear_all_transients() {
         );
     }
 
-    if ( $transients_deleted === false || $site_transients_deleted === false ) {
+    // return error if any query failed
+    if ( $transients_deleted === false || $site_transients_deleted === false || ( is_multisite() && is_super_admin() && $sitemeta_deleted === false ) ) {
         wp_send_json_error( [ 'message' => 'Failed to clear transients. Check database permissions.' ] );
         wp_die();
     }
 
-    if ( $transients_deleted === 0 && $site_transients_deleted === 0 ) {
+    // return success if nothing found
+    if ( $transients_deleted === 0 && $site_transients_deleted === 0 && ( ! is_multisite() || ! is_super_admin() || $sitemeta_deleted === 0 ) ) {
         wp_send_json_success( [ 'message' => 'No transients found to delete.' ] );
         wp_die();
     }
 
-    wp_send_json_success( [ 'message' => 'Transients cleared successfully.' ] );
+    // calculate total rows deleted
+    $total_deleted = (int) $transients_deleted + (int) $site_transients_deleted;
+    if ( is_multisite() && is_super_admin() ) {
+        $total_deleted += (int) $sitemeta_deleted;
+    }
+
+    // return success after deletions
+    wp_send_json_success( [ 'message' => "Successfully cleared {$total_deleted} transient row" . ( $total_deleted === 1 ? '' : 's' ) . "." ] );
     wp_die();
 }
 
