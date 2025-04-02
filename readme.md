@@ -4,6 +4,15 @@ Purge all of the WordPress caches
 
 ## Changelog
 
+### 3.0.0
+- major refactoring and security hardening
+- Multisite network sitemeta transients now cleared (for super admins only)
+- added total deleted row count to cleared transients success message
+- added `Requires PHP` plugin header
+- added `Tested up to` plugin header
+- added `Update URI` plugin header
+- added `Text Domain` plugin header
+
 ### 2.0.2
 - fixed `gu_override_dot_org` snippet
 
@@ -55,12 +64,3 @@ Purge all of the WordPress caches
 * initial release
 * uses PHP namespaces
 * object-oriented codebase
-
-## Defined Constants
-
-define('CLEAR_CACHES', true); // default = true
-define('CLEAR_CACHES_NGINX', true); // default = true
-define('CLEAR_CACHES_NGINX_PATH', '/var/www/cache'); // *must be unique* (SlickStack servers = /var/www/cache)
-define('CLEAR_CACHES_OBJECT', true); // default = true
-define('CLEAR_CACHES_OPCACHE', true); // default = true
-    
