@@ -1,4 +1,7 @@
 jQuery( document ).ready( $ => {
+	// exit if ajax data is not available
+	if ( typeof clearCachesData === 'undefined' ) return;
+
 	// prevent multiple ajax requests
 	let isProcessing = false;
 
@@ -28,7 +31,7 @@ jQuery( document ).ready( $ => {
 			complete: () => {
 				isProcessing = false;
 				setTimeout( () => {
-					$( '#cache-clear-modal, #cache-clear-overlay' ).remove();
+					$( '#clear-caches-modal, #clear-caches-overlay' ).remove();
 				}, 2000 );
 			}
 		} );
@@ -50,8 +53,8 @@ jQuery( document ).ready( $ => {
 
 	// show modal overlay with message
 	function showModal( message ) {
-		if ( $( '#cache-clear-overlay' ).length === 0 ) {
-			$( '<div id="cache-clear-overlay"></div>' ).css( {
+		if ( $( '#clear-caches-overlay' ).length === 0 ) {
+			$( '<div id="clear-caches-overlay"></div>' ).css( {
 				position: 'fixed',
 				top: 0,
 				left: 0,
@@ -65,8 +68,8 @@ jQuery( document ).ready( $ => {
 			} ).appendTo( 'body' );
 		}
 
-		if ( $( '#cache-clear-modal' ).length === 0 ) {
-			$( '<div id="cache-clear-modal"></div>' ).css( {
+		if ( $( '#clear-caches-modal' ).length === 0 ) {
+			$( '<div id="clear-caches-modal"></div>' ).css( {
 				backgroundColor: '#ffffff',
 				padding: '24px 32px',
 				textAlign: 'center',
@@ -80,15 +83,15 @@ jQuery( document ).ready( $ => {
 				maxWidth: '90%',
 				maxHeight: '80%',
 				overflowY: 'auto'
-			} ).appendTo( '#cache-clear-overlay' );
+			} ).appendTo( '#clear-caches-overlay' );
 		}
 
-		$( '#cache-clear-modal' ).html( '<p>' + message + '</p>' );
+		$( '#clear-caches-modal' ).text( message );
 	}
 
 	// update modal content
 	function updateModal( message, type ) {
-		$( '#cache-clear-modal' ).html( '<p>' + message + '</p>' );
+		$( '#clear-caches-modal' ).text( message );
 	}
 } );
 
