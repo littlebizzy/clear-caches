@@ -152,7 +152,7 @@ add_action( 'wp_ajax_clear_caches_action', function() {
 
     // check user capability (edit_posts minimum)
     if ( ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
-        wp_send_json_error( [ 'message' => 'Permission denied' ] );
+        wp_send_json_error( [ 'message' => 'Permission denied.' ] );
         wp_die();
     }
 
@@ -257,7 +257,7 @@ function clear_nginx_cache() {
             wp_send_json_success( [ 'message' => 'Nginx cache cleared successfully.' ] );
             wp_die();
         } else {
-            wp_send_json_error( [ 'message' => 'Failed to clear some cache files. Check permissions.' ] );
+            wp_send_json_error( [ 'message' => 'Failed to clear some Nginx cache files. Check permissions.' ] );
             wp_die();
         }
     } else {
