@@ -6,8 +6,16 @@ Purge all of the WordPress caches
 
 ### 3.0.0
 - major refactoring and security hardening
-- Multisite network sitemeta transients now cleared (for super admins only)
+- Multisite network `sitemeta` transients now cleared (for super admins only)
 - added total deleted row count to cleared transients success message
+- added dynamic nonce helper with static caching for AJAX
+- replaced `sanitize_text_field()` with `sanitize_key()` for AJAX request
+- improved capability fallback logic via `get_clear_caches_capability()` helper
+- restricted Nginx cache deletion to known safe paths (supports SlickStack, EasyEngine, WordOps, and more)
+- updated Nginx deletion logic with stricter realpath + validation
+- improved JS modal UX (ARIA tags, better namespaces, more WordPress-native CSS styling)
+- improved JS modal security (gracefully degrades if `clearCachesData` is missing, escapes messages with `.text()` now to prevent HTML injection)
+- added `wp_die()` after all `wp_send_json_*()` responses
 - added `Requires PHP` plugin header
 - added `Tested up to` plugin header
 - added `Update URI` plugin header
