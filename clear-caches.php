@@ -3,9 +3,9 @@
 Plugin Name: Clear Caches
 Plugin URI: https://www.littlebizzy.com/plugins/clear-caches
 Description: Purge all of the WordPress caches
-Version: 3.0.0
+Version: 3.1.0
 Requires PHP: 7.0
-Tested up to: 6.7
+Tested up to: 6.9
 Author: LittleBizzy
 Author URI: https://www.littlebizzy.com
 License: GPLv3
@@ -66,10 +66,8 @@ function clear_caches_get_nonce() {
 
 // add clear caches dropdown to the admin bar
 add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
-    $min_capability = get_clear_caches_capability();
 
-    // check user is logged in and has minimum capability
-    if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
+    if ( ! is_user_logged_in() || ! current_user_can( get_clear_caches_capability() ) ) {
         return;
     }
 
@@ -148,10 +146,8 @@ add_action( 'admin_enqueue_scripts', 'enqueue_clear_caches_scripts' );
 
 // handle ajax requests
 add_action( 'wp_ajax_clear_caches_action', function() {
-    $min_capability = get_clear_caches_capability();
 
-    // check user capability (edit_posts minimum)
-    if ( ! current_user_can( 'edit_posts' ) || ( $min_capability !== 'edit_posts' && ! current_user_can( $min_capability ) ) ) {
+    if ( ! current_user_can( get_clear_caches_capability() ) ) {
         wp_send_json_error( [ 'message' => 'Permission denied.' ] );
         wp_die();
     }
@@ -252,6 +248,9 @@ function clear_nginx_cache() {
             }
         }
 
+        // reset filesystem stat cache after purge
+        clearstatcache( true );
+
         // send response based on errors
         if ( empty( $errors ) ) {
             wp_send_json_success( [ 'message' => 'Nginx cache cleared successfully.' ] );
@@ -311,7 +310,7 @@ function clear_object_cache() {
     elseif ( class_exists( 'Redis' ) ) {
         $redis = new Redis();
         try {
-            if ( $redis->connect( CLEAR_CACHES_REDIS_HOST, CLEAR_CACHES_REDIS_PORT ) ) {
+            if ( $redis->connect( CLEAR_CACHES_REDIS_HOST, CLEAR_CACHES_REDIS_PORT, 1.5 ) ) {
                 $redis->flushAll();
                 $redis->set( 'test_key', 'test_value', 10 );
                 if ( $redis->get( 'test_key' ) === 'test_value' ) {
