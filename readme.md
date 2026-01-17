@@ -4,6 +4,12 @@ Purge all of the WordPress caches
 
 ## Changelog
 
+### 3.1.0
+- added Redis connection timeout to prevent stalled PHP workers on broken sockets
+- reset PHP filesystem stat cache with `clearstatcache` after Nginx cache purge to avoid stale metadata
+- simplified capability checks for better long-term maintainability
+- `Tested up to:` bumped to 6.9
+
 ### 3.0.0
 - major refactoring and security hardening
 - Multisite network `sitemeta` transients now cleared (for super admins only)
