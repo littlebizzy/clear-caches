@@ -2,6 +2,22 @@
 
 Purge all of the WordPress caches
 
+## Description
+
+Clear Caches provides individual WordPress and server-side cache controls from the WordPress admin bar.
+
+Cached data can sometimes cause old content, settings, templates, or code to remain visible after site changes. Authorized users can clear PHP OPcache, Nginx cache files, the object cache, or database transients without using command-line tools or restarting services. The controls are available from the admin bar on both frontend and admin screens when the admin bar is displayed.
+
+The object-cache action includes handlers for Memcached, Memcache, Redis, Predis, and Relay, with `wp_cache_flush()` used as the WordPress fallback. Memcached, Memcache, Redis, and Predis handlers perform a basic write-and-read check after flushing, while other handlers report the result supported by their backend.
+
+Nginx cache deletion is restricted to a predefined list of known cache directories. The configured path must resolve to one of those directories and must exist, be writable, and be a directory before any files are removed.
+
+On Multisite installations, transients stored in the current site’s options table are cleared. Network transients stored in `sitemeta` are also cleared when the action is run by a super administrator.
+
+Each action uses authenticated WordPress AJAX with capability and nonce checks. Cache modules, the required capability, the Nginx cache path, and Memcached or Redis connection details can be configured with constants instead of a settings screen.
+
+Clear Caches only handles caches managed by WordPress or the local server. It does not clear browser, CDN, load balancer, or external reverse-proxy caches.
+
 ## Changelog
 
 ### 3.1.0
